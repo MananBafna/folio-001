@@ -1,0 +1,15 @@
+# local working files, not part of the site
+.claude/
+react-components-do-not-delete.txt
+mananbafna.jpg
+assets/sky.mp4
+assets/story-1-new.png
+assets/badge.jpg
+assets/photo for circle hero.jpg
+
+# OS noise
+Thumbs.db
+.DS_Store
+
+# deployment
+.vercel/
