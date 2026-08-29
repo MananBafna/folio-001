@@ -405,8 +405,8 @@
     const badgeEl = document.querySelector(".hero-badge");
     const phx = photoEl ? gsap.quickTo(photoEl, "x", { duration: 0.8, ease: "power2.out" }) : null;
     const phy = photoEl ? gsap.quickTo(photoEl, "y", { duration: 0.8, ease: "power2.out" }) : null;
-    const pux = pupil ? gsap.quickTo(pupil, "x", { duration: 0.35, ease: "power2.out" }) : null;
-    const puy = pupil ? gsap.quickTo(pupil, "y", { duration: 0.35, ease: "power2.out" }) : null;
+    const pux = pupil ? gsap.quickTo(pupil, "x", { duration: 0.18, ease: "power2.out" }) : null;
+    const puy = pupil ? gsap.quickTo(pupil, "y", { duration: 0.18, ease: "power2.out" }) : null;
     window.addEventListener("pointermove", (e) => {
       const nx = e.clientX / window.innerWidth - 0.5;
       const ny = e.clientY / window.innerHeight - 0.5;
@@ -416,9 +416,9 @@
         const dx = e.clientX - (r.left + r.width / 2);
         const dy = e.clientY - (r.top + r.height / 2);
         const d = Math.hypot(dx, dy) || 1;
-        const m = Math.min(1, d / 240);
-        pux((dx / d) * 6 * m);
-        puy((dy / d) * 3.5 * m);
+        const m = Math.min(1, d / 80);
+        pux((dx / d) * 7.5 * m);
+        puy((dy / d) * 4.5 * m);
       }
     }, { passive: true });
   }
