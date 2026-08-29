@@ -589,7 +589,7 @@
       },
     });
 
-    gsap.from(".reel-hud, .reel-strip", {
+    gsap.from(".reel-head, .tv", {
       opacity: 0, y: 20, duration: 0.8, ease: "power3.out", stagger: 0.1,
       scrollTrigger: { trigger: ".doctrine", start: "top 75%" },
     });
@@ -735,6 +735,17 @@
       },
     });
   }
+
+  /* the ghost film reel behind the TV turns slowly */
+  gsap.to(".tv-bg-reel", { rotation: 360, duration: 46, ease: "none", repeat: -1 });
+
+  /* build days: the gears grind while the frame is small */
+  gsap.to("[data-gear-a] > g:first-child", { rotation: 360, duration: 16, ease: "none", repeat: -1, svgOrigin: "95 95" });
+  gsap.to("[data-gear-b] > g", { rotation: -360, duration: 11, ease: "none", repeat: -1, svgOrigin: "198 142" });
+
+  /* the record medal swings gently from its ribbon */
+  gsap.fromTo("[data-medal]", { rotation: 7, transformOrigin: "50% 0%" },
+    { rotation: -5, duration: 2.6, ease: "sine.inOut", repeat: -1, yoyo: true });
 
   /* ---------------------------------------------- for the record */
   gsap.from(".record .sec-title", {

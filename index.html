@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=78">
+  <link rel="stylesheet" href="css/main.css?v=79">
 </head>
 <body>
 
@@ -172,7 +172,45 @@
     <!-- ACT III · THE STORY (projector room) -->
     <section class="doctrine" id="story" aria-label="The story in six chapters">
       <div class="reel" data-reel>
-        <div class="reel-frames">
+        <svg class="tv-bg tv-bg-reel" viewBox="0 0 200 200" aria-hidden="true">
+          <g fill="#e5c4b6">
+            <path d="M100 4 a96 96 0 1 1 -0.01 0 Z M100 30 a20 20 0 1 0 0.01 0 Z M100 58 a16 16 0 1 1 -0.01 0 Z" fill-rule="evenodd"/>
+          </g>
+          <g fill="#efd6cb">
+            <circle cx="100" cy="52" r="19"/>
+            <circle cx="146" cy="85" r="19"/>
+            <circle cx="128" cy="139" r="19"/>
+            <circle cx="72" cy="139" r="19"/>
+            <circle cx="54" cy="85" r="19"/>
+            <circle cx="100" cy="100" r="12"/>
+          </g>
+          <circle cx="100" cy="100" r="96" fill="none" stroke="#e5c4b6" stroke-width="0"/>
+        </svg>
+        <svg class="tv-bg tv-bg-clap" viewBox="0 0 170 130" aria-hidden="true">
+          <g fill="#e5c4b6">
+            <path d="M6 44 h158 v78 a8 8 0 0 1 -8 8 h-142 a8 8 0 0 1 -8 -8 Z"/>
+            <path d="M8 12 l154 -8 a8 8 0 0 1 8 8 v24 l-164 8 v-24 a8 8 0 0 1 2 -8 Z" transform="rotate(-4 85 24)"/>
+          </g>
+          <g fill="#efd6cb" transform="rotate(-4 85 24)">
+            <path d="M26 8 l18 -1 l-12 28 l-18 1 Z"/>
+            <path d="M66 6 l18 -1 l-12 28 l-18 1 Z"/>
+            <path d="M106 4 l18 -1 l-12 28 l-18 1 Z"/>
+            <path d="M146 2 l14 -1 l-12 28 l-14 1 Z"/>
+          </g>
+          <circle cx="30" cy="82" r="7" fill="#efd6cb"/>
+        </svg>
+        <header class="reel-head">
+          <h2 class="sec-title"><em>Six chapters,</em> THE STORY</h2>
+          <span class="reel-counter">CH <b data-reel-no>01</b> / 06</span>
+        </header>
+        <div class="tv">
+          <svg class="tv-antenna" viewBox="0 0 120 46" aria-hidden="true">
+            <line x1="60" y1="44" x2="22" y2="6" stroke="#262054" stroke-width="5" stroke-linecap="round"/>
+            <line x1="60" y1="44" x2="98" y2="6" stroke="#262054" stroke-width="5" stroke-linecap="round"/>
+            <circle cx="22" cy="6" r="5" fill="#c74a32"/><circle cx="98" cy="6" r="5.5" fill="#f0cf4a" stroke="#262054" stroke-width="2"/>
+          </svg>
+          <div class="tv-screen">
+            <div class="reel-frames">
           <article class="frame" data-frame data-tone="red">
             <img src="assets/story-1.png" alt="A young student writing formulas across a chalkboard" loading="lazy">
             <div class="frame-scrim" aria-hidden="true"></div>
@@ -240,14 +278,16 @@
             </div>
           </article>
         </div>
-        <div class="reel-hud">
-          <h2 class="reel-title"><em>Six chapters,</em> THE STORY</h2>
-          <span class="reel-counter">REEL <b data-reel-no>01</b> / 06</span>
+            <div class="reel-flicker" data-flicker aria-hidden="true"></div>
+          </div>
+          <div class="tv-chin" aria-hidden="true">
+            <svg class="tv-speaker" viewBox="0 0 46 14"><g stroke="#262054" stroke-width="3" stroke-linecap="round"><line x1="2" y1="3" x2="44" y2="3"/><line x1="2" y1="11" x2="44" y2="11"/></g></svg>
+            <div class="reel-strip">
+              <span class="reel-cell is-on"></span><span class="reel-cell"></span><span class="reel-cell"></span><span class="reel-cell"></span><span class="reel-cell"></span><span class="reel-cell"></span>
+            </div>
+            <span class="tv-knob"></span>
+          </div>
         </div>
-        <div class="reel-strip" aria-hidden="true">
-          <span class="reel-cell is-on"></span><span class="reel-cell"></span><span class="reel-cell"></span><span class="reel-cell"></span><span class="reel-cell"></span><span class="reel-cell"></span>
-        </div>
-        <div class="reel-flicker" data-flicker aria-hidden="true"></div>
       </div>
     </section>
 
@@ -290,6 +330,49 @@
     <section class="sexpand" aria-label="Intermission: build days">
       <div class="se-track" data-se-track>
         <div class="se-stage" data-se-stage>
+          <svg class="se-gears" viewBox="0 0 260 200" aria-hidden="true">
+            <g data-gear-a>
+              <g transform="translate(95,95)">
+                <g fill="#f0cf4a" stroke="#262054" stroke-width="3">
+                  <rect x="-9" y="-62" width="18" height="20" rx="5"/>
+                  <g transform="rotate(45)"><rect x="-9" y="-62" width="18" height="20" rx="5"/></g>
+                  <g transform="rotate(90)"><rect x="-9" y="-62" width="18" height="20" rx="5"/></g>
+                  <g transform="rotate(135)"><rect x="-9" y="-62" width="18" height="20" rx="5"/></g>
+                  <g transform="rotate(180)"><rect x="-9" y="-62" width="18" height="20" rx="5"/></g>
+                  <g transform="rotate(225)"><rect x="-9" y="-62" width="18" height="20" rx="5"/></g>
+                  <g transform="rotate(270)"><rect x="-9" y="-62" width="18" height="20" rx="5"/></g>
+                  <g transform="rotate(315)"><rect x="-9" y="-62" width="18" height="20" rx="5"/></g>
+                  <circle r="48"/>
+                  <circle r="18" fill="#262054" stroke="none"/>
+                  <circle r="7" fill="#f0cf4a" stroke="none"/>
+                </g>
+              </g>
+              <g data-gear-b>
+                <g transform="translate(198,142)">
+                  <g fill="#c74a32" stroke="#262054" stroke-width="3">
+                    <rect x="-7" y="-45" width="14" height="16" rx="4"/>
+                    <g transform="rotate(60)"><rect x="-7" y="-45" width="14" height="16" rx="4"/></g>
+                    <g transform="rotate(120)"><rect x="-7" y="-45" width="14" height="16" rx="4"/></g>
+                    <g transform="rotate(180)"><rect x="-7" y="-45" width="14" height="16" rx="4"/></g>
+                    <g transform="rotate(240)"><rect x="-7" y="-45" width="14" height="16" rx="4"/></g>
+                    <g transform="rotate(300)"><rect x="-7" y="-45" width="14" height="16" rx="4"/></g>
+                    <circle r="34"/>
+                    <circle r="12" fill="#262054" stroke="none"/>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>
+          <svg class="se-bolt" viewBox="0 0 90 96" aria-hidden="true">
+            <path d="M45 6 L62 16 V36 L45 46 L28 36 V16 Z" fill="#262054"/>
+            <circle cx="45" cy="26" r="7" fill="#f0cf4a"/>
+            <rect x="38" y="48" width="14" height="40" rx="4" fill="#262054"/>
+            <g stroke="#f0cf4a" stroke-width="3" stroke-linecap="round">
+              <line x1="40" y1="56" x2="50" y2="60"/>
+              <line x1="40" y1="66" x2="50" y2="70"/>
+              <line x1="40" y1="76" x2="50" y2="80"/>
+            </g>
+          </svg>
           <div class="se-frame" data-se-frame>
             <img class="se-media" data-se-media src="https://images.unsplash.com/photo-1541462608143-67571c6738dd?auto=format&fit=crop&w=1800&q=80" alt="Top-down designer desk with wireframe sketches, keyboard and iMac" loading="lazy" draggable="false">
             <div class="se-scrim" data-se-scrim></div>
@@ -343,6 +426,17 @@
 
     <!-- ACT V·V · FOR THE RECORD -->
     <section class="record" id="record">
+      <div class="record-decor" aria-hidden="true">
+        <svg class="record-medal" data-medal viewBox="0 0 120 150">
+          <path d="M40 2 L58 2 L54 54 L36 48 Z" fill="#c74a32"/>
+          <path d="M80 2 L62 2 L66 54 L84 48 Z" fill="#b0442f"/>
+          <circle cx="60" cy="94" r="44" fill="#f0cf4a" stroke="#262054" stroke-width="4"/>
+          <circle cx="60" cy="94" r="31" fill="none" stroke="#262054" stroke-width="2.5" stroke-dasharray="3 6"/>
+          <path d="M60 72 l7 14 15 2 -11 11 3 15 -14 -8 -14 8 3 -15 -11 -11 15 -2 Z" fill="#262054"/>
+        </svg>
+        <svg class="record-spark record-spark-a" viewBox="0 0 100 100"><path d="M50 0 L61 39 L100 50 L61 61 L50 100 L39 61 L0 50 L39 39 Z"/></svg>
+        <svg class="record-spark record-spark-b" viewBox="0 0 100 100"><path d="M50 0 L61 39 L100 50 L61 61 L50 100 L39 61 L0 50 L39 39 Z"/></svg>
+      </div>
       <h2 class="sec-title"><em>For the</em> RECORD</h2>
       <ul class="record-list">
         <li class="rec" data-cursor><span class="rec-n">99.5</span><div class="rec-body"><h3>JEE Mains percentile</h3><p>The national engineering entrance, played properly.</p></div></li>
@@ -729,9 +823,9 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/particles.js?v=78"></script>
-  <script src="js/main.js?v=78"></script>
-  <script type="module" src="js/ripple.js?v=78"></script>
-  <script type="module" src="js/glow.js?v=78"></script>
+  <script src="js/particles.js?v=79"></script>
+  <script src="js/main.js?v=79"></script>
+  <script type="module" src="js/ripple.js?v=79"></script>
+  <script type="module" src="js/glow.js?v=79"></script>
 </body>
 </html>
