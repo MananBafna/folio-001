@@ -991,8 +991,7 @@ html.js .frame { opacity: 0; visibility: hidden; }
   background-size: 100% 46%;
   background-position: 0 50%;
   background-repeat: repeat-x;
-  transform: scaleX(0);
-  transform-origin: left center;
+  clip-path: inset(0 100% 0 0);
   pointer-events: none;
 }
 .clip-audio i {

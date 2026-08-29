@@ -725,8 +725,8 @@
       s.addEventListener("pointerenter", () => selectStop(i));
     });
     /* the b-roll waveform fills in step with the playhead */
-    gsap.fromTo("[data-broll-fill]", { scaleX: 0 }, {
-      scaleX: 1, ease: "none",
+    gsap.fromTo("[data-broll-fill]", { clipPath: "inset(0 100% 0 0)" }, {
+      clipPath: "inset(0 0% 0 0)", ease: "none",
       scrollTrigger: { trigger: ".gauntlet-rail", start: "top 72%", end: "bottom 62%", scrub: true },
     });
     gsap.fromTo(".editor-playhead", { left: "0%", x: 0 }, {
