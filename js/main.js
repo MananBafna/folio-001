@@ -558,7 +558,7 @@
 
     /* wipe reveal: a navy panel sweeps across the frame and leaves the
        photo behind it, which settles from a sideways drift */
-    document.querySelectorAll(".module").forEach((m) => {
+    document.querySelectorAll(".module").forEach((m, mi) => {
       const media = m.querySelector(".module-media");
       const img = media && media.querySelector("img");
       if (!media || !img) return;
@@ -566,8 +566,12 @@
       wipe.className = "module-wipe";
       media.appendChild(wipe);
       gsap.set(img, { autoAlpha: 0 });
+      /* chapter I is already on stage before the pin starts, so its wipe
+         fires on plain approach; the rest fire as the pan brings them in */
       gsap.timeline({
-        scrollTrigger: { trigger: m, containerAnimation: pan, start: "left 86%" },
+        scrollTrigger: mi === 0
+          ? { trigger: ".doctrine", start: "top 72%" }
+          : { trigger: m, containerAnimation: pan, start: "left 86%" },
       })
         .fromTo(wipe, { scaleX: 0, transformOrigin: "left center" },
           { scaleX: 1, duration: 0.38, ease: "power3.in" })
@@ -839,10 +843,21 @@
   (function initCargoArt() {
     const speedable = [];
 
-    const orbit = document.querySelector("[data-orbit-dots]");
-    if (orbit) {
-      speedable.push([orbit.closest(".crate"),
-        gsap.to(orbit, { rotation: 360, duration: 12, ease: "none", repeat: -1, svgOrigin: "100 100" })]);
+    const orbitA = document.querySelector("[data-orbit-a]");
+    if (orbitA) {
+      const crate = orbitA.closest(".crate");
+      speedable.push([crate,
+        gsap.to(orbitA, { rotation: 360, duration: 16, ease: "none", repeat: -1, svgOrigin: "110 110" })]);
+      /* counter-rotate the nodes so their glyphs stay upright while revolving */
+      orbitA.querySelectorAll("[data-upright]").forEach((n) => {
+        speedable.push([crate,
+          gsap.to(n, { rotation: -360, duration: 16, ease: "none", repeat: -1, transformOrigin: "center center" })]);
+      });
+    }
+    const orbitB = document.querySelector("[data-orbit-b]");
+    if (orbitB) {
+      speedable.push([orbitB.closest(".crate"),
+        gsap.to(orbitB, { rotation: -360, duration: 10, ease: "none", repeat: -1, svgOrigin: "110 110" })]);
     }
 
     const pipeCard = document.querySelector("[data-pipe-card]");
