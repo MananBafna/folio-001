@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=52">
+  <link rel="stylesheet" href="css/main.css?v=53">
 </head>
 <body>
 
@@ -399,37 +399,82 @@
     <!-- ACT VII · SELECTED WORK -->
     <section class="work" id="work">
       <h2 class="sec-title sec-title-center"><em>Selected</em> WORK</h2>
-      <div class="work-grid">
-        <article class="work-card wc-1" data-cursor>
-          <span class="wc-tag t-red">INTERNSHIP &middot; ROOMCHECKING</span>
-          <h3>Multi-Agent AI Workflow System</h3>
-          <p>A supervisor agent orchestrating specialized sub-agents across email, website, and guest surfaces for a hospitality SaaS. RAG-grounded answers, token-by-token streaming over SSE, JWT-secured, and hardened against real production traffic.</p>
-          <ul class="wc-chips"><li>.NET + React</li><li>RAG</li><li>SSE</li><li>JWT</li></ul>
-        </article>
-        <article class="work-card wc-2" data-cursor>
-          <span class="wc-tag t-navy">PRODUCT &middot; PARABLE</span>
-          <h3>Parable Studio CRM</h3>
-          <p>The multi-tenant platform that runs the studio end to end: pipeline, contacts, payments, retainer billing, an earnings ledger that snapshots itself, and a client portal with no logins: 144-bit signed tokens, zero anonymous grants.</p>
-          <ul class="wc-chips"><li>Next.js 14</li><li>Supabase</li><li>RLS</li><li>Postgres</li></ul>
-        </article>
-        <article class="work-card wc-3" data-cursor>
-          <span class="wc-tag t-forest">TEAM &middot; ACA WEALTH</span>
-          <h3>Wealth Management Platform</h3>
-          <p>Authored the design system end to end and rolled it across 50+ pages of a multi-author codebase without regressions. Built the admin operations and advisor consoles for a live brokerage.</p>
-          <ul class="wc-chips"><li>React</li><li>TypeScript</li><li>PostgreSQL</li></ul>
-        </article>
-        <article class="work-card wc-4" data-cursor>
-          <span class="wc-tag t-orange">CLUB &middot; SOFI, BITS GOA</span>
-          <h3>Society of Finance &amp; Investing</h3>
-          <p>Selected over competing pitches to build the society's site: custom brand identity, a generated 3D motif, GSAP scroll storytelling. Also contributes equity research on AI infrastructure and semiconductors.</p>
-          <ul class="wc-chips"><li>GSAP</li><li>Lenis</li><li>Brand</li></ul>
-        </article>
-        <article class="work-card wc-5" data-cursor>
-          <span class="wc-tag t-red">SELF-BUILT &middot; DAILY DRIVER</span>
-          <h3>Cadence</h3>
-          <p>A personal life-and-finance OS with no framework and no build step: hand-built router, offline-first storage, realtime sync, and a points ledger whose transcript always sums to its balance.</p>
-          <ul class="wc-chips"><li>Vanilla JS</li><li>Supabase</li><li>Chart.js</li></ul>
-        </article>
+      <p class="work-sub">The shipping log. Hover a line to inspect it, click to open the entry.</p>
+      <ul class="ship-list">
+        <li class="ship" data-ship data-accent="red">
+          <button class="ship-row" type="button" aria-expanded="false" data-cursor>
+            <span class="ship-no" data-scramble>SHIP 01</span>
+            <span class="ship-name">Multi-Agent AI Workflow System</span>
+            <span class="ship-kick">INTERNSHIP &middot; ROOMCHECKING</span>
+            <span class="ship-arrow" aria-hidden="true">&#8594;</span>
+          </button>
+          <div class="ship-log">
+            <div class="ship-log-inner">
+              <p>A supervisor agent orchestrating specialized sub-agents across email, website, and guest surfaces for a hospitality SaaS. RAG-grounded answers, token-by-token streaming over SSE, JWT-secured, and hardened against real production traffic.</p>
+              <ul class="wc-chips"><li>.NET + React</li><li>RAG</li><li>SSE</li><li>JWT</li></ul>
+            </div>
+          </div>
+        </li>
+        <li class="ship" data-ship data-accent="navy">
+          <button class="ship-row" type="button" aria-expanded="false" data-cursor>
+            <span class="ship-no" data-scramble>SHIP 02</span>
+            <span class="ship-name">Parable Studio CRM</span>
+            <span class="ship-kick">PRODUCT &middot; PARABLE</span>
+            <span class="ship-arrow" aria-hidden="true">&#8594;</span>
+          </button>
+          <div class="ship-log">
+            <div class="ship-log-inner">
+              <p>The multi-tenant platform that runs the studio end to end: pipeline, contacts, payments, retainer billing, an earnings ledger that snapshots itself, and a client portal with no logins: 144-bit signed tokens, zero anonymous grants.</p>
+              <ul class="wc-chips"><li>Next.js 14</li><li>Supabase</li><li>RLS</li><li>Postgres</li></ul>
+            </div>
+          </div>
+        </li>
+        <li class="ship" data-ship data-accent="forest">
+          <button class="ship-row" type="button" aria-expanded="false" data-cursor>
+            <span class="ship-no" data-scramble>SHIP 03</span>
+            <span class="ship-name">Wealth Management Platform</span>
+            <span class="ship-kick">TEAM &middot; ACA WEALTH</span>
+            <span class="ship-arrow" aria-hidden="true">&#8594;</span>
+          </button>
+          <div class="ship-log">
+            <div class="ship-log-inner">
+              <p>Authored the design system end to end and rolled it across 50+ pages of a multi-author codebase without regressions. Built the admin operations and advisor consoles for a live brokerage.</p>
+              <ul class="wc-chips"><li>React</li><li>TypeScript</li><li>PostgreSQL</li></ul>
+            </div>
+          </div>
+        </li>
+        <li class="ship" data-ship data-accent="orange">
+          <button class="ship-row" type="button" aria-expanded="false" data-cursor>
+            <span class="ship-no" data-scramble>SHIP 04</span>
+            <span class="ship-name">Society of Finance &amp; Investing</span>
+            <span class="ship-kick">CLUB &middot; SOFI, BITS GOA</span>
+            <span class="ship-arrow" aria-hidden="true">&#8594;</span>
+          </button>
+          <div class="ship-log">
+            <div class="ship-log-inner">
+              <p>Selected over competing pitches to build the society's site: custom brand identity, a generated 3D motif, GSAP scroll storytelling. Also contributes equity research on AI infrastructure and semiconductors.</p>
+              <ul class="wc-chips"><li>GSAP</li><li>Lenis</li><li>Brand</li></ul>
+            </div>
+          </div>
+        </li>
+        <li class="ship" data-ship data-accent="butter">
+          <button class="ship-row" type="button" aria-expanded="false" data-cursor>
+            <span class="ship-no" data-scramble>SHIP 05</span>
+            <span class="ship-name">Cadence</span>
+            <span class="ship-kick">SELF-BUILT &middot; DAILY DRIVER</span>
+            <span class="ship-arrow" aria-hidden="true">&#8594;</span>
+          </button>
+          <div class="ship-log">
+            <div class="ship-log-inner">
+              <p>A personal life-and-finance OS with no framework and no build step: hand-built router, offline-first storage, realtime sync, and a points ledger whose transcript always sums to its balance.</p>
+              <ul class="wc-chips"><li>Vanilla JS</li><li>Supabase</li><li>Chart.js</li></ul>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="ship-ticket" data-ticket aria-hidden="true">
+        <span class="ticket-kick" data-ticket-kick></span>
+        <ul class="wc-chips" data-ticket-chips></ul>
       </div>
     </section>
 
@@ -510,9 +555,9 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/particles.js?v=52"></script>
-  <script src="js/main.js?v=52"></script>
-  <script type="module" src="js/ripple.js?v=52"></script>
-  <script type="module" src="js/glow.js?v=52"></script>
+  <script src="js/particles.js?v=53"></script>
+  <script src="js/main.js?v=53"></script>
+  <script type="module" src="js/ripple.js?v=53"></script>
+  <script type="module" src="js/glow.js?v=53"></script>
 </body>
 </html>

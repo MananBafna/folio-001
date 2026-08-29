@@ -819,17 +819,74 @@
     scrollTrigger: { trigger: ".parable", start: "top 55%" },
   });
 
-  /* ---------------------------------------------- selected work */
-  gsap.from(".work .sec-title", {
-    opacity: 0, y: 40, duration: 0.9, ease: "power3.out",
+  /* ---------------------------------------------- selected work: the shipping log */
+  gsap.from(".work .sec-title, .work-sub", {
+    opacity: 0, y: 40, duration: 0.9, ease: "power3.out", stagger: 0.08,
     scrollTrigger: { trigger: ".work", start: "top 72%" },
   });
-  gsap.utils.toArray(".work-card").forEach((card, i) => {
-    gsap.from(card, {
-      opacity: 0, y: 46, rotate: i % 2 ? 1.5 : -1.5, duration: 0.8, ease: "power3.out", delay: (i % 3) * 0.08,
-      scrollTrigger: { trigger: card, start: "top 88%" },
+  gsap.utils.toArray(".ship").forEach((ship, i) => {
+    gsap.from(ship, {
+      opacity: 0, y: 34, duration: 0.7, ease: "power3.out", delay: i * 0.06,
+      scrollTrigger: { trigger: ".ship-list", start: "top 82%" },
     });
+    const no = ship.querySelector(".ship-no");
+    if (no && scramble) {
+      gsap.to(no, {
+        duration: 0.9 + i * 0.12,
+        scrambleText: { text: no.textContent, chars: "upperCase", speed: 0.5 },
+        scrollTrigger: { trigger: ".ship-list", start: "top 82%" },
+      });
+    }
   });
+
+  (function initShipLog() {
+    const ships = gsap.utils.toArray(".ship");
+    if (!ships.length) return;
+    const ticket = document.querySelector("[data-ticket]");
+    const tKick = ticket && ticket.querySelector("[data-ticket-kick]");
+    const tChips = ticket && ticket.querySelector("[data-ticket-chips]");
+
+    /* click opens one log at a time */
+    ships.forEach((ship) => {
+      const row = ship.querySelector(".ship-row");
+      if (!row) return;
+      row.addEventListener("click", () => {
+        const open = ship.classList.contains("is-open");
+        ships.forEach((s) => {
+          s.classList.remove("is-open");
+          const b = s.querySelector(".ship-row");
+          if (b) b.setAttribute("aria-expanded", "false");
+        });
+        if (!open) {
+          ship.classList.add("is-open");
+          row.setAttribute("aria-expanded", "true");
+        }
+        ScrollTrigger.refresh();
+      });
+    });
+
+    /* the ticket trails the cursor over the list (fine pointers only) */
+    if (!ticket || !finePointer) return;
+    const tx = gsap.quickTo(ticket, "x", { duration: 0.45, ease: "power3.out" });
+    const ty = gsap.quickTo(ticket, "y", { duration: 0.45, ease: "power3.out" });
+    const show = gsap.quickTo(ticket, "autoAlpha", { duration: 0.25, ease: "power2.out" });
+    ships.forEach((ship) => {
+      const row = ship.querySelector(".ship-row");
+      const kick = ship.querySelector(".ship-kick");
+      const chips = ship.querySelector(".wc-chips");
+      if (!row) return;
+      row.addEventListener("pointerenter", () => {
+        if (tKick && kick) tKick.textContent = kick.textContent;
+        if (tChips && chips) tChips.innerHTML = chips.innerHTML;
+        show(1);
+      });
+      row.addEventListener("pointerleave", () => show(0));
+    });
+    window.addEventListener("pointermove", (e) => {
+      tx(e.clientX + 26);
+      ty(e.clientY + 22);
+    }, { passive: true });
+  })();
 
   /* ---------------------------------------------- toolbox shelf */
   gsap.from(".toolbox .sec-title, .toolbox-sub", {
