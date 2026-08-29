@@ -532,133 +532,68 @@
     });
   })();
 
-  /* ---------------------------------------------- the story: horizontal pan */
-  const mm = gsap.matchMedia();
-  mm.add("(min-width: 900px)", () => {
-    const track = document.querySelector(".doctrine-track");
-    const pin = document.querySelector(".doctrine-pin");
-    if (!track || !pin) return;
+  /* ---------------------------------------------- the story: projector room */
+  (function initReel() {
+    const reel = document.querySelector("[data-reel]");
+    if (!reel) return;
+    const frames = gsap.utils.toArray("[data-frame]");
+    const flicker = document.querySelector("[data-flicker]");
+    const counter = document.querySelector("[data-reel-no]");
+    const cells = gsap.utils.toArray(".reel-cell");
+    if (!frames.length) return;
 
-    const distance = () => track.scrollWidth - window.innerWidth;
-    const pan = gsap.to(track, {
-      x: () => -distance(),
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".doctrine",
-        start: "top top",
-        end: () => `+=${distance()}`,
-        pin: pin,
-        scrub: 1,
-        invalidateOnRefresh: true,
-        onUpdate(self) {
-          gsap.set(".doctrine-progress-bar", { scaleX: self.progress });
-        },
-      },
-    });
+    gsap.set(frames, { autoAlpha: 0 });
+    gsap.set(frames[0], { autoAlpha: 1 });
+    gsap.set(frames[0].querySelector("img"), { scale: 1.06 });
 
-    /* wipe reveal: a navy panel sweeps across the frame and leaves the
-       photo behind it, which settles from a sideways drift */
-    document.querySelectorAll(".module").forEach((m, mi) => {
-      const media = m.querySelector(".module-media");
-      const img = media && media.querySelector("img");
-      if (!media || !img) return;
-      const wipe = document.createElement("span");
-      wipe.className = "module-wipe";
-      media.appendChild(wipe);
-      gsap.set(img, { autoAlpha: 0 });
-      /* chapter I is already on stage before the pin starts, so its wipe
-         fires on plain approach; the rest fire as the pan brings them in */
-      gsap.timeline({
-        scrollTrigger: mi === 0
-          ? { trigger: ".doctrine", start: "top 72%" }
-          : { trigger: m, containerAnimation: pan, start: "left 86%" },
-      })
-        .fromTo(wipe, { scaleX: 0, transformOrigin: "left center" },
-          { scaleX: 1, duration: 0.38, ease: "power3.in" })
-        .set(img, { autoAlpha: 1 })
-        .set(wipe, { transformOrigin: "right center" })
-        .to(wipe, { scaleX: 0, duration: 0.5, ease: "power3.out" })
-        .fromTo(img, { xPercent: -8, scale: 1.18 },
-          { xPercent: 0, scale: 1, duration: 1.1, ease: "power3.out" }, "-=0.5");
-    });
+    let current = 0;
+    let switching = false;
+    const show = (idx) => {
+      if (idx === current || switching) return;
+      switching = true;
+      const from = frames[current];
+      const to = frames[idx];
+      current = idx;
+      if (counter) counter.textContent = String(idx + 1).padStart(2, "0");
+      cells.forEach((c, i) => c.classList.toggle("is-on", i === idx));
+      const tl = gsap.timeline({ onComplete() { switching = false; } });
+      /* the projector blink: two quick dark flashes over the cut */
+      tl.set(flicker, { opacity: 1 }, 0)
+        .set(from, { autoAlpha: 0 }, 0.06)
+        .set(to, { autoAlpha: 1 }, 0.06)
+        .set(flicker, { opacity: 0 }, 0.1)
+        .set(flicker, { opacity: 0.8 }, 0.15)
+        .set(flicker, { opacity: 0 }, 0.21)
+        .fromTo(to.querySelector("img"), { scale: 1.14 },
+          { scale: 1.05, duration: 1.4, ease: "power2.out" }, 0.06)
+        .fromTo(to.querySelector(".frame-card"),
+          { y: 30, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.55, ease: "power3.out" }, 0.16);
+      const t = to.querySelector("h3");
+      if (t && scramble) {
+        tl.to(t, {
+          duration: 0.8,
+          scrambleText: { text: t.dataset.title || t.textContent, chars: "upperCase", speed: 0.6 },
+        }, 0.2);
+      }
+    };
 
-    /* panels breathe: soft-focus at the edges, full presence mid-stage */
-    document.querySelectorAll(".module").forEach((m) => {
-      gsap.timeline({
-        scrollTrigger: { trigger: m, containerAnimation: pan, start: "left right", end: "right left", scrub: true },
-      })
-        .fromTo(m, { scale: 0.92, autoAlpha: 0.7 }, { scale: 1, autoAlpha: 1, duration: 0.32, ease: "power2.out" })
-        .to(m, { scale: 1, duration: 0.36 })
-        .to(m, { scale: 0.94, autoAlpha: 0.8, duration: 0.32, ease: "power2.in" });
-    });
-
-    /* the panels lean with scroll velocity while the track pans */
-    const skewSet = gsap.quickSetter(".module", "skewX", "deg");
-    const skewClamp = gsap.utils.clamp(-5, 5);
-    const lean = { v: 0 };
     ScrollTrigger.create({
       trigger: ".doctrine",
-      start: "top bottom",
-      end: () => `+=${distance() + window.innerHeight * 2}`,
+      start: "top top",
+      end: () => `+=${frames.length * window.innerHeight * 0.75}`,
+      pin: reel,
+      invalidateOnRefresh: true,
       onUpdate(self) {
-        const s = skewClamp(self.getVelocity() / -350);
-        if (Math.abs(s) > Math.abs(lean.v)) {
-          lean.v = s;
-          gsap.to(lean, {
-            v: 0, duration: 0.6, ease: "power3.out", overwrite: true,
-            onUpdate: () => skewSet(lean.v),
-          });
-        }
+        show(Math.min(frames.length - 1, Math.floor(self.progress * frames.length)));
       },
     });
 
-    document.querySelectorAll(".module").forEach((m) => {
-      const custom = m.querySelectorAll("[data-scramble]");
-      if (custom.length && scramble) {
-        custom.forEach((el, idx) => {
-          gsap.to(el, {
-            duration: 1.1 + idx * 0.25,
-            scrambleText: { text: el.textContent, chars: "upperCase", speed: 0.55 },
-            scrollTrigger: { trigger: m, containerAnimation: pan, start: "left 70%" },
-          });
-        });
-        return;
-      }
-      const themes = m.querySelector(".module-themes");
-      if (themes && scramble) {
-        const original = themes.textContent;
-        gsap.to(themes, {
-          duration: 1.1,
-          scrambleText: { text: original, chars: "upperCase", speed: 0.6 },
-          scrollTrigger: { trigger: m, containerAnimation: pan, start: "left 70%" },
-        });
-      }
+    gsap.from(".reel-hud, .reel-strip", {
+      opacity: 0, y: 20, duration: 0.8, ease: "power3.out", stagger: 0.1,
+      scrollTrigger: { trigger: ".doctrine", start: "top 75%" },
     });
-
-    return () => {};
-  });
-
-  mm.add("(max-width: 899px)", () => {
-    gsap.utils.toArray(".module").forEach((m) => {
-      gsap.from(m, {
-        opacity: 0, y: 40, duration: 0.8, ease: "power3.out",
-        scrollTrigger: { trigger: m, start: "top 85%" },
-      });
-      const media = m.querySelector(".module-media");
-      if (media) {
-        gsap.fromTo(media,
-          { clipPath: "inset(0% 100% 0% 0% round 14px)" },
-          { clipPath: "inset(0% 0% 0% 0% round 14px)", duration: 1, ease: "power4.out",
-            scrollTrigger: { trigger: m, start: "top 80%" } });
-      }
-    });
-    return () => {};
-  });
-
-  gsap.from(".doctrine-head", {
-    opacity: 0, y: 40, duration: 0.9, ease: "power3.out",
-    scrollTrigger: { trigger: ".doctrine", start: "top 70%" },
-  });
+  })();
 
   /* ---------------------------------------------- how i work */
   gsap.utils.toArray(".rule").forEach((r, i) => {
