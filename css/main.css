@@ -1275,8 +1275,8 @@ html.js .stop.is-in { opacity: 1; transform: scale(1); }
 .crate-a { grid-column: 1 / 5; grid-row: 1 / 3; background: var(--navy); color: var(--cream); }
 .crate-b { grid-column: 5 / 7; grid-row: 1 / 3; background: var(--butter); color: var(--navy-deep); align-items: flex-start; justify-content: center; }
 .crate-c { grid-column: 3 / 7; grid-row: 5; background: var(--cream); color: var(--navy-deep); justify-content: center; gap: .8rem; }
-.crate-d { grid-column: 5 / 7; grid-row: 3; background: var(--forest); color: var(--cream); }
-.crate-e { grid-column: 1 / 5; grid-row: 3; background: var(--cream); color: var(--navy-deep); padding-right: clamp(13rem, 26vw, 22rem); justify-content: center; }
+.crate-d { grid-column: 3 / 7; grid-row: 3; background: var(--forest); color: var(--cream); padding-right: clamp(13rem, 26vw, 22rem); justify-content: center; }
+.crate-e { grid-column: 1 / 3; grid-row: 3; background: var(--cream); color: var(--navy-deep); }
 .crate-f { grid-column: 3 / 5; grid-row: 4; background: var(--orange); color: var(--navy-deep); }
 .crate-g { grid-column: 5 / 7; grid-row: 4; background: var(--red); color: var(--cream); }
 .crate-h {
@@ -1339,14 +1339,14 @@ html.js .stop.is-in { opacity: 1; transform: scale(1); }
 }
 .crate-a { padding-right: clamp(10rem, 18vw, 16rem); justify-content: center; }
 .art-orbit svg, .art-pipe svg, .art-chart svg, .art-coin svg, .art-pulse svg { width: 100%; height: auto; display: block; }
-.art-pipe { width: 150px; margin-bottom: 1rem; }
-.art-chart {
+.art-pipe {
   position: absolute;
   right: clamp(1rem, 3vw, 3.5rem); top: 50%;
-  width: clamp(200px, 23vw, 300px);
+  width: clamp(180px, 20vw, 270px);
   transform: translateY(-50%);
   margin: 0;
 }
+.art-chart { max-width: 260px; }
 .art-boat {
   width: min(230px, 80%);
   margin-top: 1.4rem;
@@ -1389,8 +1389,8 @@ html.js .stop.is-in { opacity: 1; transform: scale(1); }
   .cargo-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; }
   .crate-a, .crate-d, .crate-e { grid-column: 1 / -1; grid-row: auto; }
   .crate-b, .crate-c, .crate-f, .crate-g { grid-column: auto; grid-row: auto; }
-  .crate-a, .crate-e, .crate-h { grid-column: 1 / -1; padding-right: clamp(1.3rem, 2.2vw, 1.9rem); }
-  .art-orbit, .art-chart { position: static; transform: none; width: 170px; margin-bottom: 1rem; }
+  .crate-a, .crate-d, .crate-h { grid-column: 1 / -1; padding-right: clamp(1.3rem, 2.2vw, 1.9rem); }
+  .art-orbit, .art-pipe { position: static; transform: none; width: 170px; margin-bottom: 1rem; }
 }
 @media (max-width: 599px) {
   .cargo-grid { grid-template-columns: 1fr; }
