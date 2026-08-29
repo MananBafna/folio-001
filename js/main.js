@@ -878,10 +878,14 @@
     if (chart) {
       const len = chart.getTotalLength();
       gsap.set(chart, { strokeDasharray: len, strokeDashoffset: len });
-      gsap.to(chart, {
-        strokeDashoffset: 0, duration: 1.6, ease: "power2.inOut",
+      gsap.timeline({
         scrollTrigger: { trigger: chart.closest(".crate"), start: "top 82%" },
-      });
+      })
+        .to(chart, { strokeDashoffset: 0, duration: 1.6, ease: "power2.inOut" })
+        .from("[data-chart-area]", { opacity: 0, duration: 0.6 }, "-=0.7")
+        .from("[data-chart-dot], [data-chart-tag]", {
+          scale: 0, transformOrigin: "center center", duration: 0.4, ease: "back.out(2.2)",
+        }, "-=0.15");
     }
 
     const tickerTrack = document.querySelector("[data-ticker-track]");
