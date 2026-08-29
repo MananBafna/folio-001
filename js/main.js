@@ -854,6 +854,11 @@
           gsap.to(n, { rotation: -360, duration: 16, ease: "none", repeat: -1, transformOrigin: "center center" })]);
       });
     }
+    const botEyes = document.querySelectorAll("[data-bot-eye]");
+    if (botEyes.length) {
+      gsap.timeline({ repeat: -1, repeatDelay: 2.7 })
+        .to(botEyes, { scaleY: 0.12, transformOrigin: "center center", duration: 0.09, yoyo: true, repeat: 1 });
+    }
     const orbitB = document.querySelector("[data-orbit-b]");
     if (orbitB) {
       speedable.push([orbitB.closest(".crate"),

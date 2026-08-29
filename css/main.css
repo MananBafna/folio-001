@@ -1149,8 +1149,8 @@ html.js .stop.is-in { opacity: 1; transform: scale(1); }
 }
 .map-serpent {
   position: absolute;
-  left: 3%; top: clamp(6rem, 12vh, 9rem);
-  width: clamp(110px, 12vw, 175px);
+  left: 3%; top: clamp(5rem, 10vh, 8rem);
+  width: clamp(140px, 14vw, 210px);
 }
 .map-skull {
   position: absolute;

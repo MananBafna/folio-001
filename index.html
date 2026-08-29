@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=65">
+  <link rel="stylesheet" href="css/main.css?v=67">
 </head>
 <body>
 
@@ -427,7 +427,10 @@
             <circle cx="66" cy="66" r="6.5" fill="#262054" stroke="#e8dcc0" stroke-width="2"/>
           </g>
         </svg>
-        <svg class="map-serpent" data-serpent viewBox="0 0 230 96">
+        <svg class="map-serpent" data-serpent viewBox="0 0 260 152">
+          <path d="M14 122 C 60 98, 95 142, 145 118 S 225 86, 250 102" fill="none" stroke="#3d3122" stroke-width="2.5" stroke-dasharray="1 9" stroke-linecap="round" opacity=".5"/>
+          <g fill="#3d3122" opacity=".3"><ellipse cx="16" cy="126" rx="10" ry="3.5"/><ellipse cx="248" cy="106" rx="9" ry="3"/></g>
+          <g transform="translate(15,14)">
           <path d="M4 70 q12 -6 24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0" stroke="#3d3122" stroke-width="2" fill="none" opacity=".35"/>
           <path d="M16 68 q-12 -6 -8 -18 q4 -10 14 -8 q-6 6 -2 12 q3 6 10 6 Z" fill="oklch(0.42 0.07 160)" stroke="#262054" stroke-width="3" stroke-linejoin="round"/>
           <path d="M30 69 q17 -38 42 0 Z" fill="oklch(0.42 0.07 160)" stroke="#262054" stroke-width="3" stroke-linejoin="round"/>
@@ -445,6 +448,8 @@
             <path d="M78 64 q4 -6 10 -6"/>
             <path d="M136 64 q4 -6 10 -6"/>
           </g>
+        </g>
+          <text x="130" y="148" text-anchor="middle" font-size="11" font-weight="800" letter-spacing="2.5" fill="#3d3122" opacity=".75">HERE BE MONSTERS</text>
         </svg>
         <svg class="map-skull" viewBox="0 0 120 112">
           <g stroke="#3d3122" stroke-width="9" stroke-linecap="round">
@@ -492,12 +497,14 @@
                   <path d="M-6 -6 h12 a2 2 0 0 1 2 2 v6 a2 2 0 0 1 -2 2 h-6 l-5 5 v-5 h-1 a2 2 0 0 1 -2 -2 v-6 a2 2 0 0 1 2 -2 Z" fill="none" stroke="#262054" stroke-width="2" stroke-linejoin="round"/>
                 </g></g>
               </g>
+              <line x1="110" y1="73" x2="110" y2="84" stroke="#262054" stroke-width="3"/>
+              <circle cx="110" cy="70" r="4.5" fill="#c74a32" stroke="#262054" stroke-width="2"/>
               <rect x="84" y="84" width="52" height="52" rx="13" fill="#f0cf4a" stroke="#262054" stroke-width="3"/>
-              <g stroke="#262054" stroke-width="5.5" stroke-linecap="round">
-                <line x1="110" y1="96" x2="110" y2="124"/>
-                <line x1="98" y1="103" x2="122" y2="117"/>
-                <line x1="122" y1="103" x2="98" y2="117"/>
+              <g fill="#262054">
+                <rect data-bot-eye x="95" y="97" width="7" height="14" rx="3.5"/>
+                <rect data-bot-eye x="118" y="97" width="7" height="14" rx="3.5"/>
               </g>
+              <path d="M100 121 q10 7 20 0" fill="none" stroke="#262054" stroke-width="3.5" stroke-linecap="round"/>
               <path d="M196 44 l3 8 l8 3 l-8 3 l-3 8 l-3 -8 l-8 -3 l8 -3 Z" fill="#f5efdd" opacity=".8"/>
               <path d="M26 60 l2.5 7 l7 2.5 l-7 2.5 l-2.5 7 l-2.5 -7 l-7 -2.5 l7 -2.5 Z" fill="#c74a32" opacity=".85"/>
             </svg>
@@ -716,9 +723,9 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/particles.js?v=65"></script>
-  <script src="js/main.js?v=65"></script>
-  <script type="module" src="js/ripple.js?v=65"></script>
-  <script type="module" src="js/glow.js?v=65"></script>
+  <script src="js/particles.js?v=67"></script>
+  <script src="js/main.js?v=67"></script>
+  <script type="module" src="js/ripple.js?v=67"></script>
+  <script type="module" src="js/glow.js?v=67"></script>
 </body>
 </html>
