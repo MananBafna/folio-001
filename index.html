@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=59">
+  <link rel="stylesheet" href="css/main.css?v=62">
 </head>
 <body>
 
@@ -422,16 +422,24 @@
           <circle cx="122" cy="32" r="2.6" fill="#262054"/>
           <path d="M134 26 l 12 -10 l -2 12" fill="none" stroke="#c74a32" stroke-width="3" stroke-linecap="round"/>
         </svg>
-        <svg class="map-skull" viewBox="0 0 100 84">
-          <g stroke="oklch(0.35 0.06 70)" stroke-width="6" stroke-linecap="round">
-            <line x1="16" y1="66" x2="84" y2="82"/>
-            <line x1="84" y1="66" x2="16" y2="82"/>
+        <svg class="map-skull" viewBox="0 0 120 112">
+          <g stroke="#3d3122" stroke-width="9" stroke-linecap="round">
+            <line x1="26" y1="84" x2="94" y2="100"/>
+            <line x1="94" y1="84" x2="26" y2="100"/>
           </g>
-          <path d="M50 4 a28 26 0 0 1 28 26 c0 10 -6 16 -12 20 v10 h-32 v-10 c-6 -4 -12 -10 -12 -20 a28 26 0 0 1 28 -26 Z" fill="oklch(0.35 0.06 70)"/>
-          <circle cx="40" cy="32" r="6.5" fill="oklch(0.89 0.055 82)"/>
-          <circle cx="60" cy="32" r="6.5" fill="oklch(0.89 0.055 82)"/>
-          <rect x="44" y="48" width="4" height="8" rx="2" fill="oklch(0.89 0.055 82)"/>
-          <rect x="52" y="48" width="4" height="8" rx="2" fill="oklch(0.89 0.055 82)"/>
+          <g fill="#3d3122">
+            <circle cx="21" cy="80" r="6"/><circle cx="29" cy="90" r="6"/>
+            <circle cx="99" cy="94" r="6"/><circle cx="91" cy="104" r="6"/>
+            <circle cx="99" cy="80" r="6"/><circle cx="91" cy="90" r="6"/><!-- shared middles read as knobs -->
+            <circle cx="21" cy="104" r="6"/><circle cx="29" cy="94" r="6"/>
+          </g>
+          <path d="M60 10 c-20 0 -34 14 -34 32 c0 12 7 20 14 25 v13 h40 v-13 c7 -5 14 -13 14 -25 c0 -18 -14 -32 -34 -32 Z" fill="#3d3122"/>
+          <path d="M27 38 q33 -26 66 0 q-7 -20 -33 -20 t-33 20 Z" fill="#c74a32"/>
+          <path d="M90 32 l17 -7 l-6 12 l11 3 l-16 5 Z" fill="#c74a32"/>
+          <ellipse cx="47" cy="50" rx="8" ry="6" fill="#e8dcc0" transform="rotate(-14 47 50)"/>
+          <ellipse cx="73" cy="50" rx="8" ry="6" fill="#e8dcc0" transform="rotate(14 73 50)"/>
+          <path d="M60 57 l-5 8 h10 Z" fill="#e8dcc0"/>
+          <g fill="#e8dcc0"><rect x="48" y="70" width="5" height="9" rx="2"/><rect x="57" y="70" width="5" height="9" rx="2"/><rect x="66" y="70" width="5" height="9" rx="2"/></g>
         </svg>
       </div>
       <h2 class="sec-title sec-title-center"><em>Here be</em> WORK</h2>
@@ -458,22 +466,54 @@
         <article class="crate crate-b" aria-hidden="true">
           <span class="crate-big" data-scramble>06</span>
           <span class="crate-label">SHIPS OUT &middot; ZERO SUNK</span>
-          <svg class="art-boat" viewBox="0 0 230 92" aria-hidden="true">
-            <g data-boat>
-              <path d="M68 48 h64 l-15 18 h-34 Z" fill="#262054"/>
-              <path d="M100 12 v34" stroke="#262054" stroke-width="4" stroke-linecap="round"/>
-              <path d="M103 14 l27 28 h-27 Z" fill="#c74a32"/>
-              <path d="M97 19 l-21 23 h21 Z" fill="#faf5e6"/>
+          <svg class="art-boat" viewBox="0 0 240 122" aria-hidden="true">
+            <g stroke="#262054" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".75">
+              <path d="M24 24 q6 -7 12 0 q6 -7 12 0"/>
+              <path d="M196 38 q5 -6 10 0 q5 -6 10 0"/>
             </g>
-            <path data-wave d="M6 76 q14 -10 28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0" stroke="#262054" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <g data-boat>
+              <path d="M58 68 h100 l-17 26 h-66 Z" fill="#262054"/>
+              <g fill="#f0cf4a"><circle cx="88" cy="80" r="3.4"/><circle cx="108" cy="80" r="3.4"/><circle cx="128" cy="80" r="3.4"/></g>
+              <path d="M96 12 v56" stroke="#262054" stroke-width="4" stroke-linecap="round"/>
+              <path d="M134 28 v40" stroke="#262054" stroke-width="4" stroke-linecap="round"/>
+              <path d="M101 20 q34 12 28 44 l-28 0 Z" fill="#faf5e6" stroke="#262054" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M91 24 q-26 12 -20 40 l20 0 Z" fill="#c74a32" stroke="#262054" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M139 34 q22 9 17 34 l-17 0 Z" fill="#faf5e6" stroke="#262054" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M96 12 l20 5 l-20 6 Z" fill="#c74a32"/>
+            </g>
+            <path data-wave d="M4 102 q12 -9 24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0" stroke="#262054" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path data-wave2 d="M-8 113 q12 -8 24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0" stroke="#262054" stroke-width="3" fill="none" stroke-linecap="round" opacity=".45"/>
           </svg>
         </article>
         <article class="crate crate-c" aria-hidden="true">
-          <svg class="art-route" viewBox="0 0 330 84">
-            <circle cx="18" cy="60" r="7" fill="#262054"/>
-            <circle cx="310" cy="22" r="7" fill="#c74a32"/>
-            <path data-route d="M18 60 C 105 8, 225 78, 310 22" fill="none" stroke="#262054" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>
-            <g data-voyager><circle r="6.5" fill="#f0cf4a" stroke="#262054" stroke-width="3"/></g>
+          <svg class="art-route" viewBox="0 0 360 112">
+            <g>
+              <path d="M22 96 l7 -40 h18 l7 40 Z" fill="#c74a32" stroke="#262054" stroke-width="3" stroke-linejoin="round"/>
+              <rect x="27" y="70" width="22" height="7" fill="#faf5e6"/>
+              <rect x="25" y="84" width="26" height="7" fill="#faf5e6"/>
+              <rect x="27" y="44" width="22" height="12" rx="3" fill="#262054"/>
+              <path d="M24 44 h28 l-14 -13 Z" fill="#c74a32" stroke="#262054" stroke-width="3" stroke-linejoin="round"/>
+              <g data-beam stroke="#e0a33a" stroke-width="4" stroke-linecap="round"><line x1="16" y1="48" x2="4" y2="43"/><line x1="60" y1="48" x2="72" y2="43"/></g>
+            </g>
+            <g fill="#262054" opacity=".25"><ellipse cx="150" cy="94" rx="20" ry="5"/><ellipse cx="240" cy="24" rx="14" ry="4"/></g>
+            <g stroke="#262054" stroke-width="2.5" fill="none" opacity=".55" stroke-linecap="round">
+              <path d="M150 92 v-12"/>
+              <path d="M150 80 q-8 -6 -14 -2 M150 80 q8 -6 14 -2 M150 80 q1 -9 7 -11"/>
+            </g>
+            <g>
+              <circle cx="324" cy="36" r="15" fill="none" stroke="#262054" stroke-width="3"/>
+              <ellipse cx="324" cy="36" rx="6.5" ry="15" fill="none" stroke="#262054" stroke-width="2"/>
+              <path d="M310 31 h28 M310 41 h28" stroke="#262054" stroke-width="2"/>
+              <ellipse cx="324" cy="36" rx="25" ry="8" fill="none" stroke="#c74a32" stroke-width="2.5" transform="rotate(-18 324 36)"/>
+            </g>
+            <path data-route d="M56 76 C 112 38, 152 100, 212 60 S 286 16, 304 42" fill="none" stroke="#262054" stroke-width="3" stroke-dasharray="1 10" stroke-linecap="round"/>
+            <g data-voyager>
+              <g transform="translate(-9,-9)">
+                <path d="M0 11 h18 l-4 6 h-10 Z" fill="#262054"/>
+                <path d="M9 0 v11" stroke="#262054" stroke-width="2.5"/>
+                <path d="M10.5 1.5 l7 8 h-7 Z" fill="#c74a32"/>
+              </g>
+            </g>
           </svg>
           <span class="crate-label">PORT OF GOA &#8594; THE INTERNET &middot; DEPARTURES DAILY</span>
         </article>
@@ -631,9 +671,9 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/particles.js?v=59"></script>
-  <script src="js/main.js?v=59"></script>
-  <script type="module" src="js/ripple.js?v=59"></script>
-  <script type="module" src="js/glow.js?v=59"></script>
+  <script src="js/particles.js?v=62"></script>
+  <script src="js/main.js?v=62"></script>
+  <script type="module" src="js/ripple.js?v=62"></script>
+  <script type="module" src="js/glow.js?v=62"></script>
 </body>
 </html>

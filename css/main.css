@@ -212,7 +212,7 @@ html.js .loader {
 }
 .nav-links, .nav-meta { transition: opacity .3s ease; }
 /* past the hero the pill collapses to just the mark, top left */
-.nav.nav-mini { max-width: 212px; }
+.nav.nav-mini { max-width: 186px; }
 .nav.nav-mini .nav-links,
 .nav.nav-mini .nav-meta { opacity: 0; pointer-events: none; }
 .nav-mark { white-space: nowrap; flex-shrink: 0; }

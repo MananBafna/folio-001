@@ -888,8 +888,13 @@
     if (boat) {
       gsap.to(boat, { y: -4, rotation: 2.5, svgOrigin: "100 50", duration: 1.4, ease: "sine.inOut", repeat: -1, yoyo: true });
       const wave = document.querySelector("[data-wave]");
-      if (wave) gsap.to(wave, { x: -28, duration: 1.7, ease: "none", repeat: -1 });
+      if (wave) gsap.to(wave, { x: -24, duration: 1.6, ease: "none", repeat: -1 });
+      const wave2 = document.querySelector("[data-wave2]");
+      if (wave2) gsap.fromTo(wave2, { x: -24 }, { x: 0, duration: 2.1, ease: "none", repeat: -1 });
     }
+
+    const beam = document.querySelector("[data-beam]");
+    if (beam) gsap.to(beam, { opacity: 0.15, duration: 0.9, ease: "sine.inOut", repeat: -1, yoyo: true });
 
     const route = document.querySelector("[data-route]");
     const voyager = document.querySelector("[data-voyager]");
@@ -902,8 +907,11 @@
         gsap.to(sail, {
           p: 1, duration: 5, ease: "power1.inOut", repeat: -1, repeatDelay: 0.9,
           onUpdate() {
-            const pt = route.getPointAtLength(sail.p * rl);
-            gsap.set(voyager, { x: pt.x, y: pt.y });
+            const d = sail.p * rl;
+            const pt = route.getPointAtLength(d);
+            const ahead = route.getPointAtLength(Math.min(rl, d + 2));
+            const angle = Math.atan2(ahead.y - pt.y, ahead.x - pt.x) * (180 / Math.PI);
+            gsap.set(voyager, { x: pt.x, y: pt.y, rotation: angle * 0.55 });
           },
         })]);
     }
