@@ -1120,17 +1120,50 @@ html.js .stop.is-in { opacity: 1; transform: scale(1); }
 
 /* ------------------------------------------------ selected work · PINK */
 .work {
+  position: relative;
   padding: clamp(6rem, 14vh, 11rem) var(--gutter);
-  background: var(--blush);
+  /* aged chart: warm parchment with stains and a burnt vignette */
+  background:
+    radial-gradient(ellipse 40% 30% at 16% 10%, oklch(0.84 0.07 78 / .55), transparent 70%),
+    radial-gradient(ellipse 45% 35% at 88% 34%, oklch(0.83 0.075 74 / .5), transparent 70%),
+    radial-gradient(ellipse 55% 40% at 42% 92%, oklch(0.82 0.07 70 / .5), transparent 70%),
+    oklch(0.89 0.055 82);
+  box-shadow: inset 0 0 150px oklch(0.5 0.08 70 / .3);
   color: var(--navy-deep);
+  overflow: hidden;
+}
+.map-decor { position: absolute; inset: 0; pointer-events: none; }
+.map-course { position: absolute; inset: 0; width: 100%; height: 100%; }
+.map-compass {
+  position: absolute;
+  right: 2.5%; bottom: 3.5rem;
+  width: clamp(90px, 9vw, 150px);
+  opacity: .92;
+}
+.map-serpent {
+  position: absolute;
+  left: 3%; top: clamp(6rem, 12vh, 9rem);
+  width: clamp(110px, 12vw, 175px);
+}
+.map-skull {
+  position: absolute;
+  right: 2%; top: 38%;
+  width: 54px;
+  rotate: 12deg;
+  opacity: .85;
+}
+.work .sec-title, .work-sub, .cargo-grid { position: relative; }
+@media (max-width: 1099px) {
+  .map-serpent, .map-skull { display: none; }
+  .map-compass { width: 76px; bottom: 1.5rem; }
 }
 .work .sec-title { color: var(--navy-deep); margin-bottom: 1rem; }
 .work .sec-title em { color: var(--red); }
 .work-sub {
   text-align: center;
-  font-weight: 600;
+  font-weight: 700;
   font-size: .95rem;
-  color: oklch(0.42 0.05 290);
+  color: oklch(0.38 0.06 70);
   margin-bottom: clamp(2.5rem, 6vh, 4rem);
 }
 /* the cargo bay: a soft-brutalist bento of labeled crates, each alive */

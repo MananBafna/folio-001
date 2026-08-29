@@ -873,6 +873,17 @@
         repeat: -1, yoyo: true, stagger: 0.25,
       });
     }
+    /* map furniture: the compass needle wavers, the serpent swims in place */
+    const needle = document.querySelector("[data-needle]");
+    if (needle) {
+      gsap.fromTo(needle, { rotation: -9, svgOrigin: "50 50" },
+        { rotation: 11, svgOrigin: "50 50", duration: 2.4, ease: "sine.inOut", repeat: -1, yoyo: true });
+    }
+    const serpent = document.querySelector("[data-serpent]");
+    if (serpent) {
+      gsap.to(serpent, { y: 9, duration: 2.8, ease: "sine.inOut", repeat: -1, yoyo: true });
+    }
+
     const boat = document.querySelector("[data-boat]");
     if (boat) {
       gsap.to(boat, { y: -4, rotation: 2.5, svgOrigin: "100 50", duration: 1.4, ease: "sine.inOut", repeat: -1, yoyo: true });
