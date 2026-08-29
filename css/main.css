@@ -977,7 +977,7 @@ html.js .frame { opacity: 0; visibility: hidden; }
 .clip-audio {
   background:
     repeating-linear-gradient(90deg,
-      oklch(0.87 0.13 95 / .28) 0 3px, transparent 3px 9px),
+      transparent 0 6px, oklch(0.87 0.13 95 / .28) 6px 9px),
     var(--navy-deep);
   background-size: 100% 46%, 100% 100%;
   background-position: 0 50%, 0 0;
@@ -987,7 +987,7 @@ html.js .frame { opacity: 0; visibility: hidden; }
 .clip-audio-fill {
   position: absolute; inset: 0;
   background: repeating-linear-gradient(90deg,
-    var(--butter) 0 3px, transparent 3px 9px);
+    transparent 0 6px, var(--butter) 6px 9px);
   background-size: 100% 46%;
   background-position: 0 50%;
   background-repeat: repeat-x;
