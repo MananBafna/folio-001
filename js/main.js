@@ -873,6 +873,30 @@
         repeat: -1, yoyo: true, stagger: 0.25,
       });
     }
+    const boat = document.querySelector("[data-boat]");
+    if (boat) {
+      gsap.to(boat, { y: -4, rotation: 2.5, svgOrigin: "100 50", duration: 1.4, ease: "sine.inOut", repeat: -1, yoyo: true });
+      const wave = document.querySelector("[data-wave]");
+      if (wave) gsap.to(wave, { x: -28, duration: 1.7, ease: "none", repeat: -1 });
+    }
+
+    const route = document.querySelector("[data-route]");
+    const voyager = document.querySelector("[data-voyager]");
+    if (route && voyager) {
+      const rl = route.getTotalLength();
+      const sail = { p: 0 };
+      const pt0 = route.getPointAtLength(0);
+      gsap.set(voyager, { x: pt0.x, y: pt0.y });
+      speedable.push([route.closest(".crate"),
+        gsap.to(sail, {
+          p: 1, duration: 5, ease: "power1.inOut", repeat: -1, repeatDelay: 0.9,
+          onUpdate() {
+            const pt = route.getPointAtLength(sail.p * rl);
+            gsap.set(voyager, { x: pt.x, y: pt.y });
+          },
+        })]);
+    }
+
     const clicks = document.querySelectorAll("[data-click]");
     if (clicks.length) {
       const tlClicks = gsap.timeline({ repeat: -1, repeatDelay: 0.9 });

@@ -1223,7 +1223,22 @@ html.js .stop.is-in { opacity: 1; transform: scale(1); }
 }
 .crate-a { padding-right: clamp(10rem, 18vw, 16rem); justify-content: center; }
 .art-orbit svg, .art-pipe svg, .art-chart svg, .art-coin svg, .art-pulse svg { width: 100%; height: auto; display: block; }
-.art-pipe { max-width: 200px; }
+.art-pipe {
+  position: absolute;
+  right: clamp(1rem, 3vw, 3.5rem); top: 50%;
+  width: clamp(180px, 20vw, 270px);
+  transform: translateY(-50%);
+  margin: 0;
+}
+.crate-d { padding-right: clamp(13rem, 26vw, 22rem); justify-content: center; }
+.art-boat {
+  width: min(230px, 80%);
+  margin-top: 1.4rem;
+}
+.art-route {
+  width: min(330px, 92%);
+  overflow: visible;
+}
 .art-chart { max-width: 260px; }
 .art-ticker {
   overflow: hidden;
@@ -1254,13 +1269,12 @@ html.js .stop.is-in { opacity: 1; transform: scale(1); }
   font-size: .6rem;
   letter-spacing: .18em;
 }
-.barcode { width: min(240px, 70%); height: 34px; color: var(--navy-deep); }
 @media (max-width: 1023px) {
   .cargo-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; }
   .crate-a, .crate-d, .crate-e { grid-column: 1 / -1; grid-row: auto; }
   .crate-b, .crate-c, .crate-f, .crate-g { grid-column: auto; grid-row: auto; }
-  .crate-a, .crate-h { grid-column: 1 / -1; padding-right: clamp(1.3rem, 2.2vw, 1.9rem); }
-  .art-orbit { position: static; transform: none; width: 130px; margin-bottom: 1rem; }
+  .crate-a, .crate-d, .crate-h { grid-column: 1 / -1; padding-right: clamp(1.3rem, 2.2vw, 1.9rem); }
+  .art-orbit, .art-pipe { position: static; transform: none; width: 150px; margin-bottom: 1rem; }
 }
 @media (max-width: 599px) {
   .cargo-grid { grid-template-columns: 1fr; }
