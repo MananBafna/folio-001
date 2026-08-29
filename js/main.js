@@ -740,8 +740,9 @@
   gsap.to(".tv-bg-reel", { rotation: 360, duration: 46, ease: "none", repeat: -1 });
 
   /* build days: the gears grind while the frame is small */
-  gsap.to("[data-gear-a] > g:first-child", { rotation: 360, duration: 16, ease: "none", repeat: -1, svgOrigin: "95 95" });
-  gsap.to("[data-gear-b] > g", { rotation: -360, duration: 11, ease: "none", repeat: -1, svgOrigin: "198 142" });
+  gsap.to("[data-gear-a]", { rotation: 360, duration: 16, ease: "none", repeat: -1, svgOrigin: "120 120" });
+  gsap.to("[data-gear-b]", { rotation: -360, duration: 11, ease: "none", repeat: -1, svgOrigin: "252 176" });
+  gsap.to("[data-gear-c]", { rotation: -360, duration: 8, ease: "none", repeat: -1, svgOrigin: "196 44" });
 
   /* the record medal swings gently from its ribbon */
   gsap.fromTo("[data-medal]", { rotation: 7, transformOrigin: "50% 0%" },

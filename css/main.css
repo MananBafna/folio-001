@@ -858,14 +858,14 @@ html.js .frame { opacity: 0; visibility: hidden; }
 }
 .se-gears {
   position: absolute;
-  left: 3%; top: 50%;
+  left: 2%; top: 50%;
   transform: translateY(-50%);
-  width: clamp(160px, 17vw, 250px);
+  width: clamp(230px, 24vw, 370px);
 }
 .se-bolt {
   position: absolute;
-  right: 6%; top: 16%;
-  width: clamp(44px, 4.5vw, 66px);
+  right: 6%; top: 14%;
+  width: clamp(58px, 6vw, 88px);
   rotate: 14deg;
 }
 @media (max-width: 899px) {
@@ -963,9 +963,8 @@ html.js .frame { opacity: 0; visibility: hidden; }
 }
 .clip i {
   font-style: normal;
-  font-family: var(--font-poster);
-  font-weight: 400;
-  font-size: .72rem; letter-spacing: .12em;
+  font-weight: 800;
+  font-size: .64rem; letter-spacing: .09em;
   color: var(--cream);
   white-space: nowrap;
 }
