@@ -1276,7 +1276,7 @@ html.js .stop.is-in { opacity: 1; transform: scale(1); }
   margin-top: 1.4rem;
 }
 .art-route {
-  width: min(330px, 92%);
+  width: 100%;
   overflow: visible;
 }
 .art-chart { max-width: 260px; }

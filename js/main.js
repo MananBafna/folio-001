@@ -929,7 +929,7 @@
       gsap.set(voyager, { x: pt0.x, y: pt0.y });
       speedable.push([route.closest(".crate"),
         gsap.to(sail, {
-          p: 1, duration: 5, ease: "power1.inOut", repeat: -1, repeatDelay: 0.9,
+          p: 1, duration: 7, ease: "power1.inOut", repeat: -1, repeatDelay: 0.9,
           onUpdate() {
             const d = sail.p * rl;
             const pt = route.getPointAtLength(d);
