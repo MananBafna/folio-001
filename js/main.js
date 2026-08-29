@@ -282,6 +282,17 @@
     heroIntro.play();
   }
 
+  /* ---------------------------------------------- nav: collapse to the mark past the hero */
+  const navEl = document.querySelector(".nav");
+  if (navEl) {
+    ScrollTrigger.create({
+      trigger: ".hero",
+      start: "bottom top+=90",
+      onEnter: () => navEl.classList.add("nav-mini"),
+      onLeaveBack: () => navEl.classList.remove("nav-mini"),
+    });
+  }
+
   /* ---------------------------------------------- badges: CircularText spin, speedUp on hover */
   document.querySelectorAll(".hero-badge, .access-badge, .premise-badge").forEach((badge) => {
     const svg = badge.querySelector("svg");

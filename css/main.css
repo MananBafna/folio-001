@@ -35,6 +35,9 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
+/* hide the window scrollbar, keep scrolling */
+html { scrollbar-width: none; -ms-overflow-style: none; }
+html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 
@@ -203,7 +206,16 @@ html.js .loader {
   backdrop-filter: blur(14px);
   box-shadow: 0 6px 24px oklch(0.23 0.08 290 / .12);
   color: var(--navy-deep);
+  overflow: hidden;
+  max-width: 2200px;
+  transition: max-width .7s cubic-bezier(.22, 1, .36, 1);
 }
+.nav-links, .nav-meta { transition: opacity .3s ease; }
+/* past the hero the pill collapses to just the mark, top left */
+.nav.nav-mini { max-width: 212px; }
+.nav.nav-mini .nav-links,
+.nav.nav-mini .nav-meta { opacity: 0; pointer-events: none; }
+.nav-mark { white-space: nowrap; flex-shrink: 0; }
 @media (prefers-reduced-transparency: reduce) {
   .nav { background: oklch(0.97 0.012 95 / .96); backdrop-filter: none; }
 }
