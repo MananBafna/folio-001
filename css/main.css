@@ -1141,7 +1141,6 @@ html.js .stop.is-in { opacity: 1; transform: scale(1); }
   overflow: hidden;
 }
 .map-decor { position: absolute; inset: 0; pointer-events: none; }
-.map-course { position: absolute; inset: 0; width: 100%; height: 100%; }
 .map-compass {
   position: absolute;
   right: 2.5%; bottom: 3.5rem;
