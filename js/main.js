@@ -557,24 +557,24 @@
       if (counter) counter.textContent = String(idx + 1).padStart(2, "0");
       cells.forEach((c, i) => c.classList.toggle("is-on", i === idx));
       const tl = gsap.timeline({ onComplete() { switching = false; } });
-      /* the projector blink: two quick dark flashes over the cut */
-      tl.set(flicker, { opacity: 1 }, 0)
-        .set(from, { autoAlpha: 0 }, 0.06)
-        .set(to, { autoAlpha: 1 }, 0.06)
-        .set(flicker, { opacity: 0 }, 0.1)
-        .set(flicker, { opacity: 0.8 }, 0.15)
-        .set(flicker, { opacity: 0 }, 0.21)
-        .fromTo(to.querySelector("img"), { scale: 1.14 },
-          { scale: 1.05, duration: 1.4, ease: "power2.out" }, 0.06)
+      /* iris wipe: the next frame blooms open as a circle over the last,
+         while the old image drifts a touch deeper */
+      tl.set(to, { autoAlpha: 1, clipPath: "circle(0% at 50% 54%)" }, 0)
+        .to(to, { clipPath: "circle(75% at 50% 54%)", duration: 0.85, ease: "power2.inOut" }, 0)
+        .to(from.querySelector("img"), { scale: "+=0.03", duration: 0.85, ease: "power1.out" }, 0)
+        .set(from, { autoAlpha: 0 }, 0.85)
+        .set(to, { clipPath: "none" }, 0.85)
+        .fromTo(to.querySelector("img"), { scale: 1.12 },
+          { scale: 1.05, duration: 1.5, ease: "power2.out" }, 0)
         .fromTo(to.querySelector(".frame-card"),
-          { y: 30, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 0.55, ease: "power3.out" }, 0.16);
+          { y: 26, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.55, ease: "power3.out" }, 0.3);
       const t = to.querySelector("h3");
       if (t && scramble) {
         tl.to(t, {
           duration: 0.8,
           scrambleText: { text: t.dataset.title || t.textContent, chars: "upperCase", speed: 0.6 },
-        }, 0.2);
+        }, 0.35);
       }
     };
 
