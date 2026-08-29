@@ -860,21 +860,10 @@
       });
     }
 
-    const sofi = document.querySelector("[data-sofi]");
-    if (sofi) {
-      const bars = sofi.querySelectorAll("[data-sbar]");
-      const arrow = sofi.querySelector("[data-sofi-arrow]");
-      const tlSofi = gsap.timeline({ repeat: -1, yoyo: true, repeatDelay: 1.3 });
-      tlSofi.fromTo(bars,
-        { scaleY: 0.14, transformOrigin: "50% 100%" },
-        { scaleY: 1, duration: 0.5, ease: "back.out(1.5)", stagger: 0.16 });
-      if (arrow) {
-        const aLen = arrow.getTotalLength();
-        gsap.set(arrow, { strokeDasharray: aLen });
-        tlSofi.fromTo(arrow, { strokeDashoffset: aLen },
-          { strokeDashoffset: 0, duration: 0.65, ease: "power2.out" }, 0.3);
-      }
-      speedable.push([sofi.closest(".crate"), tlSofi]);
+    const tickerTrack = document.querySelector("[data-ticker-track]");
+    if (tickerTrack) {
+      speedable.push([tickerTrack.closest(".crate"),
+        gsap.to(tickerTrack, { xPercent: -50, duration: 9, ease: "none", repeat: -1 })]);
     }
 
     const steam = document.querySelectorAll("[data-steam] path");
