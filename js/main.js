@@ -860,10 +860,36 @@
       });
     }
 
-    const coin = document.querySelector("[data-coin]");
-    if (coin) {
-      speedable.push([coin.closest(".crate"),
-        gsap.to(coin, { scaleX: -1, duration: 1.1, ease: "power2.inOut", repeat: -1, yoyo: true, repeatDelay: 0.5, svgOrigin: "50 50" })]);
+    const sofi = document.querySelector("[data-sofi]");
+    if (sofi) {
+      const bars = sofi.querySelectorAll("[data-sbar]");
+      const arrow = sofi.querySelector("[data-sofi-arrow]");
+      const tlSofi = gsap.timeline({ repeat: -1, yoyo: true, repeatDelay: 1.3 });
+      tlSofi.fromTo(bars,
+        { scaleY: 0.14, transformOrigin: "50% 100%" },
+        { scaleY: 1, duration: 0.5, ease: "back.out(1.5)", stagger: 0.16 });
+      if (arrow) {
+        const aLen = arrow.getTotalLength();
+        gsap.set(arrow, { strokeDasharray: aLen });
+        tlSofi.fromTo(arrow, { strokeDashoffset: aLen },
+          { strokeDashoffset: 0, duration: 0.65, ease: "power2.out" }, 0.3);
+      }
+      speedable.push([sofi.closest(".crate"), tlSofi]);
+    }
+
+    const steam = document.querySelectorAll("[data-steam] path");
+    if (steam.length) {
+      gsap.to(steam, {
+        y: -5, opacity: 0.35, duration: 1.1, ease: "sine.inOut",
+        repeat: -1, yoyo: true, stagger: 0.25,
+      });
+    }
+    const clicks = document.querySelectorAll("[data-click]");
+    if (clicks.length) {
+      const tlClicks = gsap.timeline({ repeat: -1, repeatDelay: 0.9 });
+      tlClicks.to(clicks, { opacity: 1, duration: 0.16, stagger: 0.32, ease: "power2.out" })
+        .to(clicks, { opacity: 0, duration: 0.3 }, "+=0.9");
+      speedable.push([clicks[0].closest(".crate"), tlClicks]);
     }
 
     const pulse = document.querySelector("[data-pulse]");
