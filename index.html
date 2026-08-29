@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=62">
+  <link rel="stylesheet" href="css/main.css?v=63">
 </head>
 <body>
 
@@ -332,6 +332,7 @@
         <h2 class="sec-title"><em>A life in</em> SEVEN SCENES</h2>
         <p class="gauntlet-sub">The story so far, laid out on the timeline it deserves.</p>
       </header>
+      <div class="editor-dock">
       <div class="editor" role="img" aria-label="A film-style timeline of seven scenes, from Scratch games in school to multi-agent AI in production">
         <div class="editor-inner">
           <div class="editor-ruler" aria-hidden="true">
@@ -351,6 +352,7 @@
           </div>
           <span class="editor-playhead" aria-hidden="true"></span>
         </div>
+      </div>
       </div>
       <div class="gauntlet-rail">
         <span class="gauntlet-line" aria-hidden="true"><span class="gauntlet-line-fill"></span></span>
@@ -406,21 +408,50 @@
             <path d="M 962 766 l 18 22 M 980 766 l -18 22"/>
           </g>
         </svg>
-        <svg class="map-compass" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="45" fill="none" stroke="oklch(0.38 0.06 70)" stroke-width="3"/>
-          <circle cx="50" cy="50" r="36" fill="none" stroke="oklch(0.38 0.06 70)" stroke-width="1.5" stroke-dasharray="2 6"/>
-          <g data-needle>
-            <path d="M50 12 L58 50 L50 88 L42 50 Z" fill="#c74a32"/>
-            <path d="M12 50 L50 42 L88 50 L50 58 Z" fill="oklch(0.38 0.06 70)"/>
-            <circle cx="50" cy="50" r="6" fill="#262054"/>
+        <svg class="map-compass" viewBox="0 0 132 132">
+          <g font-size="12" font-weight="800" fill="#3d3122" text-anchor="middle">
+            <text x="66" y="13">N</text><text x="125" y="70">E</text><text x="66" y="129">S</text><text x="7" y="70">W</text>
           </g>
-          <text x="50" y="10" text-anchor="middle" font-size="11" font-weight="800" fill="oklch(0.35 0.06 70)">N</text>
+          <circle cx="66" cy="66" r="48" fill="none" stroke="#3d3122" stroke-width="3.5"/>
+          <circle cx="66" cy="66" r="41" fill="none" stroke="#3d3122" stroke-width="1.5" stroke-dasharray="2 5"/>
+          <g stroke="#3d3122" stroke-width="2.5" stroke-linecap="round">
+            <line x1="66" y1="20" x2="66" y2="27"/><line x1="66" y1="105" x2="66" y2="112"/>
+            <line x1="20" y1="66" x2="27" y2="66"/><line x1="105" y1="66" x2="112" y2="66"/>
+          </g>
+          <g transform="rotate(45 66 66)" fill="#b0442f" opacity=".85">
+            <path d="M66 30 L70 66 L66 74 L62 66 Z"/>
+            <path d="M66 102 L70 66 L66 58 L62 66 Z"/>
+            <path d="M30 66 L66 70 L74 66 L66 62 Z"/>
+            <path d="M102 66 L66 70 L58 66 L66 62 Z"/>
+          </g>
+          <path d="M66 20 L72 66 L66 66 Z" fill="#3d3122"/><path d="M66 20 L60 66 L66 66 Z" fill="#e8dcc0" stroke="#3d3122" stroke-width="1"/>
+          <path d="M112 66 L66 72 L66 66 Z" fill="#3d3122"/><path d="M112 66 L66 60 L66 66 Z" fill="#e8dcc0" stroke="#3d3122" stroke-width="1"/>
+          <path d="M66 112 L60 66 L66 66 Z" fill="#3d3122"/><path d="M66 112 L72 66 L66 66 Z" fill="#e8dcc0" stroke="#3d3122" stroke-width="1"/>
+          <path d="M20 66 L66 60 L66 66 Z" fill="#3d3122"/><path d="M20 66 L66 72 L66 66 Z" fill="#e8dcc0" stroke="#3d3122" stroke-width="1"/>
+          <g data-needle>
+            <path d="M66 24 L70 66 L66 70 L62 66 Z" fill="#c74a32"/>
+            <path d="M66 108 L70 66 L66 62 L62 66 Z" fill="#e8dcc0" stroke="#3d3122" stroke-width="1.5"/>
+            <circle cx="66" cy="66" r="6.5" fill="#262054" stroke="#e8dcc0" stroke-width="2"/>
+          </g>
         </svg>
-        <svg class="map-serpent" data-serpent viewBox="0 0 180 70">
-          <path d="M6 48 q14 -26 28 0 q-14 22 -28 0 Z M48 48 q16 -32 32 0 q-16 26 -32 0 Z" fill="oklch(0.42 0.07 160)" stroke="#262054" stroke-width="3"/>
-          <path d="M96 48 q10 -30 26 -22 q18 8 12 22 q-4 10 -16 8 l 6 10 l -16 -4 q-14 -2 -12 -14 Z" fill="oklch(0.42 0.07 160)" stroke="#262054" stroke-width="3"/>
-          <circle cx="122" cy="32" r="2.6" fill="#262054"/>
-          <path d="M134 26 l 12 -10 l -2 12" fill="none" stroke="#c74a32" stroke-width="3" stroke-linecap="round"/>
+        <svg class="map-serpent" data-serpent viewBox="0 0 230 96">
+          <path d="M4 70 q12 -6 24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0" stroke="#3d3122" stroke-width="2" fill="none" opacity=".35"/>
+          <path d="M16 68 q-12 -6 -8 -18 q4 -10 14 -8 q-6 6 -2 12 q3 6 10 6 Z" fill="oklch(0.42 0.07 160)" stroke="#262054" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M30 69 q17 -38 42 0 Z" fill="oklch(0.42 0.07 160)" stroke="#262054" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M84 69 q22 -48 48 0 Z" fill="oklch(0.42 0.07 160)" stroke="#262054" stroke-width="3" stroke-linejoin="round"/>
+          <g fill="#c74a32" stroke="#262054" stroke-width="2" stroke-linejoin="round">
+            <path d="M44 46 l6 -10 l5 9 Z"/>
+            <path d="M56 41 l6 -9 l5 8 Z"/>
+            <path d="M100 36 l6 -11 l6 10 Z"/>
+          </g>
+          <path d="M142 69 q4 -30 22 -40 q16 -9 28 2 q10 9 2 20 q-5 7 -16 6 l9 12 q-15 3 -24 -7 q-12 5 -18 -2 Z" fill="oklch(0.42 0.07 160)" stroke="#262054" stroke-width="3" stroke-linejoin="round"/>
+          <circle cx="180" cy="38" r="4.5" fill="#faf5e6"/><circle cx="181.5" cy="38.5" r="2" fill="#262054"/>
+          <path d="M198 47 l14 -6 l-4 10" fill="none" stroke="#c74a32" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <g stroke="#3d3122" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".5">
+            <path d="M26 64 q-4 -6 -10 -6"/>
+            <path d="M78 64 q4 -6 10 -6"/>
+            <path d="M136 64 q4 -6 10 -6"/>
+          </g>
         </svg>
         <svg class="map-skull" viewBox="0 0 120 112">
           <g stroke="#3d3122" stroke-width="9" stroke-linecap="round">
@@ -671,9 +702,9 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/particles.js?v=62"></script>
-  <script src="js/main.js?v=62"></script>
-  <script type="module" src="js/ripple.js?v=62"></script>
-  <script type="module" src="js/glow.js?v=62"></script>
+  <script src="js/particles.js?v=63"></script>
+  <script src="js/main.js?v=63"></script>
+  <script type="module" src="js/ripple.js?v=63"></script>
+  <script type="module" src="js/glow.js?v=63"></script>
 </body>
 </html>

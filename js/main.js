@@ -771,9 +771,13 @@
   };
   if (stops.length) {
     if ("IntersectionObserver" in window) {
+      /* the dock owns the top of the viewport: rows fade out before they
+         slide under it, so only the scenes below the card stay visible */
+      const dock = document.querySelector(".editor-dock");
+      const dockH = dock ? dock.offsetHeight : 0;
       const io = new IntersectionObserver((entries) => {
         entries.forEach((en) => en.target.classList.toggle("is-in", en.isIntersecting));
-      }, { threshold: 0.5 });
+      }, { threshold: 0.5, rootMargin: `-${dockH}px 0px 0px 0px` });
       stops.forEach((s) => io.observe(s));
     } else {
       stops.forEach((s) => s.classList.add("is-in"));
