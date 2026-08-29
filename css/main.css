@@ -790,8 +790,12 @@ html.js .frame { opacity: 0; visibility: hidden; }
   pointer-events: none;
 }
 @media (max-width: 699px) {
-  .frame-card { left: 4%; right: 4%; bottom: 5%; max-width: none; }
+  .frame-card { left: 4%; right: 4%; bottom: 5%; max-width: none; padding: .85rem 1rem; }
   .frame-line, .frame-src { display: none; }
+  .frame-card h3 { font-size: 1.15rem; }
+  .frame-meta { font-size: .6rem; margin-bottom: .25rem; }
+  .frame-themes { margin-bottom: 0; }
+  .premise-loop svg { height: 150px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .reel { height: auto; }

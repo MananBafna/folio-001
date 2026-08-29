@@ -213,7 +213,10 @@
     const wordsEl = loader.querySelector(".loader-words");
     if (orbit && ast && wordsEl) {
       const wb = wordsEl.getBoundingClientRect();
-      const R = Math.max(wb.width, wb.height) / 2 + 95;
+      const R = Math.min(
+        Math.max(wb.width, wb.height) / 2 + 95,
+        window.innerWidth / 2 - 54
+      );
       gsap.set(ast, { x: R });
       tl.to(orbit, { rotation: 400, duration: 2.25, ease: "power1.inOut" }, 0.1);
       tl.to(ast, { rotation: -400, duration: 2.25, ease: "power1.inOut" }, 0.1);
@@ -469,6 +472,10 @@
     ];
     const unit = PAIRS.join("  ✦  ") + "  ✦  ";
     measure.textContent = unit;
+    /* on phones, crop the wave instead of shrinking it into illegibility */
+    if (window.innerWidth < 700) {
+      root.querySelector("svg").setAttribute("preserveAspectRatio", "xMidYMid slice");
+    }
     const setup = () => {
       let length = 0, unitW = 0;
       try {
