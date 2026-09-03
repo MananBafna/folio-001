@@ -2033,7 +2033,7 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
   color: var(--navy-deep); opacity: .75;
 }
 .screw-hint {
-  position: fixed; left: 50%; bottom: 1.6rem; transform: translateX(-50%);
+  position: fixed; left: 50%; bottom: 1.6rem; translate: -50% 0;
   z-index: 60;
   padding: .55em 1.1em;
   background: var(--navy-deep); color: var(--butter);
