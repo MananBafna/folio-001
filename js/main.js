@@ -563,14 +563,14 @@
 
     /* ---- sound: a CRT hum, static, and a mechanical click. Built lazily on
        the first gesture (browsers require one); the volume dial is the gain. */
-    const snd = { ctx: null, master: null, noiseGain: null, volume: 0.35, on: true };
+    const snd = { ctx: null, master: null, noiseGain: null, volume: 0.35, on: true, near: true };
     const ensureAudio = () => {
       if (snd.ctx) { if (snd.ctx.state === "suspended") snd.ctx.resume(); return; }
       const AC = window.AudioContext || window.webkitAudioContext;
       if (!AC) return;
       const ctx = new AC();
       const master = ctx.createGain();
-      master.gain.value = snd.on ? snd.volume : 0;
+      master.gain.value = snd.on && snd.near ? snd.volume : 0;
       master.connect(ctx.destination);
       const hum = ctx.createOscillator(); hum.type = "sine"; hum.frequency.value = 55;
       const humG = ctx.createGain(); humG.gain.value = 0.05;
@@ -591,8 +591,15 @@
     };
     const applyVolume = () => {
       if (!snd.master) return;
-      snd.master.gain.setTargetAtTime(snd.on ? snd.volume : 0, snd.ctx.currentTime, 0.06);
+      snd.master.gain.setTargetAtTime(snd.on && snd.near ? snd.volume : 0, snd.ctx.currentTime, 0.06);
     };
+    /* the set only hums while it is on screen */
+    snd.near = true;
+    ScrollTrigger.create({
+      trigger: ".doctrine", start: "top bottom", end: "bottom top",
+      onEnter: () => { snd.near = true; applyVolume(); }, onEnterBack: () => { snd.near = true; applyVolume(); },
+      onLeave: () => { snd.near = false; applyVolume(); }, onLeaveBack: () => { snd.near = false; applyVolume(); },
+    });
     const staticBurst = (dur = 0.4, level = 0.35) => {
       if (!snd.noiseGain) return;
       const t = snd.ctx.currentTime;
@@ -1366,9 +1373,31 @@
     const q = (n) => engine.querySelector(`[data-eng-${n}]`);
     const bar = (n) => engine.querySelector(`[data-eng-bar="${n}"]`);
     const t0 = performance.now();
+    const hist = { fps: [], vel: [], cur: [] };
+    const traces = {};
+    ["fps", "vel", "cur"].forEach((k) => { const cv = engine.querySelector(`[data-eng-trace="${k}"]`); if (cv) traces[k] = cv.getContext("2d"); });
+    const drawTrace = (k, max) => {
+      const ctx = traces[k]; if (!ctx) return;
+      const cv = ctx.canvas, W = cv.width, Hh = cv.height, data = hist[k];
+      ctx.clearRect(0, 0, W, Hh);
+      ctx.strokeStyle = "rgba(240,207,74,.12)"; ctx.lineWidth = 1;
+      for (let y = Hh / 4; y < Hh; y += Hh / 4) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+      if (data.length < 2) return;
+      ctx.beginPath();
+      data.forEach((v, i) => { const x = (i / (data.length - 1)) * W; const y = Hh - 6 - Math.min(1, v / max) * (Hh - 12); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
+      ctx.strokeStyle = "#f0cf4a"; ctx.lineWidth = 2; ctx.lineJoin = "round"; ctx.stroke();
+      ctx.lineTo(W, Hh); ctx.lineTo(0, Hh); ctx.closePath();
+      ctx.fillStyle = "rgba(240,207,74,.12)"; ctx.fill();
+    };
+    const push = (k, v, cap = 160) => { hist[k].push(v); if (hist[k].length > cap) hist[k].shift(); };
     const tick = (now) => {
       raf = requestAnimationFrame(tick);
       frames++;
+      const velNow = ScrollTrigger.getAll()[0] ? Math.abs(ScrollTrigger.getAll()[0].getVelocity()) : 0;
+      push("vel", velNow); push("cur", cursor.x / Math.max(1, window.innerWidth));
+      drawTrace("vel", 3000); drawTrace("cur", 1);
+      const vNow = engine.querySelector("[data-eng-trace-vel-now]"); if (vNow) vNow.textContent = Math.round(velNow) + " px/s";
+      const cNow = engine.querySelector("[data-eng-trace-cur-now]"); if (cNow) cNow.textContent = Math.round(cursor.x) + " · " + Math.round(cursor.y);
       if (now - last >= 500) {
         fps = Math.round((frames * 1000) / (now - last)); frames = 0; last = now;
         const dom = document.getElementsByTagName("*").length;
@@ -1381,7 +1410,9 @@
         q("res").textContent = res;
         q("tweens").textContent = tweens;
         q("scroll").textContent = Math.round(window.scrollY) + "px";
-        q("cursor").textContent = cursor.x + "," + cursor.y;
+        q("cursor").textContent = Math.round(cursor.x) + ", " + Math.round(cursor.y);
+        push("fps", fps, 80); drawTrace("fps", 120);
+        const fNow = engine.querySelector("[data-eng-trace-fps-now]"); if (fNow) fNow.textContent = fps + " fps";
         const up = Math.floor((now - t0) / 1000);
         q("up").textContent = Math.floor(up / 60) + "m " + (up % 60) + "s";
         gsap.set(bar("scroll"), { scaleX: Math.min(1, vel / 3000) });
@@ -1407,12 +1438,26 @@
       screws.forEach((s) => { s.classList.remove("is-loose"); gsap.to(s, { rotation: 0, duration: 0.4 }); });
       loose.clear();
     };
+    const hintEl = document.querySelector("[data-screw-hint]");
+    let hintTimer = 0;
+    const hint = (text) => {
+      if (!hintEl) return;
+      hintEl.textContent = text;
+      gsap.to(hintEl, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" });
+      clearTimeout(hintTimer);
+      hintTimer = setTimeout(() => gsap.to(hintEl, { opacity: 0, y: 8, duration: 0.4 }), 3200);
+    };
     screws.forEach((s) => s.addEventListener("click", (e) => {
       e.stopPropagation();
       if (loose.has(s)) return;
       loose.add(s); s.classList.add("is-loose");
       gsap.to(s, { rotation: "+=270", duration: 0.5, ease: "power2.out" });
-      if (loose.size === screws.length) setTimeout(open, 350);
+      const total = screws.length, n = loose.size;
+      const crateLoose = [...loose].some((x) => x.classList.contains("crate-screw"));
+      if (n === total) { hint("hatch open"); setTimeout(open, 350); }
+      else if (n === total - 1 && !crateLoose) hint(`${n} / ${total} · the last screw is not on the TV. Try the crates.`);
+      else if (n === 1) hint(`1 / ${total} screws loose · find the rest`);
+      else hint(`${n} / ${total} screws loose`);
     }));
     engine.querySelector("[data-engine-close]").addEventListener("click", close);
     window.addEventListener("keydown", (e) => { if (e.key === "Escape" && engine.classList.contains("is-open")) close(); });

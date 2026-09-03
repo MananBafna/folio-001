@@ -2004,13 +2004,34 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
 /* ------------------------------------------------ the maintenance hatch */
 .tv-screw {
   position: absolute; z-index: 3;
-  width: 16px; height: 16px; padding: 0; border: 0; background: none;
+  width: 22px; height: 22px; padding: 0; border: 0; background: none;
   cursor: pointer;
+  filter: drop-shadow(1px 2px 0 rgba(0, 0, 0, .45));
+  transition: transform .2s ease;
 }
+.tv-screw:hover { transform: scale(1.18); }
 .tv-screw svg { width: 100%; height: 100%; display: block; }
-.tv-screw-tl { left: 6px; top: 6px; } .tv-screw-tr { right: 6px; top: 6px; }
-.tv-screw-bl { left: 6px; bottom: 6px; } .tv-screw-br { right: 6px; bottom: 6px; }
+.tv-screw-tl { left: 8px; top: 8px; } .tv-screw-tr { right: 8px; top: 8px; }
+.tv-screw-bl { left: 8px; bottom: 8px; } .tv-screw-br { right: 8px; bottom: 8px; }
+.tv-screw.is-loose { filter: none; }
 .tv-screw.is-loose svg { opacity: .35; }
+.crate-screw { right: 10px; bottom: 10px; z-index: 4; }
+.tv-chin { position: relative; }
+.tv-service {
+  position: absolute; left: 50%; bottom: 4px; transform: translateX(-50%);
+  font-weight: 800; font-size: .48rem; letter-spacing: .22em; white-space: nowrap;
+  color: oklch(0.72 0.05 290);
+}
+.screw-hint {
+  position: fixed; left: 50%; bottom: 1.6rem; transform: translateX(-50%);
+  z-index: 60;
+  padding: .55em 1.1em;
+  background: var(--navy-deep); color: var(--butter);
+  border: 2px solid var(--butter); border-radius: 999px;
+  font-weight: 800; font-size: .66rem; letter-spacing: .18em; text-transform: uppercase; white-space: nowrap;
+  box-shadow: 4px 4px 0 var(--red);
+  opacity: 0; pointer-events: none;
+}
 .engine {
   position: fixed; inset: 0; z-index: 96;
   background: oklch(0.1 0.04 290);
@@ -2025,9 +2046,16 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
 .engine-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; margin-bottom: 2rem; }
 .engine-title { font-family: var(--font-poster); font-size: clamp(2rem, 4.5vw, 3.6rem); letter-spacing: .04em; color: var(--butter); line-height: 1; }
 .engine-sub { margin-top: .5rem; color: oklch(0.8 0.03 300); max-width: 52ch; }
-.engine-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; max-width: 1240px; }
+.engine-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.1rem; max-width: 1240px; }
+.eng-traces { grid-column: 1 / -1; }
 .eng-card { background: oklch(0.13 0.05 290); border: 1.5px solid oklch(0.32 0.08 290); border-radius: 14px; padding: 1.1rem; }
 .eng-card h3 { font-weight: 800; font-size: .62rem; letter-spacing: .2em; color: var(--butter); margin-bottom: .9rem; }
+.eng-card h3 span { font-weight: 600; letter-spacing: .04em; text-transform: none; color: oklch(0.7 0.04 300); margin-left: .6em; }
+.eng-trace-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.eng-trace { display: grid; gap: .45rem; }
+.eng-trace figcaption { display: flex; justify-content: space-between; font-weight: 800; font-size: .56rem; letter-spacing: .16em; color: oklch(0.7 0.04 300); }
+.eng-trace figcaption b { font-family: var(--font-poster); font-size: .95rem; letter-spacing: .02em; color: var(--cream); font-variant-numeric: tabular-nums; }
+.eng-trace canvas { display: block; width: 100%; height: 76px; border-radius: 8px; background: oklch(0.09 0.04 290); border: 1px solid oklch(0.28 0.08 290); }
 .eng-stack { display: grid; gap: .5rem; font-weight: 800; font-size: .74rem; letter-spacing: .06em; }
 .eng-stack span { display: block; font-weight: 500; letter-spacing: 0; font-size: .74rem; color: oklch(0.72 0.04 300); }
 .eng-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
@@ -2037,4 +2065,4 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
 .eng-systems li { display: grid; gap: .3rem; font-size: .72rem; font-weight: 700; letter-spacing: .06em; }
 .eng-bar { display: block; height: 8px; background: oklch(0.3 0.08 290); border-radius: 4px; overflow: hidden; }
 .eng-bar b { display: block; height: 100%; width: 100%; background: var(--butter); transform: scaleX(0); transform-origin: left; transition: transform .25s ease; }
-@media (max-width: 899px) { .engine-grid { grid-template-columns: 1fr; } .engine-top { flex-direction: column; gap: 1rem; } }
+@media (max-width: 899px) { .engine-grid { grid-template-columns: 1fr; } .engine-top { flex-direction: column; gap: 1rem; } .eng-trace-row { grid-template-columns: 1fr; } .tv-service { display: none; } }
