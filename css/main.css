@@ -1742,6 +1742,7 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
   .hero-premise { font-size: .95rem; }
   .shape-asterisk, .sticker-c { display: none; }
   .tv-screw, .crate-screw, .screw-hint-wrap { display: none; }
+  html.js .drawer-pull, .drawer-pull.is-shown, .drawer { display: none !important; }
   .premise-big { max-width: none; }
 
   /* story: native horizontal scroll instead of pin */
