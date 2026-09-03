@@ -53,7 +53,11 @@
       mk2.setAttribute("y", y2);
       mk2.setAttribute("x", Math.max(0, w - len2px - inset));
       const h = y2 + fs2 * 0.16;
+      const changed = mark.style.height !== h + "px";
       mark.style.height = h + "px";
+      /* the hero just changed height: every pinned section below must re-measure,
+         or the broadcast pins early and draws over the section above it */
+      if (changed && window.ScrollTrigger) { clearTimeout(window.__stRefresh); window.__stRefresh = setTimeout(() => ScrollTrigger.refresh(), 60); }
       flow.width = 880;
       flow.height = Math.max(160, Math.round((880 * h) / w));
       /* map mark-space y to canvas px through the canvas's 112%/120%
@@ -195,6 +199,8 @@
         document.documentElement.classList.remove("is-loading");
         loader.remove();
         heroIntro.play();
+        /* the scroll lock is gone: widths change with the scrollbar, so re-measure */
+        ScrollTrigger.refresh();
       },
     });
 
@@ -721,7 +727,7 @@
     st = ScrollTrigger.create({
       trigger: ".doctrine", start: "top top",
       end: () => `+=${N * window.innerHeight * 0.7}`,
-      pin: reel, invalidateOnRefresh: true,
+      pin: reel, invalidateOnRefresh: true, anticipatePin: 1,
       onEnter() { if (!booted) bootSequence(); },
       onUpdate() { if (booted === true) sync(); },
     });
@@ -1539,4 +1545,5 @@
 
   /* refresh after fonts + images settle so pins measure correctly */
   window.addEventListener("load", () => ScrollTrigger.refresh());
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => ScrollTrigger.refresh());
 })();
