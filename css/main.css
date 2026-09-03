@@ -1864,7 +1864,8 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
   position: relative;
   pointer-events: none;
 }
-.drawer-top > * { pointer-events: auto; }
+.drawer-top > * { pointer-events: none; }
+.drawer-top .drawer-close { pointer-events: auto; }
 .drawer-title { font-family: var(--font-poster); font-size: clamp(2rem, 4vw, 3.2rem); color: var(--navy-deep); line-height: 1; }
 .drawer-sub { max-width: 52ch; margin-top: .6rem; color: oklch(0.36 0.05 290); font-weight: 500; }
 .drawer-close {
