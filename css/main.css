@@ -616,7 +616,7 @@ html.js .loader {
   margin-inline: auto;
 }
 .premise-big {
-  font-family: var(--font-round);
+  font-family: "Bricolage Grotesque", var(--font-round);
   font-weight: 800;
   font-size: clamp(2.2rem, 5vw, 4.6rem);
   line-height: 1.06;
@@ -626,7 +626,7 @@ html.js .loader {
   max-width: 22ch;
 }
 .premise-big-alt { color: var(--butter); margin-top: .35em; }
-.premise-big .line { display: block; overflow: hidden; padding-block: .04em; }
+.premise-big .line { display: block; overflow: hidden; padding-block: .12em; margin-block: -.08em; padding-inline-end: .1em; }
 .premise-note {
   margin-top: 2.4rem;
   color: oklch(0.86 0.03 300);
@@ -1866,7 +1866,7 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
   background: var(--navy-deep); color: var(--butter);
   border: 2px solid var(--butter); border-right: 0;
   border-radius: 12px 0 0 12px;
-  font-weight: 800; font-size: .62rem; letter-spacing: .26em;
+  font-family: var(--font-poster); font-weight: 400; font-size: .8rem; letter-spacing: .22em;
   cursor: pointer;
   transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .3s ease;
   opacity: 0; pointer-events: none;
