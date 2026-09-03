@@ -1861,14 +1861,14 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
 .drawer-top {
   display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem;
   padding: calc(14px + 56px + 1rem) var(--gutter) 0;
-  position: relative; z-index: 30;
+  position: relative;
   pointer-events: none;
 }
 .drawer-top > * { pointer-events: auto; }
 .drawer-title { font-family: var(--font-poster); font-size: clamp(2rem, 4vw, 3.2rem); color: var(--navy-deep); line-height: 1; }
 .drawer-sub { max-width: 52ch; margin-top: .6rem; color: oklch(0.36 0.05 290); font-weight: 500; }
 .drawer-close {
-  flex-shrink: 0;
+  flex-shrink: 0; position: relative; z-index: 40;
   background: var(--navy-deep); color: var(--cream); border-color: var(--navy-deep);
   box-shadow: 4px 4px 0 var(--red);
 }
