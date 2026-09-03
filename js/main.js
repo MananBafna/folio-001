@@ -3,6 +3,7 @@
    Everything here ENHANCES a page that is fully readable without JS. */
 
 (function () {
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const loader = document.querySelector(".loader");
   const finePointer = window.matchMedia("(pointer: fine)").matches;
