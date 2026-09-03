@@ -186,6 +186,9 @@
     let cy = window.innerHeight / 2;
     const setMask = () => {
       if (!veil) return;
+      /* a zero-radius mask makes the veil vanish on iOS Safari, so the veil stays a
+         plain solid until the aperture actually starts opening */
+      if (state.r <= 0.5) { veil.style.webkitMaskImage = ""; veil.style.maskImage = ""; return; }
       const m = `radial-gradient(circle ${state.r}px at ${cx}px ${cy}px, transparent 99%, #000 100%)`;
       veil.style.webkitMaskImage = m;
       veil.style.maskImage = m;
