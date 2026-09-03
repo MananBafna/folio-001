@@ -1729,8 +1729,8 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
     margin-top: 1.6rem;
   }
   /* phone set dressing: the badge and the ring live in the pocket left of the photo */
-  .hero-badge { width: 92px; left: 5%; right: auto; top: 40%; box-shadow: 5px 5px 0 var(--navy-deep); }
-  .shape-ring { width: 40px; left: 44%; top: 52%; bottom: auto; }
+  .hero-badge { width: 92px; left: 5%; right: auto; top: 48%; box-shadow: 5px 5px 0 var(--navy-deep); }
+  .shape-ring { width: 38px; left: 44%; top: 57%; bottom: auto; }
   .shape-plus { display: none; }
   .sticker-b { display: none; }
   .shape-arc { display: none; }
