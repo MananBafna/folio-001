@@ -1715,7 +1715,8 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
   .wc-2, .wc-3, .wc-4, .wc-5 { grid-column: span 3; grid-row: auto; }
 }
 @media (max-width: 899px) {
-  .drift-wall { display: none; }
+  .drift-wall { opacity: .5; }
+  .dw-plane { transform: translate(-50%, -50%) scale(1.05) rotateX(14deg) rotateY(-12deg) translateZ(-120px); }
   .hero { align-items: flex-start; padding-top: 100px; }
   .hero-stage { display: flex; flex-direction: column; }
   .hero-mark { order: 1; }
@@ -1726,10 +1727,12 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
     flex-direction: row; flex-wrap: wrap;
     margin-top: 1.6rem;
   }
-  .hero-badge { display: none; }
+  /* phone set dressing: the badge and the ring live in the pocket left of the photo */
+  .hero-badge { width: 92px; left: 5%; right: auto; top: 40%; box-shadow: 5px 5px 0 var(--navy-deep); }
+  .shape-ring { width: 40px; left: 44%; top: 52%; bottom: auto; }
   .shape-plus { display: none; }
   .sticker-b { display: none; }
-  .shape-arc, .shape-ring { display: none; }
+  .shape-arc { display: none; }
   .shape-asterisk { bottom: auto; top: 46%; left: 4%; }
   .hero-photo {
     order: -1;
@@ -2005,9 +2008,11 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
 .live { position: absolute; pointer-events: none; opacity: 0; transition: opacity .25s ease; z-index: 2; }
 .crate:hover .live, .crate.is-live .live { opacity: 1; }
 .crate-art { transition: opacity .3s ease; }
-.crate:hover .art-orbit, .crate.is-live .art-orbit,
-.crate:hover .art-chart, .crate.is-live .art-chart,
-.crate:hover .art-chai, .crate.is-live .art-chai { opacity: .18; }
+@media (hover: hover) and (min-width: 1024px) {
+  .crate:hover .art-orbit, .crate.is-live .art-orbit,
+  .crate:hover .art-chart, .crate.is-live .art-chart,
+  .crate:hover .art-chai, .crate.is-live .art-chai { opacity: .18; }
+}
 .live-chat { right: clamp(1rem, 3vw, 2.6rem); top: 50%; transform: translateY(-50%); width: min(250px, 34%); display: grid; gap: .4rem; }
 .chat-in, .chat-out { font-size: .74rem; padding: .45em .8em; border-radius: 12px; max-width: 100%; }
 .chat-in { background: oklch(0.42 0.09 290); color: var(--cream); justify-self: end; border-bottom-right-radius: 3px; }

@@ -358,7 +358,7 @@
      tiles drifting behind the mark, with pointer-follow tilt. */
   (function driftWall() {
     const wall = document.querySelector("[data-driftwall]");
-    if (!wall || window.innerWidth < 900) return;
+    if (!wall) return;
     /* the wall is built ONLY from your own photos: drop JPGs named
        wall-1.jpg, wall-2.jpg, ... into assets/wall/ (up to 16); the wall
        stays off until at least one exists */
@@ -1333,8 +1333,10 @@
   /* ---------------------------------------------- live moments on the crates */
   (function initLiveMoments() {
     const runOnce = new Set();
+    /* live moments need a hover pointer and a wide crate; on phones the art stays as drawn */
+    const liveOK = finePointer && window.innerWidth >= 1024;
     const bind = (crate, build) => {
-      if (!crate) return;
+      if (!crate || !liveOK) return;
       let tl = null;
       const play = () => {
         if (tl) tl.kill();
