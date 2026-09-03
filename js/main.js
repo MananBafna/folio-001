@@ -839,8 +839,6 @@
       gsap.from(".code-text", { opacity: 0, y: 30, duration: 1, ease: "power3.out",
         scrollTrigger: { trigger: ".code", start: "top 65%" } });
     }
-    gsap.from(".code-foot", { opacity: 0, y: 12, duration: 0.6,
-      scrollTrigger: { trigger: ".code", start: "top 55%" } });
   }
 
   /* ---------------------------------------------- how i work */
@@ -1195,21 +1193,26 @@
         o.connect(g).connect(ctx.destination); o.start(); o.stop(ctx.currentTime + 0.06);
       } catch (e) {}
     };
+    const bars = stage.querySelector("[data-outro-bars]");
+    const standby = stage.querySelector("[data-outro-standby]");
+    const osdL = stage.querySelector("[data-outro-osd]");
     const play = () => {
       if (played) return; played = true;
       gsap.timeline()
-        .to(stat, { opacity: 0.5, duration: 0.2 })
-        .to(screen, { scaleY: 0.01, duration: 0.35, ease: "power4.in" }, 0.9)
+        .to(stat, { opacity: 0.45, duration: 0.3 }, 1.4)
+        .to([bars, standby], { opacity: 0, duration: 0.08 }, 1.6)
+        .to(screen, { scaleY: 0.01, duration: 0.35, ease: "power4.in" }, 1.6)
         .set(stat, { opacity: 0 })
         .to(screen, { scaleX: 0.2, duration: 0.15, ease: "power2.in" })
         .to(led, { opacity: 1, boxShadow: "0 0 12px 4px oklch(0.58 0.17 30 / .7)", duration: 0.4 })
-        .add(tick, "+=1.1")
+        .add(tick, "+=1.2")
         .to(screen, { scaleX: 1, scaleY: 1, duration: 0.35, ease: "power3.out" })
+        .to(stat, { opacity: 0.12, duration: 0.3 }, "<")
+        .to([osdL, tag], { opacity: 1, duration: 0.4 }, "<")
         .fromTo(lines[0], { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.5 }, "+=0.3")
         .fromTo(lines[1], { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.5 }, "+=1.1")
         .fromTo(lines[2], { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, "+=0.9")
-        .fromTo(cta, { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, "-=0.2")
-        .to(tag, { opacity: 1, duration: 0.6 }, "-=0.1");
+        .fromTo(cta, { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, "-=0.2");
     };
     ScrollTrigger.create({ trigger: ".outro", start: "top 35%", onEnter: play });
   })();
