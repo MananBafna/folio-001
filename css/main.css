@@ -1489,9 +1489,9 @@ html.js .frame { opacity: 0; visibility: hidden; }
 }
 .plaque {
   position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-  padding: .38em 1.6em;
-  font-weight: 800; font-size: .74rem; letter-spacing: .2em; white-space: nowrap;
-  color: #3b2a12;
+  padding: .34em 1.7em .3em;
+  font-family: "Cinzel", Georgia, serif; font-weight: 600; font-size: .78rem; letter-spacing: .16em; white-space: nowrap;
+  color: #3a2810; text-shadow: 0 1px 0 rgba(255, 244, 200, .55);
   background: linear-gradient(180deg, #f5dd90, #cfa94e);
   border: 1px solid #7d5a1c; border-radius: 2px;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 2px 3px rgba(0, 0, 0, .35);
@@ -1528,6 +1528,7 @@ html.js .frame { opacity: 0; visibility: hidden; }
   .cubbies { grid-template-columns: 1fr; }
   .cubby { min-height: 330px; }
   .bookcase { padding: 14px; }
+  .plaque { font-size: .6rem; letter-spacing: .1em; padding-inline: 1.3em; }
 }
 
 /* ------------------------------------------------ contact · BUTTER + ripple, fullscreen */
