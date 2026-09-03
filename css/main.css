@@ -197,12 +197,29 @@ html.js .loader {
 .loader-meta .loader-tag { position: fixed; }
 .loader-tag b { color: var(--butter); font-weight: 800; }
 .loader-tag i { font-style: normal; opacity: .55; }
-.loader-sweep {
-  position: absolute; left: 0; right: 0; top: 0; height: 18%;
-  background: linear-gradient(to bottom, transparent, oklch(0.87 0.13 95 / .12), transparent);
-  transform: translateY(-100%);
+.loader-noise {
+  position: absolute; inset: -20%;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+  animation: crt-noise .12s steps(4) infinite;
+}
+.loader-scan {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0, 0, 0, .26) 2px 4px);
+  opacity: .55;
   pointer-events: none;
 }
+.loader-bars { display: inline-flex; align-items: flex-end; gap: 3px; height: 14px; margin-right: .7rem; vertical-align: -2px; }
+.loader-bars i { width: 4px; background: oklch(0.4 0.06 290); transition: background-color .15s ease; }
+.loader-bars i:nth-child(1) { height: 4px; } .loader-bars i:nth-child(2) { height: 6.5px; } .loader-bars i:nth-child(3) { height: 9px; }
+.loader-bars i:nth-child(4) { height: 11.5px; } .loader-bars i:nth-child(5) { height: 14px; }
+.loader-bars i.is-on { background: var(--butter); }
+.loader.is-tuning .lw { text-shadow: -4px 0 oklch(0.58 0.17 30 / .75), 4px 0 oklch(0.72 0.1 160 / .7); }
+.loader.is-tuning .lw-3 { -webkit-text-stroke-color: oklch(0.96 0.015 85 / .8); }
+@media (prefers-reduced-motion: reduce) { .loader-noise { animation: none; } }
 .loader-flash { position: absolute; inset: 0; background: var(--cream); opacity: 0; pointer-events: none; }
 
 /* ------------------------------------------------ nav · floating glass pill */
@@ -330,7 +347,7 @@ html.js .loader {
 }
 .hero-mark-defs { position: absolute; }
 #markclip text {
-  font-family: var(--font-body);
+  font-family: "Bricolage Grotesque", var(--font-body);
   font-weight: 800;
   letter-spacing: -0.02em;
 }
@@ -381,7 +398,7 @@ html.js .loader {
 }
 .hero-signal {
   position: absolute;
-  left: 1%; top: 0;
+  left: 1%; top: -1.8rem;
   display: inline-flex; align-items: center; gap: .5rem;
   font-weight: 800; font-size: .62rem; letter-spacing: .24em;
   color: var(--butter);

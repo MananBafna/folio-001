@@ -104,7 +104,7 @@
     };
 
     const ready = document.fonts && document.fonts.load
-      ? document.fonts.load('800 100px "Manrope"').then(() => document.fonts.ready).catch(() => {})
+      ? document.fonts.load('800 100px "Bricolage Grotesque"').then(() => document.fonts.ready).catch(() => {})
       : Promise.resolve();
     Promise.resolve(ready).then(() => {
       layout();
@@ -205,6 +205,7 @@
       onUpdate() {
         if (count) count.textContent = String(Math.round(state.n)).padStart(2, "0");
         if (bar) bar.style.transform = `scaleX(${state.n / 100})`;
+        sigBars.forEach((b, i) => b.classList.toggle("is-on", state.n >= (i + 1) * 18));
       },
     }, 0);
 
@@ -241,18 +242,29 @@
         .to(shapes[2], { scale: 1, duration: 0.18, ease: "power2.out" }, 1.72);
     }
 
-    /* the set warms up: a scan sweep runs down the tube and the status line tunes in */
-    const sweep = loader.querySelector("[data-sweep]");
+    /* a transmission being tuned in: static thins out as the signal locks,
+       the picture tears sideways a few times, the strength bars fill, and
+       the ghosted words snap into focus on SIGNAL FOUND */
+    const noiseLayer = loader.querySelector("[data-noise-layer]");
     const flash = loader.querySelector("[data-flash]");
     const status = loader.querySelector("[data-loader-status]");
+    const sigBars = loader.querySelectorAll("[data-loader-bars] i");
     const setStatus = (text) => {
       if (!status) return;
       if (scramble) gsap.to(status, { duration: 0.5, scrambleText: { text, chars: "upperCase", speed: 0.7 } });
       else status.textContent = text;
     };
-    if (sweep) tl.fromTo(sweep, { yPercent: -100 }, { yPercent: 580, duration: 1.05, ease: "none", repeat: 1 }, 0);
+    if (noiseLayer) {
+      tl.fromTo(noiseLayer, { opacity: 0.55 }, { opacity: 0.2, duration: 1.2, ease: "power2.out" }, 0)
+        .to(noiseLayer, { opacity: 0.45, duration: 0.08, yoyo: true, repeat: 3, ease: "none" }, 1.0)
+        .to(noiseLayer, { opacity: 0, duration: 0.35, ease: "power2.in" }, 1.9);
+    }
+    [0.12, 0.5, 0.95, 1.45].forEach((at, i) => {
+      tl.to(scene, { skewX: i % 2 ? -9 : 9, x: i % 2 ? 12 : -12, duration: 0.05, repeat: 3, yoyo: true, ease: "none" }, at)
+        .set(scene, { skewX: 0, x: 0 }, at + 0.2);
+    });
     tl.add(() => setStatus("LOCKING SIGNAL"), 1.05);
-    tl.add(() => setStatus("SIGNAL FOUND"), 1.9);
+    tl.add(() => { setStatus("SIGNAL FOUND"); loader.classList.remove("is-tuning"); }, 1.9);
 
     /* stamps: slam in from above, tilted, with a flash and a screen shake on each hit */
     const words = loader.querySelectorAll(".lw");
