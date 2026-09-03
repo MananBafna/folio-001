@@ -729,7 +729,8 @@
       end: () => `+=${N * window.innerHeight * 0.7}`,
       pin: reel, invalidateOnRefresh: true, anticipatePin: 1,
       onEnter() { if (!booted) bootSequence(); },
-      onUpdate() { if (booted === true) sync(); },
+      onEnterBack() { if (!booted) bootSequence(); },
+      onUpdate() { if (!booted) bootSequence(); else if (booted === true) sync(); },
     });
     if (st.isActive && !booted) bootSequence();
     const gotoChannel = (idx) => {
@@ -865,7 +866,7 @@
 
     gsap.from(".reel-head, .tv", {
       opacity: 0, y: 20, duration: 0.8, ease: "power3.out", stagger: 0.1,
-      scrollTrigger: { trigger: ".doctrine", start: "top 75%" },
+      scrollTrigger: { trigger: ".doctrine", start: "top 75%", toggleActions: "play none play none" },
     });
   })();
 
@@ -1544,6 +1545,9 @@
   }
 
   /* refresh after fonts + images settle so pins measure correctly */
+  /* the page always opens at the top: the overture and every pinned section assume it */
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  window.scrollTo(0, 0);
   window.addEventListener("load", () => ScrollTrigger.refresh());
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => ScrollTrigger.refresh());
 })();
