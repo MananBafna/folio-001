@@ -21,8 +21,8 @@
   --ink: oklch(0.24 0.04 290);
 
   --font-poster: "Anton", "Arial Narrow", sans-serif;
-  --font-round: "Bricolage Grotesque", "Segoe UI", Arial, sans-serif;
-  --font-body: "Bricolage Grotesque", "Segoe UI", Arial, sans-serif;
+  --font-round: "Manrope", "Segoe UI", Arial, sans-serif;
+  --font-body: "Manrope", "Segoe UI", Arial, sans-serif;
 
   --z-grain: 90;
   --z-nav: 60;
@@ -195,6 +195,15 @@ html.js .loader {
   white-space: nowrap;
 }
 .loader-meta .loader-tag { position: fixed; }
+.loader-tag b { color: var(--butter); font-weight: 800; }
+.loader-tag i { font-style: normal; opacity: .55; }
+.loader-sweep {
+  position: absolute; left: 0; right: 0; top: 0; height: 18%;
+  background: linear-gradient(to bottom, transparent, oklch(0.87 0.13 95 / .12), transparent);
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+.loader-flash { position: absolute; inset: 0; background: var(--cream); opacity: 0; pointer-events: none; }
 
 /* ------------------------------------------------ nav · floating glass pill */
 .nav {
@@ -888,7 +897,7 @@ html.js .frame { opacity: 0; visibility: hidden; }
 .tv-vents i { width: 22px; height: 2px; background: oklch(0.85 0.03 95 / .3); }
 /* chin */
 .tv-chin {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
   gap: 1rem;
   margin-top: .8rem;
   padding-inline: .3rem;
@@ -2016,11 +2025,12 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
 .tv-screw.is-loose { filter: none; }
 .tv-screw.is-loose svg { opacity: .35; }
 .crate-screw { right: 10px; bottom: 10px; z-index: 4; }
-.tv-chin { position: relative; }
 .tv-service {
-  position: absolute; left: 50%; bottom: 4px; transform: translateX(-50%);
-  font-weight: 800; font-size: .48rem; letter-spacing: .22em; white-space: nowrap;
-  color: var(--butter); opacity: .85;
+  order: 10; flex-basis: 100%;
+  margin-top: .45rem;
+  text-align: center;
+  font-weight: 800; font-size: .58rem; letter-spacing: .22em; white-space: nowrap;
+  color: var(--navy-deep); opacity: .75;
 }
 .screw-hint {
   position: fixed; left: 50%; bottom: 1.6rem; transform: translateX(-50%);
@@ -2041,29 +2051,32 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
   background-size: 28px 28px;
   color: var(--cream);
   overflow-y: auto;
+  scrollbar-width: none;
   opacity: 0; visibility: hidden;
-  padding: calc(14px + 56px + 1rem) var(--gutter) 3rem;
+  padding: 1.4rem var(--gutter) 1.4rem;
 }
+.engine::-webkit-scrollbar { display: none; }
 .engine.is-open { opacity: 1; visibility: visible; }
-.engine-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; margin-bottom: 2rem; }
-.engine-title { font-family: var(--font-poster); font-size: clamp(2rem, 4.5vw, 3.6rem); letter-spacing: .04em; color: var(--butter); line-height: 1; }
-.engine-sub { margin-top: .5rem; color: oklch(0.8 0.03 300); max-width: 52ch; }
+.engine-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; margin-bottom: 1rem; }
+.engine-top .sec-kicker { margin-bottom: .3rem; }
+.engine-title { font-family: var(--font-poster); font-size: clamp(1.8rem, 3.2vw, 2.6rem); letter-spacing: .04em; color: var(--butter); line-height: 1; }
+.engine-sub { margin-top: .35rem; color: oklch(0.8 0.03 300); max-width: 60ch; font-size: .92rem; }
 .engine-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.1rem; max-width: 1240px; }
 .eng-traces { grid-column: 1 / -1; }
-.eng-card { background: oklch(0.13 0.05 290); border: 1.5px solid oklch(0.32 0.08 290); border-radius: 14px; padding: 1.1rem; }
-.eng-card h3 { font-weight: 800; font-size: .62rem; letter-spacing: .2em; color: var(--butter); margin-bottom: .9rem; }
+.eng-card { background: oklch(0.13 0.05 290); border: 1.5px solid oklch(0.32 0.08 290); border-radius: 14px; padding: .95rem 1rem; }
+.eng-card h3 { font-weight: 800; font-size: .62rem; letter-spacing: .2em; color: var(--butter); margin-bottom: .7rem; }
 .eng-card h3 span { font-weight: 600; letter-spacing: .04em; text-transform: none; color: oklch(0.7 0.04 300); margin-left: .6em; }
 .eng-trace-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
 .eng-trace { display: grid; gap: .45rem; }
 .eng-trace figcaption { display: flex; justify-content: space-between; font-weight: 800; font-size: .56rem; letter-spacing: .16em; color: oklch(0.7 0.04 300); }
 .eng-trace figcaption b { font-family: var(--font-poster); font-size: .95rem; letter-spacing: .02em; color: var(--cream); font-variant-numeric: tabular-nums; }
-.eng-trace canvas { display: block; width: 100%; height: 76px; border-radius: 8px; background: oklch(0.09 0.04 290); border: 1px solid oklch(0.28 0.08 290); }
-.eng-stack { display: grid; gap: .5rem; font-weight: 800; font-size: .74rem; letter-spacing: .06em; }
-.eng-stack span { display: block; font-weight: 500; letter-spacing: 0; font-size: .74rem; color: oklch(0.72 0.04 300); }
-.eng-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+.eng-trace canvas { display: block; width: 100%; height: 60px; border-radius: 8px; background: oklch(0.09 0.04 290); border: 1px solid oklch(0.28 0.08 290); }
+.eng-stack { display: grid; gap: .3rem; font-weight: 800; font-size: .7rem; letter-spacing: .06em; }
+.eng-stack span { display: block; font-weight: 500; letter-spacing: 0; font-size: .7rem; color: oklch(0.72 0.04 300); }
+.eng-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: .55rem .8rem; }
 .eng-metrics dt { font-weight: 800; font-size: .56rem; letter-spacing: .16em; color: oklch(0.7 0.04 300); }
-.eng-metrics dd { font-family: var(--font-poster); font-size: 1.6rem; color: var(--cream); font-variant-numeric: tabular-nums; }
-.eng-systems ul { display: grid; gap: .7rem; }
+.eng-metrics dd { font-family: var(--font-poster); font-size: 1.45rem; line-height: 1.05; color: var(--cream); font-variant-numeric: tabular-nums; }
+.eng-systems ul { display: grid; gap: .5rem; }
 .eng-systems li { display: grid; gap: .3rem; font-size: .72rem; font-weight: 700; letter-spacing: .06em; }
 .eng-bar { display: block; height: 8px; background: oklch(0.3 0.08 290); border-radius: 4px; overflow: hidden; }
 .eng-bar b { display: block; height: 100%; width: 100%; background: var(--butter); transform: scaleX(0); transform-origin: left; transition: transform .25s ease; }

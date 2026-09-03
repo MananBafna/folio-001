@@ -104,7 +104,7 @@
     };
 
     const ready = document.fonts && document.fonts.load
-      ? document.fonts.load('800 100px "Bricolage Grotesque"').then(() => document.fonts.ready).catch(() => {})
+      ? document.fonts.load('800 100px "Manrope"').then(() => document.fonts.ready).catch(() => {})
       : Promise.resolve();
     Promise.resolve(ready).then(() => {
       layout();
@@ -241,13 +241,28 @@
         .to(shapes[2], { scale: 1, duration: 0.18, ease: "power2.out" }, 1.72);
     }
 
-    /* stamps: slam in from above with a screen shake on each hit */
+    /* the set warms up: a scan sweep runs down the tube and the status line tunes in */
+    const sweep = loader.querySelector("[data-sweep]");
+    const flash = loader.querySelector("[data-flash]");
+    const status = loader.querySelector("[data-loader-status]");
+    const setStatus = (text) => {
+      if (!status) return;
+      if (scramble) gsap.to(status, { duration: 0.5, scrambleText: { text, chars: "upperCase", speed: 0.7 } });
+      else status.textContent = text;
+    };
+    if (sweep) tl.fromTo(sweep, { yPercent: -100 }, { yPercent: 580, duration: 1.05, ease: "none", repeat: 1 }, 0);
+    tl.add(() => setStatus("LOCKING SIGNAL"), 1.05);
+    tl.add(() => setStatus("SIGNAL FOUND"), 1.9);
+
+    /* stamps: slam in from above, tilted, with a flash and a screen shake on each hit */
     const words = loader.querySelectorAll(".lw");
+    const rest = [-2.5, 1.8, -1.6], tilt = [-14, 12, -11];
     words.forEach((w, i) => {
       const at = 0.55 + i * 0.3;
       tl.fromTo(w,
-        { scale: 2.4, autoAlpha: 0 },
-        { scale: 1, autoAlpha: 1, duration: 0.2, ease: "power4.in" }, at);
+        { scale: 2.4, autoAlpha: 0, rotation: tilt[i] },
+        { scale: 1, autoAlpha: 1, rotation: rest[i], duration: 0.2, ease: "power4.in" }, at);
+      if (flash) tl.fromTo(flash, { opacity: 0.2 }, { opacity: 0, duration: 0.28, ease: "power2.out" }, at + 0.19);
       tl.to(scene, { x: i % 2 ? 6 : -6, duration: 0.04, yoyo: true, repeat: 3, ease: "none" }, at + 0.19);
     });
 
@@ -261,7 +276,8 @@
       .to(".loader-meta", { autoAlpha: 0, duration: 0.25, ease: "power2.out" }, "<")
       .to(bar, { autoAlpha: 0, duration: 0.25 }, "<");
 
-    /* aperture + shockwave ring over the name */
+    /* the tube flickers once, then the aperture tears open with a shockwave ring over the name */
+    tl.to(loader, { opacity: 0.72, duration: 0.05, repeat: 3, yoyo: true, ease: "none" });
     tl.add(() => {
       if (mark) {
         const r = mark.getBoundingClientRect();
