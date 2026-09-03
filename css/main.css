@@ -1944,14 +1944,17 @@ html.js .frame { opacity: 0; visibility: hidden; }
 .live-wealth i { font-style: normal; font-weight: 800; color: var(--forest); }
 .wealth-risk b { color: var(--orange); }
 .wealth-risk.is-low b { color: var(--forest); }
-.live-food { right: 1.2rem; top: 3.4rem; width: min(230px, 52%); display: grid; gap: .45rem; justify-items: end; }
-.food-qr { width: 62px; height: 62px; padding: 5px; background: #fff; border: 3px solid var(--navy-deep); border-radius: 6px; position: relative; overflow: hidden; box-shadow: 3px 3px 0 var(--navy-deep); }
+.live-food { left: 1.4rem; right: 1.4rem; top: 1.4rem; display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: .6rem; align-items: start; }
+.food-side { display: grid; gap: .35rem; justify-items: start; }
+.crate-stamp { transition: opacity .25s ease; }
+.crate:has(.live-food):hover .crate-stamp, .crate.is-live:has(.live-food) .crate-stamp { opacity: 0; }
+.food-qr { width: 56px; height: 56px; padding: 4px; background: #fff; border: 3px solid var(--navy-deep); border-radius: 6px; position: relative; overflow: hidden; box-shadow: 3px 3px 0 var(--navy-deep); }
 .food-qr svg { display: block; width: 100%; height: 100%; fill: var(--navy-deep); }
 .food-qr i { position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--red); box-shadow: 0 0 8px var(--red); z-index: 1; }
 .food-stalls { display: flex; gap: .3rem; flex-wrap: wrap; }
 .food-stalls span { font-size: .6rem; font-weight: 800; padding: .25em .6em; border-radius: 999px; border: 1.5px solid var(--navy-deep); opacity: .5; }
 .food-stalls span.is-pick { background: var(--navy-deep); color: var(--pink); opacity: 1; }
-.food-review { font-size: .7rem; background: var(--cream); color: var(--navy-deep); padding: .4em .7em; border-radius: 8px; box-shadow: 3px 3px 0 var(--navy-deep); opacity: 0; }
+.food-review { font-size: .66rem; line-height: 1.25; background: var(--cream); color: var(--navy-deep); padding: .4em .7em; border-radius: 8px; box-shadow: 3px 3px 0 var(--navy-deep); opacity: 0; }
 @media (max-width: 1023px) { .live { display: none; } }
 
 /* ------------------------------------------------ the maintenance hatch */
