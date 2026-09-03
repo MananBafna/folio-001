@@ -2020,7 +2020,7 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
 .tv-service {
   position: absolute; left: 50%; bottom: 4px; transform: translateX(-50%);
   font-weight: 800; font-size: .48rem; letter-spacing: .22em; white-space: nowrap;
-  color: oklch(0.72 0.05 290);
+  color: var(--butter); opacity: .85;
 }
 .screw-hint {
   position: fixed; left: 50%; bottom: 1.6rem; transform: translateX(-50%);
@@ -2030,8 +2030,10 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
   border: 2px solid var(--butter); border-radius: 999px;
   font-weight: 800; font-size: .66rem; letter-spacing: .18em; text-transform: uppercase; white-space: nowrap;
   box-shadow: 4px 4px 0 var(--red);
-  opacity: 0; pointer-events: none;
+  opacity: 0; pointer-events: none; cursor: pointer;
 }
+.screw-hint.is-link { pointer-events: auto; }
+.screw-hint.is-link:hover { background: var(--butter); color: var(--navy-deep); }
 .engine {
   position: fixed; inset: 0; z-index: 96;
   background: oklch(0.1 0.04 290);

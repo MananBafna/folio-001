@@ -1440,13 +1440,22 @@
     };
     const hintEl = document.querySelector("[data-screw-hint]");
     let hintTimer = 0;
-    const hint = (text) => {
+    const hint = (text, link) => {
       if (!hintEl) return;
       hintEl.textContent = text;
+      hintEl.classList.toggle("is-link", !!link);
       gsap.to(hintEl, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" });
       clearTimeout(hintTimer);
-      hintTimer = setTimeout(() => gsap.to(hintEl, { opacity: 0, y: 8, duration: 0.4 }), 3200);
+      hintTimer = setTimeout(() => { gsap.to(hintEl, { opacity: 0, y: 8, duration: 0.4 }); hintEl.classList.remove("is-link"); }, link ? 7000 : 3200);
     };
+    if (hintEl) hintEl.addEventListener("click", () => {
+      if (!hintEl.classList.contains("is-link")) return;
+      const crateScrew = document.querySelector(".crate-screw");
+      const target = crateScrew ? crateScrew.closest(".crate") : null;
+      if (!target) return;
+      if (lenis) lenis.scrollTo(target, { offset: -140, duration: 1.4 }); else target.scrollIntoView({ behavior: "smooth", block: "center" });
+      gsap.to(hintEl, { opacity: 0, y: 8, duration: 0.3 }); hintEl.classList.remove("is-link");
+    });
     screws.forEach((s) => s.addEventListener("click", (e) => {
       e.stopPropagation();
       if (loose.has(s)) return;
@@ -1455,7 +1464,7 @@
       const total = screws.length, n = loose.size;
       const crateLoose = [...loose].some((x) => x.classList.contains("crate-screw"));
       if (n === total) { hint("hatch open"); setTimeout(open, 350); }
-      else if (n === total - 1 && !crateLoose) hint(`${n} / ${total} · the last screw is not on the TV. Try the crates.`);
+      else if (n === total - 1 && !crateLoose) hint(`${n} / ${total} · the last screw is hiding on a project card. Take me there →`, true);
       else if (n === 1) hint(`1 / ${total} screws loose · find the rest`);
       else hint(`${n} / ${total} screws loose`);
     }));
