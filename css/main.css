@@ -96,12 +96,16 @@ h1, h2, h3 { text-wrap: balance; }
   html.js .cursor-label {
     position: absolute; top: 0; left: 0;
     transform: translate(-50%, -50%);
+    padding: .55em 1em;
+    border-radius: 999px;
+    background: var(--butter);
     font-family: var(--font-round);
-    font-size: .62rem; letter-spacing: .1em; font-weight: 700;
+    font-size: .62rem; letter-spacing: .14em; font-weight: 800;
     color: var(--forest-deep);
+    white-space: nowrap;
     opacity: 0;
   }
-  html.js .cursor.has-label .cursor-dot { mix-blend-mode: normal; }
+  html.js .cursor.has-label .cursor-dot { opacity: 0; }
   html.js .cursor.has-label .cursor-label { opacity: 1; }
 }
 
