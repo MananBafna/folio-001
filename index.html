@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=94">
+  <link rel="stylesheet" href="css/main.css?v=95">
 </head>
 <body>
 
@@ -752,96 +752,121 @@
         <h2 class="sec-title"><em>Touch the</em> OPS ROOM</h2>
         <p class="ops-sub">A working sketch of the HOPR AI supervisor. Drag a request into the inbox (or tap it) and watch it route, retrieve, act, and log.</p>
       </div>
-      <div class="ops-room" data-ops>
-        <aside class="ops-col ops-inbox" data-ops-layer>
-          <h3 class="ops-h">INBOX</h3>
-          <div class="ops-drop" data-ops-drop><span>drop a request here</span></div>
-          <ul class="ops-requests" data-ops-requests>
-            <li class="ops-req" data-req tabindex="0" data-agent="email" data-from="guest &middot; email" data-kb="Late checkout policy: 2pm, &#8377;500 after 12:00|Room 302 · departs tomorrow · no conflicts|Tone guide: warm, brief, no exclamation marks" data-action="draft_reply &middot; late checkout confirmed, 2pm" data-cursor-label="DRAG">Can we check out at 2pm tomorrow?</li>
-            <li class="ops-req" data-req tabindex="0" data-agent="web" data-from="visitor &middot; website chat" data-kb="Sea-view double: &#8377;7,400 / night in March|Availability: 12 nights open, 3 blocked|Offer: 3+ nights, breakfast included" data-action="quote_sent &middot; sea-view double, March" data-cursor-label="DRAG">What&#8217;s the rate for a sea-view double in March?</li>
-            <li class="ops-req" data-req tabindex="0" data-agent="guest" data-from="guest &middot; in-stay request" data-kb="Housekeeping roster: floor 2, 14:00 pass|Room 204 · linen replaced 09:10 · flagged|SLA: replacement within 30 minutes" data-action="create_task &middot; housekeeping, room 204" data-cursor-label="DRAG">Towels haven&#8217;t been replaced in 204.</li>
-          </ul>
-          <ul class="ops-done" data-ops-done aria-label="Resolved requests"></ul>
-        </aside>
-        <div class="ops-col ops-graph" data-ops-layer>
-          <div class="ops-node ops-super" data-node="super"><span class="node-dot"></span><b>SUPERVISOR</b><small data-super-state>idle</small></div>
-          <svg class="ops-wires" viewBox="0 0 400 200" preserveAspectRatio="none" aria-hidden="true">
-            <path data-wire="email" d="M200 28 C 200 100, 60 90, 60 172" fill="none"/>
-            <path data-wire="web" d="M200 28 C 200 100, 200 100, 200 172" fill="none"/>
-            <path data-wire="guest" d="M200 28 C 200 100, 340 90, 340 172" fill="none"/>
-          </svg>
-          <div class="ops-agents">
-            <button class="ops-node ops-agent" type="button" data-node="email" data-cursor-label="OPEN"><span class="node-dot"></span><b>EMAIL</b><small data-agent-state>idle</small><div class="agent-detail">Replies to guests in the hotel&#8217;s voice. Never invents policy: retrieves it. Tools: draft_reply, create_task.</div></button>
-            <button class="ops-node ops-agent" type="button" data-node="web" data-cursor-label="OPEN"><span class="node-dot"></span><b>WEB</b><small data-agent-state>idle</small><div class="agent-detail">Answers site visitors with live rates and availability. Tools: quote, hold_room.</div></button>
-            <button class="ops-node ops-agent" type="button" data-node="guest" data-cursor-label="OPEN"><span class="node-dot"></span><b>GUEST</b><small data-agent-state>idle</small><div class="agent-detail">Handles in-stay requests and turns them into operations: cleanings, tasks, lost and found. Tools: create_task, escalate.</div></button>
+      <div class="ops-stage" data-ops-stage>
+        <div class="ops-window" data-ops-window>
+          <header class="ops-chrome"><i></i><i></i><i></i><span>hopr &middot; operations</span><b data-ops-clock>00:00.0</b></header>
+          <div class="ops-app">
+            <nav class="ops-side" aria-hidden="true">
+              <span class="is-on">Inbox</span><span>Agents</span><span>Knowledge</span><span>Actions</span><span>Events</span>
+              <em>v0.9 &middot; staging</em>
+            </nav>
+            <div class="ops-main">
+              <div class="ops-kpis" aria-hidden="true">
+                <div class="kpi"><span>requests today</span><b data-kpi="req">0</b></div>
+                <div class="kpi kpi-red"><span>avg resolve</span><b data-kpi="time">&#8212;</b></div>
+                <div class="kpi kpi-butter"><span>agents online</span><b>3</b></div>
+                <div class="kpi kpi-forest"><span>grounded replies</span><b>100%</b></div>
+              </div>
+              <div class="ops-room" data-ops>
+              <aside class="ops-col ops-inbox" data-ops-layer>
+                <h3 class="ops-h">INBOX</h3>
+                <div class="ops-drop" data-ops-drop><span>drop a request here</span></div>
+                <ul class="ops-requests" data-ops-requests>
+                  <li class="ops-req" data-req tabindex="0" data-agent="email" data-from="guest &middot; email" data-kb="Late checkout policy: 2pm, &#8377;500 after 12:00|Room 302 · departs tomorrow · no conflicts|Tone guide: warm, brief, no exclamation marks" data-action="draft_reply &middot; late checkout confirmed, 2pm" data-cursor-label="DRAG">Can we check out at 2pm tomorrow?</li>
+                  <li class="ops-req" data-req tabindex="0" data-agent="web" data-from="visitor &middot; website chat" data-kb="Sea-view double: &#8377;7,400 / night in March|Availability: 12 nights open, 3 blocked|Offer: 3+ nights, breakfast included" data-action="quote_sent &middot; sea-view double, March" data-cursor-label="DRAG">What&#8217;s the rate for a sea-view double in March?</li>
+                  <li class="ops-req" data-req tabindex="0" data-agent="guest" data-from="guest &middot; in-stay request" data-kb="Housekeeping roster: floor 2, 14:00 pass|Room 204 · linen replaced 09:10 · flagged|SLA: replacement within 30 minutes" data-action="create_task &middot; housekeeping, room 204" data-cursor-label="DRAG">Towels haven&#8217;t been replaced in 204.</li>
+                </ul>
+                <ul class="ops-done" data-ops-done aria-label="Resolved requests"></ul>
+              </aside>
+              <div class="ops-col ops-graph" data-ops-layer>
+                <div class="ops-node ops-super" data-node="super"><span class="node-dot"></span><b>SUPERVISOR</b><small data-super-state>idle</small></div>
+                <svg class="ops-wires" viewBox="0 0 400 200" preserveAspectRatio="none" aria-hidden="true">
+                  <path data-wire="email" d="M200 28 C 200 100, 60 90, 60 172" fill="none"/>
+                  <path data-wire="web" d="M200 28 C 200 100, 200 100, 200 172" fill="none"/>
+                  <path data-wire="guest" d="M200 28 C 200 100, 340 90, 340 172" fill="none"/>
+                </svg>
+                <div class="ops-agents">
+                  <button class="ops-node ops-agent" type="button" data-node="email" data-cursor-label="OPEN"><span class="node-dot"></span><b>EMAIL</b><small data-agent-state>idle</small><div class="agent-detail">Replies to guests in the hotel&#8217;s voice. Never invents policy: retrieves it. Tools: draft_reply, create_task.</div></button>
+                  <button class="ops-node ops-agent" type="button" data-node="web" data-cursor-label="OPEN"><span class="node-dot"></span><b>WEB</b><small data-agent-state>idle</small><div class="agent-detail">Answers site visitors with live rates and availability. Tools: quote, hold_room.</div></button>
+                  <button class="ops-node ops-agent" type="button" data-node="guest" data-cursor-label="OPEN"><span class="node-dot"></span><b>GUEST</b><small data-agent-state>idle</small><div class="agent-detail">Handles in-stay requests and turns them into operations: cleanings, tasks, lost and found. Tools: create_task, escalate.</div></button>
+                </div>
+              </div>
+              <aside class="ops-col ops-panels" data-ops-layer>
+                <div class="ops-panel">
+                  <h3 class="ops-h">KNOWLEDGE <span>pgvector</span></h3>
+                  <ul class="ops-kb" data-ops-kb><li class="ops-empty">nothing retrieved yet</li></ul>
+                </div>
+                <div class="ops-panel">
+                  <h3 class="ops-h">ACTION</h3>
+                  <div class="ops-action" data-ops-action><span data-ops-action-text>waiting for a request</span><i class="ops-progress"><b data-ops-progress></b></i></div>
+                </div>
+                <div class="ops-panel ops-events">
+                  <h3 class="ops-h">EVENTS <span>live</span></h3>
+                  <ul class="ops-log" data-ops-log></ul>
+                </div>
+              </aside>
+            </div>
+            </div>
           </div>
         </div>
-        <aside class="ops-col ops-panels" data-ops-layer>
-          <div class="ops-panel">
-            <h3 class="ops-h">KNOWLEDGE <span>pgvector</span></h3>
-            <ul class="ops-kb" data-ops-kb><li class="ops-empty">nothing retrieved yet</li></ul>
-          </div>
-          <div class="ops-panel">
-            <h3 class="ops-h">ACTION</h3>
-            <div class="ops-action" data-ops-action><span data-ops-action-text>waiting for a request</span><i class="ops-progress"><b data-ops-progress></b></i></div>
-          </div>
-          <div class="ops-panel ops-events">
-            <h3 class="ops-h">EVENTS <span data-ops-clock>00:00.0</span></h3>
-            <ul class="ops-log" data-ops-log></ul>
-          </div>
-        </aside>
+        <span class="ops-float ops-float-1" aria-hidden="true">EMAIL AGENT</span>
+        <span class="ops-float ops-float-2" aria-hidden="true">pgvector</span>
+        <span class="ops-float ops-float-3" aria-hidden="true">SSE &middot; SignalR</span>
+        <span class="ops-float ops-float-4" aria-hidden="true">GUEST AGENT</span>
+        <span class="ops-float ops-float-5" aria-hidden="true">create_task()</span>
+        <div class="ops-cursor" data-ops-cursor aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 2 L20 12 L12 13.5 L8 22 Z" fill="#262054" stroke="#faf5e6" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
       </div>
     </section>
 
-    <!-- ACT VIII · THINGS I KEEP REACHING FOR -->
+    <!-- ACT VIII · THINGS I KEEP REACHING FOR (the tape rack) -->
     <section class="toolbox" id="toolbox">
       <h2 class="sec-title sec-title-center"><em>Things I keep</em> REACHING FOR</h2>
-      <p class="toolbox-sub">Four shelves, sorted by what they are for.</p>
-      <div class="shelves">
-        <div class="shelf">
-          <h3 class="shelf-title"><em>To make things</em> MOVE</h3>
-          <ul class="shelf-row">
-          <li class="book"><strong>GSAP + LENIS</strong><span>MOTION</span></li>
-          <li class="book"><strong>SHADERS · OGL</strong><span>MOTION</span></li>
-          <li class="book"><strong>SCROLL CHOREO</strong><span>MOTION</span></li>
-          <li class="book"><strong>DESIGN SYSTEMS</strong><span>DESIGN</span></li>
-          <li class="book"><strong>TAILWIND</strong><span>DESIGN</span></li>
-          <li class="book"><strong>COPYWRITING</strong><span>VOICE</span></li>
+      <p class="toolbox-sub">Four racks of tapes, sorted by what they are for. Hover one and it plays.</p>
+      <div class="racks">
+        <div class="rack rack-move">
+          <h3 class="rack-label"><em>To make things</em> MOVE</h3>
+          <ul class="tapes">
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">01</span><b>GSAP + LENIS</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">MOTION</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">02</span><b>SHADERS · OGL</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">MOTION</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">03</span><b>SCROLL CHOREO</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">MOTION</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">04</span><b>DESIGN SYSTEMS</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">DESIGN</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">05</span><b>TAILWIND</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">DESIGN</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">06</span><b>COPYWRITING</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">VOICE</span></li>
           </ul>
         </div>
-        <div class="shelf">
-          <h3 class="shelf-title"><em>To make things</em> THINK</h3>
-          <ul class="shelf-row">
-          <li class="book"><strong>LLM ORCHESTRATION</strong><span>AI</span></li>
-          <li class="book"><strong>MULTI-AGENT SYSTEMS</strong><span>AI</span></li>
-          <li class="book"><strong>RAG · PGVECTOR</strong><span>AI</span></li>
-          <li class="book"><strong>TOOL-USE AGENTS</strong><span>AI</span></li>
-          <li class="book"><strong>PROMPT + CONTEXT</strong><span>AI</span></li>
-          <li class="book"><strong>WORKFLOW AUTOMATION</strong><span>OPS</span></li>
+        <div class="rack rack-think">
+          <h3 class="rack-label"><em>To make things</em> THINK</h3>
+          <ul class="tapes">
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">07</span><b>LLM ORCHESTRATION</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">AI</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">08</span><b>MULTI-AGENT SYSTEMS</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">AI</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">09</span><b>RAG · PGVECTOR</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">AI</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">10</span><b>TOOL-USE AGENTS</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">AI</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">11</span><b>PROMPT + CONTEXT</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">AI</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">12</span><b>WORKFLOW AUTOMATION</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">OPS</span></li>
           </ul>
         </div>
-        <div class="shelf">
-          <h3 class="shelf-title"><em>To make things</em> HOLD TOGETHER</h3>
-          <ul class="shelf-row">
-          <li class="book"><strong>NEXT.JS + REACT</strong><span>WEB</span></li>
-          <li class="book"><strong>.NET / C#</strong><span>WEB</span></li>
-          <li class="book"><strong>TYPESCRIPT</strong><span>WEB</span></li>
-          <li class="book"><strong>NODE + EXPRESS</strong><span>WEB</span></li>
-          <li class="book"><strong>POSTGRES + SUPABASE</strong><span>DATA</span></li>
-          <li class="book"><strong>MULTI-TENANT · RLS</strong><span>DATA</span></li>
-          <li class="book"><strong>SSE · SIGNALR</strong><span>SYSTEMS</span></li>
-          <li class="book"><strong>JAVA + C++ + PYTHON</strong><span>ORIGIN</span></li>
+        <div class="rack rack-hold">
+          <h3 class="rack-label"><em>To make things</em> HOLD TOGETHER</h3>
+          <ul class="tapes">
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">13</span><b>NEXT.JS + REACT</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">WEB</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">14</span><b>.NET / C#</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">WEB</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">15</span><b>TYPESCRIPT</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">WEB</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">16</span><b>NODE + EXPRESS</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">WEB</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">17</span><b>POSTGRES + SUPABASE</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">DATA</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">18</span><b>MULTI-TENANT · RLS</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">DATA</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">19</span><b>SSE · SIGNALR</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">SYSTEMS</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">20</span><b>JAVA + C++ + PYTHON</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">ORIGIN</span></li>
           </ul>
         </div>
-        <div class="shelf">
-          <h3 class="shelf-title"><em>To figure things</em> OUT</h3>
-          <ul class="shelf-row">
-          <li class="book"><strong>EQUITY RESEARCH</strong><span>FINANCE</span></li>
-          <li class="book"><strong>TECHNICAL RESEARCH</strong><span>RESEARCH</span></li>
-          <li class="book"><strong>API ARCHITECTURE</strong><span>SYSTEMS</span></li>
-          <li class="book"><strong>PRODUCT ENGINEERING</strong><span>PRODUCT</span></li>
-          <li class="book"><strong>UNIT ECONOMICS</strong><span>FINANCE</span></li>
-          <li class="book"><strong>CONVERSATIONS</strong><span>VOICE</span></li>
+        <div class="rack rack-out">
+          <h3 class="rack-label"><em>To figure things</em> OUT</h3>
+          <ul class="tapes">
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">21</span><b>EQUITY RESEARCH</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">FINANCE</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">22</span><b>TECHNICAL RESEARCH</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">RESEARCH</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">23</span><b>API ARCHITECTURE</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">SYSTEMS</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">24</span><b>PRODUCT ENGINEERING</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">PRODUCT</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">25</span><b>UNIT ECONOMICS</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">FINANCE</span></li>
+            <li class="tape" tabindex="0" data-cursor-label="PLAY"><span class="tape-no">26</span><b>CONVERSATIONS</b><span class="tape-reels" aria-hidden="true"><i></i><i></i></span><span class="tape-tag">VOICE</span></li>
           </ul>
         </div>
       </div>
@@ -1055,9 +1080,9 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/particles.js?v=94"></script>
-  <script src="js/main.js?v=94"></script>
-  <script type="module" src="js/ripple.js?v=94"></script>
-  <script type="module" src="js/glow.js?v=94"></script>
+  <script src="js/particles.js?v=95"></script>
+  <script src="js/main.js?v=95"></script>
+  <script type="module" src="js/ripple.js?v=95"></script>
+  <script type="module" src="js/glow.js?v=95"></script>
 </body>
 </html>

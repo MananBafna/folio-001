@@ -1389,6 +1389,7 @@
     const route = (req) => {
       if (busy) return;
       busy = true;
+      const started = performance.now();
       const agentKey = req.dataset.agent;
       const agent = agents[agentKey], wire = wires[agentKey];
       const snippets = (req.dataset.kb || "").split("|");
@@ -1432,7 +1433,8 @@
           agent.classList.remove("is-busy"); agent.classList.add("is-done"); agent.querySelector("[data-agent-state]").textContent = "done";
           superNode.classList.remove("is-busy"); superState.textContent = "idle";
           addLog("streamed over SSE &middot; JWT ok");
-          addLog(`done in ${((performance.now() - t0) / 1000).toFixed(1)}s`);
+          addLog(`done in ${((performance.now() - started) / 1000).toFixed(1)}s`);
+          ops.dispatchEvent(new CustomEvent("ops:done", { detail: (performance.now() - started) / 1000 }));
         });
     };
 
@@ -1467,6 +1469,59 @@
       req.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); route(req); } });
     });
     Object.values(agents).forEach((a) => a.addEventListener("click", () => a.classList.toggle("is-open")));
+
+    /* kpis tick when a request resolves */
+    let served = 0;
+    const kReq = ops.closest(".ops").querySelector('[data-kpi="req"]');
+    const kTime = ops.closest(".ops").querySelector('[data-kpi="time"]');
+    ops.addEventListener("ops:done", (e) => {
+      served++;
+      if (kReq) kReq.textContent = String(served);
+      if (kTime) kTime.textContent = e.detail.toFixed(1) + "s";
+    });
+
+    /* the window tilts toward the pointer; the floating tags lag behind at depth */
+    const stage = document.querySelector("[data-ops-stage]");
+    const win = document.querySelector("[data-ops-window]");
+    const floats = gsap.utils.toArray(".ops-float");
+    if (stage && win && finePointer && window.innerWidth >= 1024) {
+      const rx = gsap.quickTo(win, "rotationX", { duration: 0.8, ease: "power3.out" });
+      const ry = gsap.quickTo(win, "rotationY", { duration: 0.8, ease: "power3.out" });
+      const fx = floats.map((f) => gsap.quickTo(f, "x", { duration: 1.1, ease: "power3.out" }));
+      const fy = floats.map((f) => gsap.quickTo(f, "y", { duration: 1.1, ease: "power3.out" }));
+      stage.addEventListener("pointermove", (e) => {
+        const r = stage.getBoundingClientRect();
+        const nx = (e.clientX - r.left) / r.width - 0.5, ny = (e.clientY - r.top) / r.height - 0.5;
+        rx(-ny * 7); ry(nx * 9);
+        floats.forEach((f, i) => { const d = 18 + (i % 3) * 12; fx[i](-nx * d); fy[i](-ny * d); });
+      }, { passive: true });
+      stage.addEventListener("pointerleave", () => { rx(0); ry(0); floats.forEach((f, i) => { fx[i](0); fy[i](0); }); });
+      gsap.set(win, { rotationX: 6, rotationY: -6 });
+      ScrollTrigger.create({ trigger: stage, start: "top 75%", once: true, onEnter() { rx(0); ry(0); } });
+    }
+    floats.forEach((f, i) => gsap.to(f, { y: "+=8", duration: 2.2 + i * 0.3, ease: "sine.inOut", repeat: -1, yoyo: true }));
+
+    /* auto demo on first sight: a cursor appears, drags the first request in */
+    const cur = document.querySelector("[data-ops-cursor]");
+    if (cur && stage && window.innerWidth >= 1024) {
+      ScrollTrigger.create({ trigger: stage, start: "top 60%", once: true, onEnter() {
+        const req = reqs[0]; if (!req || busy) return;
+        const sr = stage.getBoundingClientRect(), rr = req.getBoundingClientRect(), dr = drop.getBoundingClientRect();
+        const to = (r, ox, oy) => ({ x: r.left - sr.left + r.width * ox, y: r.top - sr.top + r.height * oy });
+        const a = to(rr, 0.6, 0.5), b = to(dr, 0.5, 0.5);
+        gsap.timeline({ delay: 1.2 })
+          .set(cur, { x: a.x + 120, y: a.y + 140, autoAlpha: 0 })
+          .to(cur, { autoAlpha: 1, duration: 0.3 })
+          .to(cur, { x: a.x, y: a.y, duration: 0.9, ease: "power2.inOut" })
+          .to(cur, { scale: 0.8, duration: 0.1, yoyo: true, repeat: 1 })
+          .add(() => { req.classList.add("is-lifted"); })
+          .to([cur, req], { x: "+=" + (b.x - a.x), y: "+=" + (b.y - a.y), duration: 1.0, ease: "power2.inOut" }, "+=0.1")
+          .add(() => { drop.classList.add("is-hot"); })
+          .to(cur, { scale: 0.8, duration: 0.1, yoyo: true, repeat: 1 }, "+=0.15")
+          .add(() => { drop.classList.remove("is-hot"); gsap.set(req, { x: 0, y: 0 }); route(req); })
+          .to(cur, { autoAlpha: 0, y: "+=40", duration: 0.5 }, "+=0.4");
+      } });
+    }
   })();
 
   /* ---------------------------------------------- the maintenance hatch: four screws, then the engine room */
@@ -1531,6 +1586,14 @@
     engine.querySelector("[data-engine-close]").addEventListener("click", close);
     window.addEventListener("keydown", (e) => { if (e.key === "Escape" && engine.classList.contains("is-open")) close(); });
   })();
+
+  /* ---------------------------------------------- the tape rack */
+  gsap.utils.toArray(".rack").forEach((rack) => {
+    gsap.from(rack.querySelectorAll(".tape"), {
+      x: -18, autoAlpha: 0, duration: 0.5, ease: "power3.out", stagger: 0.05,
+      scrollTrigger: { trigger: rack, start: "top 85%" },
+    });
+  });
 
   /* ---------------------------------------------- cursor */
   const cursor = document.querySelector(".cursor");
