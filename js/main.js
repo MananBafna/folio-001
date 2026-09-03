@@ -525,11 +525,11 @@
       const at = i * 2.1;
       cyc.fromTo(chip, { x: 0, y: 0, autoAlpha: 0, scale: 1 },
         { autoAlpha: 1, duration: 0.25, ease: "power2.out" }, at)
-        .to(chip, { x: 118, y: 92, scale: 0.35, autoAlpha: 0, duration: 0.55, ease: "power2.in" }, at + 0.4)
+        .to(chip, { x: 168, y: 132, scale: 0.35, autoAlpha: 0, duration: 0.55, ease: "power2.in" }, at + 0.4)
         .to(box, { scale: 1.14, duration: 0.12, ease: "power2.out" }, at + 0.92)
         .to(box, { scale: 1, duration: 0.34, ease: "back.out(3)" }, at + 1.04)
         .to(spinner, { rotation: "+=120", duration: 0.5, ease: "power2.out" }, at + 0.92)
-        .fromTo(outs[i], { x: -118, y: -100, scale: 0.35, autoAlpha: 0 },
+        .fromTo(outs[i], { x: -168, y: -136, scale: 0.35, autoAlpha: 0 },
           { x: 0, y: 0, scale: 1, autoAlpha: 1, duration: 0.5, ease: "back.out(1.6)" }, at + 1.02)
         .to(outs[i], { autoAlpha: 0, y: 14, duration: 0.35, ease: "power2.in" }, at + 1.8);
     });
@@ -542,59 +542,274 @@
   /* ---------------------------------------------- the story: projector room */
   (function initReel() {
     const reel = document.querySelector("[data-reel]");
-    if (!reel) return;
+    const tv = document.querySelector("[data-tv]");
+    if (!reel || !tv) return;
     const frames = gsap.utils.toArray("[data-frame]");
-    const flicker = document.querySelector("[data-flicker]");
+    const N = frames.length;
+    if (!N) return;
+    const q = (sel) => tv.querySelector(sel);
+    const flicker = q("[data-flicker]");
     const counter = document.querySelector("[data-reel-no]");
+    const osdCh = q("[data-osd-ch]");
+    const osdTime = q("[data-osd-time]");
+    const osdSignal = q("[data-osd-signal]");
+    const osdVolBar = q("[data-osd-vol-bar]");
+    const osdCc = q("[data-osd-cc]");
+    const boot = q("[data-boot]");
+    const offVeil = q("[data-off]");
+    const offDot = q("[data-off-dot]");
+    const framesWrap = q("[data-frames]");
     const cells = gsap.utils.toArray(".reel-cell");
-    if (!frames.length) return;
+
+    /* ---- sound: a CRT hum, static, and a mechanical click. Built lazily on
+       the first gesture (browsers require one); the volume dial is the gain. */
+    const snd = { ctx: null, master: null, noiseGain: null, volume: 0.35, on: true };
+    const ensureAudio = () => {
+      if (snd.ctx) { if (snd.ctx.state === "suspended") snd.ctx.resume(); return; }
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      const ctx = new AC();
+      const master = ctx.createGain();
+      master.gain.value = snd.on ? snd.volume : 0;
+      master.connect(ctx.destination);
+      const hum = ctx.createOscillator(); hum.type = "sine"; hum.frequency.value = 55;
+      const humG = ctx.createGain(); humG.gain.value = 0.05;
+      const hum2 = ctx.createOscillator(); hum2.type = "triangle"; hum2.frequency.value = 110;
+      const hum2G = ctx.createGain(); hum2G.gain.value = 0.018;
+      hum.connect(humG).connect(master); hum2.connect(hum2G).connect(master);
+      hum.start(); hum2.start();
+      const len = ctx.sampleRate * 2;
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      const noise = ctx.createBufferSource(); noise.buffer = buf; noise.loop = true;
+      const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 1800; bp.Q.value = 0.6;
+      const noiseGain = ctx.createGain(); noiseGain.gain.value = 0;
+      noise.connect(bp).connect(noiseGain).connect(master);
+      noise.start();
+      snd.ctx = ctx; snd.master = master; snd.noiseGain = noiseGain;
+    };
+    const applyVolume = () => {
+      if (!snd.master) return;
+      snd.master.gain.setTargetAtTime(snd.on ? snd.volume : 0, snd.ctx.currentTime, 0.06);
+    };
+    const staticBurst = (dur = 0.4, level = 0.35) => {
+      if (!snd.noiseGain) return;
+      const t = snd.ctx.currentTime;
+      snd.noiseGain.gain.cancelScheduledValues(t);
+      snd.noiseGain.gain.setTargetAtTime(level, t, 0.02);
+      snd.noiseGain.gain.setTargetAtTime(0, t + dur, 0.08);
+    };
+    const clickSound = () => staticBurst(0.03, 0.5);
+    tv.addEventListener("pointerdown", ensureAudio, { passive: true });
+
+    /* ---- state ---- */
+    let current = 0, switching = false, power = true, booted = false, cc = false;
+    const pad = (n) => String(n + 1).padStart(2, "0");
+    const chDialEl = q('[data-dial="channel"]');
+    const setOSD = (idx) => {
+      if (counter) counter.textContent = pad(idx);
+      if (osdCh) osdCh.textContent = pad(idx);
+      cells.forEach((c, i) => c.classList.toggle("is-on", i === idx));
+      const line = frames[idx].querySelector(".frame-line");
+      if (osdCc && line) osdCc.textContent = line.textContent;
+      if (chDialEl) chDialEl.setAttribute("aria-valuenow", String(idx + 1));
+    };
 
     gsap.set(frames, { autoAlpha: 0 });
-    gsap.set(frames[0], { autoAlpha: 1 });
-    gsap.set(frames[0].querySelector("img"), { scale: 1.06 });
 
-    let current = 0;
-    let switching = false;
     const show = (idx) => {
       if (idx === current || switching) return;
       switching = true;
-      const from = frames[current];
-      const to = frames[idx];
+      const from = frames[current], to = frames[idx];
       current = idx;
-      if (counter) counter.textContent = String(idx + 1).padStart(2, "0");
-      cells.forEach((c, i) => c.classList.toggle("is-on", i === idx));
+      setOSD(idx);
+      staticBurst(0.16, 0.22);
+      const toImg = to.querySelector("img"), fromImg = from.querySelector("img");
       const tl = gsap.timeline({ onComplete() { switching = false; } });
-      /* iris wipe: the next frame blooms open as a circle over the last,
-         while the old image drifts a touch deeper */
+      /* iris wipe: the next channel blooms open over the last */
       tl.set(to, { autoAlpha: 1, clipPath: "circle(0% at 50% 54%)" }, 0)
         .to(to, { clipPath: "circle(75% at 50% 54%)", duration: 0.85, ease: "power2.inOut" }, 0)
-        .to(from.querySelector("img"), { scale: "+=0.03", duration: 0.85, ease: "power1.out" }, 0)
         .set(from, { autoAlpha: 0 }, 0.85)
         .set(to, { clipPath: "none" }, 0.85)
-        .fromTo(to.querySelector("img"), { scale: 1.12 },
-          { scale: 1.05, duration: 1.5, ease: "power2.out" }, 0)
-        .fromTo(to.querySelector(".frame-card"),
-          { y: 26, autoAlpha: 0 },
+        .fromTo(to.querySelector(".frame-card"), { y: 26, autoAlpha: 0 },
           { y: 0, autoAlpha: 1, duration: 0.55, ease: "power3.out" }, 0.3);
+      if (fromImg) tl.to(fromImg, { scale: "+=0.03", duration: 0.85, ease: "power1.out" }, 0);
+      if (toImg) tl.fromTo(toImg, { scale: 1.12 }, { scale: 1.05, duration: 1.5, ease: "power2.out" }, 0);
       const t = to.querySelector("h3");
       if (t && scramble) {
-        tl.to(t, {
-          duration: 0.8,
-          scrambleText: { text: t.dataset.title || t.textContent, chars: "upperCase", speed: 0.6 },
-        }, 0.35);
+        tl.to(t, { duration: 0.8, scrambleText: { text: t.dataset.title || t.textContent, chars: "upperCase", speed: 0.6 } }, 0.35);
       }
     };
 
-    ScrollTrigger.create({
-      trigger: ".doctrine",
-      start: "top top",
-      end: () => `+=${frames.length * window.innerHeight * 0.75}`,
-      pin: reel,
-      invalidateOnRefresh: true,
-      onUpdate(self) {
-        show(Math.min(frames.length - 1, Math.floor(self.progress * frames.length)));
+    /* ---- boot: SIGNAL FOUND, then the tube warms up ---- */
+    let st;
+    const sync = () => { if (st && booted && power) show(Math.min(N - 1, Math.floor(st.progress * N))); };
+    const bootSequence = () => {
+      booted = "booting";
+      const lines = [q("[data-boot-1]"), q("[data-boot-2]"), q("[data-boot-3]")];
+      const tl = gsap.timeline({ onComplete() { booted = true; sync(); } });
+      tl.set(boot, { autoAlpha: 1 })
+        .fromTo(lines[0], { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.3)
+        .fromTo(lines[1], { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.95)
+        .fromTo(lines[2], { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" }, 1.3)
+        .add(() => staticBurst(0.35, 0.3), 2.0)
+        .set(flicker, { opacity: 1 }, 2.0)
+        .set(boot, { autoAlpha: 0 }, 2.05)
+        .set(frames[0], { autoAlpha: 1 }, 2.05)
+        .fromTo(framesWrap, { scaleY: 0.02, filter: "brightness(3)" },
+          { scaleY: 1, filter: "brightness(1)", duration: 0.5, ease: "power3.out" }, 2.05)
+        .to(flicker, { opacity: 0, duration: 0.3 }, 2.1);
+      if (scramble) {
+        lines.forEach((l, i) => tl.to(l, {
+          duration: 0.6, scrambleText: { text: l.textContent, chars: "upperCase", speed: 0.7 },
+        }, [0.3, 0.95, 1.3][i]));
+      }
+      setOSD(0);
+    };
+
+    /* ---- scroll picks the channel; the dial drives the scroll ---- */
+    st = ScrollTrigger.create({
+      trigger: ".doctrine", start: "top top",
+      end: () => `+=${N * window.innerHeight * 0.7}`,
+      pin: reel, invalidateOnRefresh: true,
+      onEnter() { if (!booted) bootSequence(); },
+      onUpdate() { if (booted === true) sync(); },
+    });
+    if (st.isActive && !booted) bootSequence();
+    const gotoChannel = (idx) => {
+      idx = Math.max(0, Math.min(N - 1, idx));
+      const y = st.start + ((idx + 0.5) / N) * (st.end - st.start);
+      if (lenis) lenis.scrollTo(y, { duration: 0.9 }); else window.scrollTo(0, y);
+    };
+
+    /* ---- dials: drag (or arrow keys) to turn ---- */
+    const makeDial = (el, opts) => {
+      if (!el) return { set() {}, busy: false };
+      const cap = el.querySelector("[data-dial-cap]");
+      const api = { busy: false, set(a) { angle = a; render(); } };
+      let angle = opts.initial || 0, moved = false, startA = 0, startAngle = 0;
+      const render = () => gsap.set(cap, { rotation: angle });
+      const pointerAngle = (e) => {
+        const r = el.getBoundingClientRect();
+        return Math.atan2(e.clientY - (r.top + r.height / 2), e.clientX - (r.left + r.width / 2)) * 180 / Math.PI;
+      };
+      el.addEventListener("pointerdown", (e) => {
+        api.busy = true; moved = false; startA = pointerAngle(e); startAngle = angle;
+        el.setPointerCapture(e.pointerId); ensureAudio();
+      });
+      el.addEventListener("pointermove", (e) => {
+        if (!api.busy) return;
+        let d = pointerAngle(e) - startA;
+        if (d > 180) d -= 360; if (d < -180) d += 360;
+        if (Math.abs(d) > 2) moved = true;
+        angle = Math.max(opts.min, Math.min(opts.max, startAngle + d));
+        render(); opts.onTurn(angle);
+      });
+      const end = () => {
+        if (!api.busy) return;
+        api.busy = false;
+        if (!moved && opts.onTap) opts.onTap();
+      };
+      el.addEventListener("pointerup", end);
+      el.addEventListener("pointercancel", end);
+      el.addEventListener("keydown", (e) => {
+        const step = opts.keyStep || 10;
+        if (e.key === "ArrowRight" || e.key === "ArrowUp") angle = Math.min(opts.max, angle + step);
+        else if (e.key === "ArrowLeft" || e.key === "ArrowDown") angle = Math.max(opts.min, angle - step);
+        else return;
+        e.preventDefault(); ensureAudio(); render(); opts.onTurn(angle);
+      });
+      render();
+      return api;
+    };
+
+    const chStep = 300 / (N - 1);
+    let lastDialIdx = 0;
+    const chDial = makeDial(chDialEl, {
+      min: -150, max: 150, initial: -150, keyStep: chStep,
+      onTurn(a) {
+        const idx = Math.round((a + 150) / chStep);
+        if (idx !== lastDialIdx) { lastDialIdx = idx; clickSound(); gotoChannel(idx); }
+      },
+      onTap() { clickSound(); gotoChannel((current + 1) % N); },
+    });
+    const volDialEl = q('[data-dial="volume"]');
+    let volTimer;
+    makeDial(volDialEl, {
+      min: -135, max: 135, initial: -135 + 270 * 0.35, keyStep: 15,
+      onTurn(a) {
+        snd.volume = (a + 135) / 270; applyVolume();
+        if (osdVolBar) osdVolBar.style.transform = `scaleX(${snd.volume})`;
+        tv.classList.add("is-vol");
+        clearTimeout(volTimer); volTimer = setTimeout(() => tv.classList.remove("is-vol"), 1200);
+        if (volDialEl) volDialEl.setAttribute("aria-valuenow", String(Math.round(snd.volume * 100)));
       },
     });
+    /* the channel dial keeps pointing at whatever channel the scroll chose */
+    setInterval(() => {
+      if (chDial.busy) return;
+      lastDialIdx = current;
+      chDial.set(-150 + current * chStep);
+    }, 400);
+
+    /* ---- power ---- */
+    const powerBtn = q("[data-power]");
+    if (powerBtn) powerBtn.addEventListener("click", () => {
+      ensureAudio(); clickSound();
+      power = !power;
+      powerBtn.setAttribute("aria-pressed", String(power));
+      tv.classList.toggle("is-off", !power);
+      snd.on = power; applyVolume();
+      if (!power) {
+        gsap.timeline()
+          .to(framesWrap, { scaleY: 0.01, duration: 0.28, ease: "power4.in" })
+          .set(offVeil, { autoAlpha: 1 })
+          .fromTo(offDot, { scale: 1, autoAlpha: 1 }, { scale: 0.2, autoAlpha: 0, duration: 0.9, ease: "power2.in" });
+      } else {
+        gsap.timeline()
+          .set(offVeil, { autoAlpha: 0 })
+          .set(flicker, { opacity: 1 })
+          .to(framesWrap, { scaleY: 1, duration: 0.45, ease: "power3.out" })
+          .to(flicker, { opacity: 0, duration: 0.3 }, 0.1)
+          .add(sync);
+      }
+    });
+
+    /* ---- antenna: interference ---- */
+    const antenna = q("[data-antenna]");
+    if (antenna) antenna.addEventListener("click", () => {
+      ensureAudio(); staticBurst(0.7, 0.45);
+      tv.classList.add("is-noise");
+      gsap.fromTo(antenna, { rotation: -6 }, { rotation: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
+      gsap.timeline({ onComplete() { tv.classList.remove("is-noise"); } })
+        .to(framesWrap, { x: -6, skewX: 3, duration: 0.05, repeat: 9, yoyo: true, ease: "none" })
+        .set(framesWrap, { x: 0, skewX: 0 });
+      randomizeSignal(true);
+    });
+
+    /* ---- subtitles ---- */
+    const ccBtn = q("[data-cc]");
+    if (ccBtn) ccBtn.addEventListener("click", () => {
+      cc = !cc; ccBtn.setAttribute("aria-pressed", String(cc));
+      tv.classList.toggle("is-cc", cc); clickSound();
+    });
+
+    /* ---- OSD clock + signal bars ---- */
+    const t0 = Date.now();
+    setInterval(() => {
+      if (!osdTime) return;
+      const s = Math.floor((Date.now() - t0) / 1000);
+      osdTime.textContent = [Math.floor(s / 3600), Math.floor((s % 3600) / 60), s % 60]
+        .map((n) => String(n).padStart(2, "0")).join(":");
+    }, 1000);
+    const randomizeSignal = (weak) => {
+      if (!osdSignal) return;
+      const n = weak ? 1 + Math.floor(Math.random() * 2) : 3 + Math.floor(Math.random() * 3);
+      [...osdSignal.children].forEach((b, i) => b.classList.toggle("is-on", i < n));
+    };
+    randomizeSignal(false);
+    setInterval(() => randomizeSignal(false), 1600);
 
     gsap.from(".reel-head, .tv", {
       opacity: 0, y: 20, duration: 0.8, ease: "power3.out", stagger: 0.1,
@@ -692,61 +907,6 @@
       applyProgress(current);
     });
   })();
-
-  /* ---------------------------------------------- the arc: editor timeline */
-  gsap.from(".gauntlet-head > *", {
-    opacity: 0, y: 36, duration: 0.9, ease: "power3.out", stagger: 0.1,
-    scrollTrigger: { trigger: ".gauntlet", start: "top 70%" },
-  });
-  gsap.from(".editor .clip", {
-    scaleX: 0, transformOrigin: "left center", duration: 0.6, ease: "power3.out", stagger: 0.06,
-    scrollTrigger: { trigger: ".editor", start: "top 78%" },
-  });
-  gsap.to(".gauntlet-line-fill", {
-    scaleY: 1,
-    ease: "none",
-    scrollTrigger: { trigger: ".gauntlet-rail", start: "top 75%", end: "bottom 45%", scrub: true },
-  });
-
-  /* the seven scenes as an animated list (AnimatedList, ported): rows scale
-     in and out with visibility; hover selects; and the playhead, scrubbed
-     against the rail itself, keeps the selected row in sync with the red line */
-  const stops = gsap.utils.toArray(".stop");
-  const selectStop = (idx) => {
-    stops.forEach((o, i) => o.classList.toggle("selected", i === idx));
-  };
-  if (stops.length) {
-    if ("IntersectionObserver" in window) {
-      /* the dock owns the top of the viewport: rows fade out before they
-         slide under it, so only the scenes below the card stay visible */
-      const dock = document.querySelector(".editor-dock");
-      const dockH = dock ? dock.offsetHeight : 0;
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((en) => en.target.classList.toggle("is-in", en.isIntersecting));
-      }, { threshold: 0.5, rootMargin: `-${dockH}px 0px 0px 0px` });
-      stops.forEach((s) => io.observe(s));
-    } else {
-      stops.forEach((s) => s.classList.add("is-in"));
-    }
-    stops.forEach((s, i) => {
-      s.addEventListener("pointerenter", () => selectStop(i));
-    });
-    /* the b-roll waveform fills in step with the playhead */
-    gsap.fromTo("[data-broll-fill]", { clipPath: "inset(0 100% 0 0)" }, {
-      clipPath: "inset(0 0% 0 0)", ease: "none",
-      scrollTrigger: { trigger: ".gauntlet-rail", start: "top 72%", end: "bottom 62%", scrub: true },
-    });
-    gsap.fromTo(".editor-playhead", { left: "0%", x: 0 }, {
-      left: "100%", x: -3,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".gauntlet-rail", start: "top 72%", end: "bottom 62%", scrub: true,
-        onUpdate(self) {
-          selectStop(Math.min(stops.length - 1, Math.floor(self.progress * stops.length)));
-        },
-      },
-    });
-  }
 
   /* the ghost film reel behind the TV turns slowly */
   gsap.to(".tv-bg-reel", { rotation: 360, duration: 46, ease: "none", repeat: -1 });
@@ -947,11 +1107,6 @@
     opacity: 0, y: 34, duration: 0.9, ease: "power3.out", stagger: 0.1,
     scrollTrigger: { trigger: ".access", start: "top 65%" },
   });
-  gsap.fromTo("[data-mailrow]", { xPercent: 1 }, {
-    xPercent: -26,
-    ease: "none",
-    scrollTrigger: { trigger: ".access", start: "top bottom", end: "bottom top", scrub: true },
-  });
   gsap.to(".access-stick-a", {
     yPercent: 60, rotate: 20, ease: "none",
     scrollTrigger: { trigger: ".access", start: "top bottom", end: "bottom top", scrub: true },
@@ -989,6 +1144,367 @@
       scrollTrigger: { trigger: ".colophon", start: "top 85%" },
     });
   }
+
+
+  /* ---------------------------------------------- end of transmission */
+  (function initOutro() {
+    const stage = document.querySelector("[data-outro]");
+    if (!stage) return;
+    const screen = stage.querySelector("[data-outro-screen]");
+    const stat = stage.querySelector("[data-outro-static]");
+    const led = stage.querySelector("[data-outro-led]");
+    const lines = [1, 2, 3].map((n) => stage.querySelector(`[data-outro-${n}]`));
+    const cta = stage.querySelector("[data-outro-cta]");
+    const tag = stage.querySelector("[data-outro-tag]");
+    let played = false;
+    const tick = () => {
+      try {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        const ctx = new AC();
+        const o = ctx.createOscillator(); const g = ctx.createGain();
+        o.type = "square"; o.frequency.value = 900;
+        g.gain.setValueAtTime(0.06, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.05);
+        o.connect(g).connect(ctx.destination); o.start(); o.stop(ctx.currentTime + 0.06);
+      } catch (e) {}
+    };
+    const play = () => {
+      if (played) return; played = true;
+      gsap.timeline()
+        .to(stat, { opacity: 0.5, duration: 0.2 })
+        .to(screen, { scaleY: 0.01, duration: 0.35, ease: "power4.in" }, 0.9)
+        .set(stat, { opacity: 0 })
+        .to(screen, { scaleX: 0.2, duration: 0.15, ease: "power2.in" })
+        .to(led, { opacity: 1, boxShadow: "0 0 12px 4px oklch(0.58 0.17 30 / .7)", duration: 0.4 })
+        .add(tick, "+=1.1")
+        .to(screen, { scaleX: 1, scaleY: 1, duration: 0.35, ease: "power3.out" })
+        .fromTo(lines[0], { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.5 }, "+=0.3")
+        .fromTo(lines[1], { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.5 }, "+=1.1")
+        .fromTo(lines[2], { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, "+=0.9")
+        .fromTo(cta, { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, "-=0.2")
+        .to(tag, { opacity: 1, duration: 0.6 }, "-=0.1");
+    };
+    ScrollTrigger.create({ trigger: ".outro", start: "top 35%", onEnter: play });
+  })();
+
+  /* ---------------------------------------------- field signals: the drawer */
+  (function initDrawer() {
+    const drawer = document.querySelector("[data-drawer]");
+    const pull = document.querySelector("[data-drawer-open]");
+    const closeBtn = document.querySelector("[data-drawer-close]");
+    if (!drawer || !pull) return;
+    /* the pull shows itself once the hero is behind you */
+    ScrollTrigger.create({
+      trigger: ".hero", start: "bottom top",
+      onEnter: () => pull.classList.add("is-shown"),
+      onLeaveBack: () => pull.classList.remove("is-shown"),
+    });
+    const open = () => {
+      drawer.classList.add("is-open"); drawer.setAttribute("aria-hidden", "false");
+      document.documentElement.classList.add("is-loading");
+      if (lenis) lenis.stop();
+      gsap.fromTo(drawer, { y: "100%" }, { y: 0, duration: 0.7, ease: "power4.out", clearProps: "transform" });
+      gsap.from("[data-desk] > *", { scale: 0.85, autoAlpha: 0, duration: 0.5, ease: "back.out(1.5)", stagger: 0.04, delay: 0.3 });
+    };
+    const close = () => {
+      gsap.to(drawer, { y: "100%", duration: 0.5, ease: "power3.in", onComplete() {
+        drawer.classList.remove("is-open"); drawer.setAttribute("aria-hidden", "true");
+        gsap.set(drawer, { clearProps: "transform" });
+        document.documentElement.classList.remove("is-loading");
+        if (lenis) lenis.start();
+      } });
+    };
+    pull.addEventListener("click", open);
+    if (closeBtn) closeBtn.addEventListener("click", close);
+    window.addEventListener("keydown", (e) => { if (e.key === "Escape" && drawer.classList.contains("is-open")) close(); });
+
+    /* every item drags; a click without a drag flips the note */
+    let z = 10;
+    drawer.querySelectorAll("[data-note]").forEach((el) => {
+      let sx = 0, sy = 0, ox = 0, oy = 0, moved = false, on = false;
+      el.addEventListener("pointerdown", (e) => {
+        on = true; moved = false; sx = e.clientX; sy = e.clientY;
+        ox = gsap.getProperty(el, "x"); oy = gsap.getProperty(el, "y");
+        el.style.zIndex = ++z; el.setPointerCapture(e.pointerId);
+      });
+      el.addEventListener("pointermove", (e) => {
+        if (!on) return;
+        const dx = e.clientX - sx, dy = e.clientY - sy;
+        if (Math.abs(dx) + Math.abs(dy) > 4) moved = true;
+        gsap.set(el, { x: ox + dx, y: oy + dy });
+      });
+      const up = () => {
+        if (!on) return; on = false;
+        if (!moved && el.classList.contains("note")) el.classList.toggle("is-open");
+      };
+      el.addEventListener("pointerup", up); el.addEventListener("pointercancel", up);
+      el.addEventListener("keydown", (e) => { if ((e.key === "Enter" || e.key === " ") && el.classList.contains("note")) { e.preventDefault(); el.classList.toggle("is-open"); } });
+    });
+  })();
+
+
+  /* ---------------------------------------------- live moments on the crates */
+  (function initLiveMoments() {
+    const runOnce = new Set();
+    const bind = (crate, build) => {
+      if (!crate) return;
+      let tl = null;
+      const play = () => {
+        if (tl) tl.kill();
+        tl = build();
+      };
+      crate.addEventListener("pointerenter", play);
+      ScrollTrigger.create({ trigger: crate, start: "top 70%", once: true, onEnter() {
+        crate.classList.add("is-live"); play();
+        setTimeout(() => crate.classList.remove("is-live"), 5200);
+      } });
+    };
+
+    /* multi-agent: the reply streams in */
+    const chat = document.querySelector('[data-live="chat"]');
+    if (chat) {
+      const out = chat.querySelector("[data-chat-stream]");
+      const text = "Yes, late checkout at 2pm is confirmed for room 302. There is a ₹500 charge after noon; I have noted it on the folio.";
+      bind(chat.closest(".crate"), () => {
+        out.textContent = "";
+        const st = { n: 0 };
+        return gsap.timeline()
+          .from(chat.querySelector(".chat-in"), { y: 8, autoAlpha: 0, duration: 0.3 })
+          .to(st, { n: text.length, duration: 2.6, ease: "none", onUpdate() { out.textContent = text.slice(0, Math.round(st.n)); } }, 0.5);
+      });
+    }
+
+    /* crm: a lead arrives, gets tagged, moves, gets an owner, saves */
+    const crm = document.querySelector('[data-live="crm"]');
+    if (crm) {
+      const lead = crm.querySelector("[data-crm-lead]"), tag = crm.querySelector("[data-crm-tag]");
+      const avatar = crm.querySelector("[data-crm-avatar]"), toast = crm.querySelector("[data-crm-toast]");
+      bind(crm.closest(".crate"), () => gsap.timeline()
+        .set(tag, { textContent: "new enquiry", backgroundColor: "#f0cf4a" })
+        .set(avatar, { autoAlpha: 0 }).set(toast, { autoAlpha: 0 })
+        .from(lead, { x: -30, autoAlpha: 0, duration: 0.4, ease: "power3.out" })
+        .to(tag, { textContent: "AI: warm lead", backgroundColor: "#e88b74", duration: 0.01 }, "+=0.5")
+        .to(lead, { x: 26, duration: 0.5, ease: "power2.inOut" }, "+=0.3")
+        .to(avatar, { autoAlpha: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, "+=0.2")
+        .to(toast, { autoAlpha: 1, y: -4, duration: 0.3 }, "+=0.3"));
+    }
+
+    /* wealth: a price ticks, the book revalues, risk relaxes */
+    const wealth = document.querySelector('[data-live="wealth"]');
+    if (wealth) {
+      const price = wealth.querySelector("[data-wealth-price]"), delta = wealth.querySelector("[data-wealth-delta]");
+      const value = wealth.querySelector("[data-wealth-value]"), risk = wealth.querySelector("[data-wealth-risk]");
+      const fmt = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
+      bind(wealth.closest(".crate"), () => {
+        const st = { p: 34210, v: 1240300 };
+        risk.closest("p").classList.remove("is-low"); risk.textContent = "MODERATE";
+        return gsap.timeline()
+          .to(st, { p: 34980, v: 1269100, duration: 1.4, ease: "power2.out", onUpdate() {
+            price.textContent = Math.round(st.p).toLocaleString("en-IN");
+            delta.textContent = "+" + (((st.p - 34210) / 34210) * 100).toFixed(1) + "%";
+            value.textContent = fmt(st.v);
+          } }, 0.3)
+          .add(() => { risk.textContent = "LOW"; risk.closest("p").classList.add("is-low"); }, 1.9);
+      });
+    }
+
+    /* foodcourt: scan, pick a stall, the review lands on the wall */
+    const food = document.querySelector('[data-live="food"]');
+    if (food) {
+      const qr = food.querySelector("[data-food-qr] i"), stalls = food.querySelectorAll("[data-food-stall]"), review = food.querySelector("[data-food-review]");
+      bind(food.closest(".crate"), () => gsap.timeline()
+        .set(stalls, { className: "" }).set(review, { autoAlpha: 0 })
+        .fromTo(qr, { y: 0 }, { y: 40, duration: 0.5, ease: "none", repeat: 1, yoyo: true })
+        .add(() => stalls[0].classList.add("is-pick"), 1.3)
+        .fromTo(review, { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "back.out(1.6)" }, 1.9));
+    }
+  })();
+
+  /* ---------------------------------------------- transmission · live · the ops room */
+  (function initOps() {
+    const ops = document.querySelector("[data-ops]");
+    if (!ops) return;
+    const drop = ops.querySelector("[data-ops-drop]");
+    const reqs = gsap.utils.toArray("[data-req]");
+    const done = ops.querySelector("[data-ops-done]");
+    const superNode = ops.querySelector('[data-node="super"]');
+    const superState = ops.querySelector("[data-super-state]");
+    const agents = { email: ops.querySelector('[data-node="email"]'), web: ops.querySelector('[data-node="web"]'), guest: ops.querySelector('[data-node="guest"]') };
+    const wires = { email: ops.querySelector('[data-wire="email"]'), web: ops.querySelector('[data-wire="web"]'), guest: ops.querySelector('[data-wire="guest"]') };
+    const kb = ops.querySelector("[data-ops-kb]");
+    const actionBox = ops.querySelector("[data-ops-action]");
+    const actionText = ops.querySelector("[data-ops-action-text]");
+    const progress = ops.querySelector("[data-ops-progress]");
+    const log = ops.querySelector("[data-ops-log]");
+    const clock = ops.querySelector("[data-ops-clock]");
+    let busy = false;
+    const t0 = performance.now();
+    setInterval(() => {
+      if (!clock) return;
+      const s = (performance.now() - t0) / 1000;
+      clock.textContent = String(Math.floor(s / 60)).padStart(2, "0") + ":" + (s % 60).toFixed(1).padStart(4, "0");
+    }, 100);
+    const stamp = () => { const s = (performance.now() - t0) / 1000; return String(Math.floor(s / 60)).padStart(2, "0") + ":" + (s % 60).toFixed(1).padStart(4, "0"); };
+    const addLog = (text) => {
+      const li = document.createElement("li");
+      li.innerHTML = `<time>${stamp()}</time><span>${text}</span>`;
+      log.prepend(li);
+      gsap.from(li, { x: -8, autoAlpha: 0, duration: 0.3 });
+      while (log.children.length > 7) log.lastElementChild.remove();
+    };
+
+    /* materialize the room layer by layer */
+    gsap.from("[data-ops-layer]", { y: 26, autoAlpha: 0, duration: 0.7, ease: "power3.out", stagger: 0.14,
+      scrollTrigger: { trigger: ".ops-room", start: "top 78%" } });
+    gsap.from(".ops-node", { scale: 0.9, autoAlpha: 0, duration: 0.5, ease: "back.out(1.6)", stagger: 0.08,
+      scrollTrigger: { trigger: ".ops-room", start: "top 70%" } });
+
+    const route = (req) => {
+      if (busy) return;
+      busy = true;
+      const agentKey = req.dataset.agent;
+      const agent = agents[agentKey], wire = wires[agentKey];
+      const snippets = (req.dataset.kb || "").split("|");
+      const action = req.dataset.action || "";
+      const rr = req.getBoundingClientRect(), sr = superNode.getBoundingClientRect();
+      const ghost = req.cloneNode(true);
+      ghost.classList.add("ops-req-ghost");
+      ghost.style.left = rr.left + "px"; ghost.style.top = rr.top + "px";
+      document.body.appendChild(ghost);
+      req.classList.add("is-gone");
+      Object.values(agents).forEach((a) => a.classList.remove("is-busy", "is-done"));
+      Object.values(wires).forEach((w) => w.classList.remove("is-live"));
+      kb.innerHTML = "";
+      actionBox.classList.remove("is-done"); actionText.textContent = "waiting"; gsap.set(progress, { scaleX: 0 });
+      addLog(`request received &middot; ${req.dataset.from}`);
+      const tl = gsap.timeline({ onComplete() {
+        busy = false;
+        const li = document.createElement("li"); li.textContent = req.textContent.trim(); done.appendChild(li);
+        gsap.from(li, { x: -8, autoAlpha: 0, duration: 0.3 });
+      } });
+      tl.to(ghost, { left: sr.left + sr.width / 2 - 120, top: sr.top + sr.height / 2 - 20, scale: 0.6, autoAlpha: 0.4, duration: 0.6, ease: "power2.inOut" })
+        .add(() => { ghost.remove(); superNode.classList.add("is-busy"); superState.textContent = "reading intent"; })
+        .add(() => { superState.textContent = "routing → " + agentKey; addLog(`supervisor &middot; intent: ${agentKey} &middot; routing`); }, "+=0.7")
+        .add(() => {
+          const len = wire.getTotalLength();
+          wire.classList.add("is-live");
+          gsap.fromTo(wire, { strokeDasharray: len, strokeDashoffset: len }, { strokeDashoffset: 0, duration: 0.6, ease: "power2.out" });
+        }, "+=0.2")
+        .add(() => { agent.classList.add("is-busy"); agent.querySelector("[data-agent-state]").textContent = "retrieving"; addLog(`${agentKey} agent &middot; querying pgvector`); }, "+=0.6");
+      snippets.forEach((sn, i) => {
+        tl.add(() => {
+          const li = document.createElement("li");
+          li.innerHTML = `${sn}<em>sim ${(0.93 - i * 0.05).toFixed(2)}</em>`;
+          kb.appendChild(li); gsap.from(li, { x: -8, autoAlpha: 0, duration: 0.3 });
+        }, "+=0.35");
+      });
+      tl.add(() => { addLog(`retrieved ${snippets.length} chunks &middot; grounded`); agent.querySelector("[data-agent-state]").textContent = "acting"; actionText.textContent = action; addLog(`tool call &middot; ${action.split(" ")[0]}`); }, "+=0.3")
+        .to(progress, { scaleX: 1, duration: 1.1, ease: "power2.inOut" })
+        .add(() => {
+          actionBox.classList.add("is-done"); actionText.textContent = "✓ " + action;
+          agent.classList.remove("is-busy"); agent.classList.add("is-done"); agent.querySelector("[data-agent-state]").textContent = "done";
+          superNode.classList.remove("is-busy"); superState.textContent = "idle";
+          addLog("streamed over SSE &middot; JWT ok");
+          addLog(`done in ${((performance.now() - t0) / 1000).toFixed(1)}s`);
+        });
+    };
+
+    /* drag a request into the inbox, or just tap it */
+    reqs.forEach((req) => {
+      let ghost = null, sx = 0, sy = 0, moved = false, on = false;
+      req.addEventListener("pointerdown", (e) => {
+        if (busy) return;
+        on = true; moved = false; sx = e.clientX; sy = e.clientY;
+        req.setPointerCapture(e.pointerId);
+      });
+      req.addEventListener("pointermove", (e) => {
+        if (!on) return;
+        const dx = e.clientX - sx, dy = e.clientY - sy;
+        if (!moved && Math.abs(dx) + Math.abs(dy) > 6) {
+          moved = true;
+          ghost = req.cloneNode(true); ghost.classList.add("ops-req-ghost");
+          document.body.appendChild(ghost);
+        }
+        if (ghost) { ghost.style.left = e.clientX - 120 + "px"; ghost.style.top = e.clientY - 20 + "px"; }
+        const dr = drop.getBoundingClientRect();
+        drop.classList.toggle("is-hot", e.clientX > dr.left && e.clientX < dr.right && e.clientY > dr.top && e.clientY < dr.bottom);
+      });
+      const up = (e) => {
+        if (!on) return; on = false;
+        const hot = drop.classList.contains("is-hot");
+        drop.classList.remove("is-hot");
+        if (ghost) { ghost.remove(); ghost = null; }
+        if (!moved || hot) route(req);
+      };
+      req.addEventListener("pointerup", up); req.addEventListener("pointercancel", up);
+      req.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); route(req); } });
+    });
+    Object.values(agents).forEach((a) => a.addEventListener("click", () => a.classList.toggle("is-open")));
+  })();
+
+  /* ---------------------------------------------- the maintenance hatch: four screws, then the engine room */
+  (function initEngine() {
+    const screws = gsap.utils.toArray("[data-screw]");
+    const engine = document.querySelector("[data-engine]");
+    if (!screws.length || !engine) return;
+    const loose = new Set();
+    let raf = 0, frames = 0, last = performance.now(), fps = 60, cursor = { x: 0, y: 0 };
+    window.addEventListener("pointermove", (e) => { cursor.x = e.clientX; cursor.y = e.clientY; }, { passive: true });
+    const q = (n) => engine.querySelector(`[data-eng-${n}]`);
+    const bar = (n) => engine.querySelector(`[data-eng-bar="${n}"]`);
+    const t0 = performance.now();
+    const tick = (now) => {
+      raf = requestAnimationFrame(tick);
+      frames++;
+      if (now - last >= 500) {
+        fps = Math.round((frames * 1000) / (now - last)); frames = 0; last = now;
+        const dom = document.getElementsByTagName("*").length;
+        const res = performance.getEntriesByType("resource").length;
+        const tweens = gsap.globalTimeline.getChildren(true, true, true).filter((t) => t.isActive()).length;
+        const vel = ScrollTrigger.getAll()[0] ? Math.abs(ScrollTrigger.getAll()[0].getVelocity()) : 0;
+        q("fps").textContent = fps;
+        q("dom").textContent = dom.toLocaleString();
+        q("gl").textContent = document.querySelectorAll("canvas").length + " ctx";
+        q("res").textContent = res;
+        q("tweens").textContent = tweens;
+        q("scroll").textContent = Math.round(window.scrollY) + "px";
+        q("cursor").textContent = cursor.x + "," + cursor.y;
+        const up = Math.floor((now - t0) / 1000);
+        q("up").textContent = Math.floor(up / 60) + "m " + (up % 60) + "s";
+        gsap.set(bar("scroll"), { scaleX: Math.min(1, vel / 3000) });
+        gsap.set(bar("cursor"), { scaleX: (cursor.x / window.innerWidth) || 0 });
+        gsap.set(bar("shader"), { scaleX: document.querySelector("[data-ripple] canvas") ? 1 : 0.1 });
+        gsap.set(bar("tweens"), { scaleX: Math.min(1, tweens / 40) });
+        gsap.set(bar("audio"), { scaleX: document.querySelector(".tv.is-off") ? 0.05 : 0.6 });
+        gsap.set(bar("assets"), { scaleX: Math.min(1, res / 60) });
+      }
+    };
+    const open = () => {
+      engine.classList.add("is-open"); engine.setAttribute("aria-hidden", "false");
+      document.documentElement.classList.add("is-loading");
+      if (lenis) lenis.stop();
+      gsap.from(".eng-card", { y: 20, autoAlpha: 0, duration: 0.6, ease: "power3.out", stagger: 0.1 });
+      raf = requestAnimationFrame(tick);
+    };
+    const close = () => {
+      engine.classList.remove("is-open"); engine.setAttribute("aria-hidden", "true");
+      document.documentElement.classList.remove("is-loading");
+      if (lenis) lenis.start();
+      cancelAnimationFrame(raf);
+      screws.forEach((s) => { s.classList.remove("is-loose"); gsap.to(s, { rotation: 0, duration: 0.4 }); });
+      loose.clear();
+    };
+    screws.forEach((s) => s.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (loose.has(s)) return;
+      loose.add(s); s.classList.add("is-loose");
+      gsap.to(s, { rotation: "+=270", duration: 0.5, ease: "power2.out" });
+      if (loose.size === screws.length) setTimeout(open, 350);
+    }));
+    engine.querySelector("[data-engine-close]").addEventListener("click", close);
+    window.addEventListener("keydown", (e) => { if (e.key === "Escape" && engine.classList.contains("is-open")) close(); });
+  })();
 
   /* ---------------------------------------------- cursor */
   const cursor = document.querySelector(".cursor");

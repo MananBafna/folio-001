@@ -1,0 +1,67 @@
+1. **State and explain 4 types of financial statements:** Balance Sheet (assets, liabilities, and equity), Income Statement (revenue, expenses, and profit), Cash Flow Statement (cash inflows and outflows), and Statement of Changes in Equity (changes in shareholders’ equity).
+
+2. **What is an income statement?** A statement showing a company’s revenue, expenses, and profit/loss over a specific period.
+
+3. **How do you get EBIT from EBITDA (add or subtract)?** **EBIT = EBITDA − Depreciation − Amortization.**
+
+4. **What is the difference between revenue and profit?** Revenue is the money earned from sales, while profit is what remains after deducting expenses.
+
+5. **What does EBITDA stand for?** **Earnings Before Interest, Taxes, Depreciation and Amortization.**
+
+6. **What are assets and liabilities?** Assets are what a company owns or controls, while liabilities are what the company owes.
+
+7. **What is the difference between EBITDA and EBIT?** EBITDA excludes depreciation and amortization, while EBIT deducts them.
+
+8. **How is net worth calculated?** **Net Worth = Total Assets − Total Liabilities.**
+
+9. **Does your brand value count as an asset?** A purchased brand can be recorded as an intangible asset, but internally generated brand value generally cannot be recorded as an asset.
+
+10. **If you own a car worth ₹10 lakh, does it count as an asset on your balance sheet?** Yes, if the **business owns the car**, it is recorded as a tangible/fixed asset; if you personally own it, it is not on the company’s balance sheet.
+
+11. **Can a company have high revenue but low profit? Why?** Yes, because high operating costs, interest, depreciation, taxes, or other expenses can reduce profit.
+
+12. **What is the balance sheet equation?** **Assets = Liabilities + Shareholders’ Equity.**
+
+13. **What is SG&A?** SG&A stands for **Selling, General & Administrative expenses**, which are the costs of selling products and running the business.
+
+14. **In a balance sheet, what are examples of assets and liabilities in business?** Assets include cash, inventory, machinery, and receivables; liabilities include loans, accounts payable, and other outstanding expenses.
+
+15. **What is NIFTY 50?** NIFTY 50 is an index representing 50 major companies listed on the NSE.
+
+16. **If an investment earns a constant annual return of 8%, approximately how many years will it take to double?** Approximately **9 years**, using the Rule of 72.
+
+17. **What’s the difference between tangible and intangible assets?** Tangible assets have physical form, while intangible assets have no physical form but have economic value.
+
+18. **What is amortization?** Amortization is the gradual allocation of an intangible asset’s cost as an expense over its useful life.
+
+19. **Difference between interest and amortization:** Interest is the cost of borrowing money, while amortization is the spreading of an asset’s cost over time.
+
+20. **What is an IPO and why do companies list on the stock exchange?** An IPO is when a private company first offers shares to the public, mainly to raise capital and provide liquidity to shareholders.
+
+21. **What is P/E ratio?** **P/E = Share Price ÷ EPS**, showing how much investors are paying for each ₹1 of earnings.
+
+22. **What are mutual funds?** Mutual funds pool money from many investors and invest it in assets such as stocks, bonds, or other securities.
+
+23. **Types of mutual funds:** Major types include **equity, debt, hybrid, index, sectoral/thematic, and money-market funds**.
+
+24. **What is market cap?** **Market Cap = Current Share Price × Number of Outstanding Shares.**
+
+25. **What are dividends and why do companies give them?** Dividends are profits distributed to shareholders, usually when a company has excess cash and fewer attractive opportunities to reinvest it.
+
+26. **What are the different exchanges?** In India, the two major stock exchanges are **NSE (National Stock Exchange)** and **BSE (BSE Ltd., formerly Bombay Stock Exchange)**.
+
+27. **Give an example of tangible and intangible assets:** **Tangible:** building or machinery; **Intangible:** patent, trademark, or software.
+
+28. **Why is equity added with liabilities in the balance sheet?** Because both represent claims against the company’s assets—liabilities belong to creditors and equity belongs to owners.
+
+29. **What is the Rule of 72?** **Years to double ≈ 72 ÷ Annual Return (%)**; for example, at 8%, 72 ÷ 8 = **9 years**.
+
+30. **How do you think a company grows?** A company grows by acquiring more customers, increasing sales, entering new markets, launching products, improving margins, or acquiring other businesses.
+
+31. **What is liquidity?** Liquidity is how easily and quickly an asset can be converted into cash without a significant loss in value.
+
+32. **What is leverage?** Leverage is using borrowed money to finance a business or investment, which can increase both potential returns and risk.
+
+33. **What is the difference between net profit and PAT?** They are generally the same; **PAT (Profit After Tax)** is the profit left after all expenses and taxes.
+
+34. **How do you think stock prices grow and fall?** Stock prices rise when demand exceeds supply and fall when supply exceeds demand, largely based on investors’ expectations about future earnings and risk.

@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=90">
+  <link rel="stylesheet" href="css/main.css?v=93">
 </head>
 <body>
 
@@ -87,12 +87,13 @@
             <canvas class="hero-flow"></canvas>
           </div>
         </div>
+        <p class="hero-signal" aria-hidden="true"><i></i>SIGNAL FOUND &middot; FOLIO 001</p>
         <div class="hero-chips" data-parallax="10">
           <a class="chip chip-navy" href="https://parablestudio.in" target="_blank" rel="noopener" data-cursor>Parable Studio &#8599;</a>
           <span class="chip chip-cream">19 years old</span>
           <span class="chip chip-red">Systems &amp; Design Engg</span>
         </div>
-        <div class="hero-badge" data-parallax="9" aria-hidden="true">
+        <div class="hero-badge" data-parallax="9" aria-hidden="true" data-cursor-label="WHY?">
           <svg viewBox="0 0 100 100">
             <defs><path id="badge-circ" d="M50,50 m-36,0 a36,36 0 1,1 72,0 a36,36 0 1,1 -72,0"/></defs>
             <text textLength="226" lengthAdjust="spacingAndGlyphs"><textPath href="#badge-circ" textLength="226" lengthAdjust="spacingAndGlyphs">BUILDS THINGS &#8226; STAYS CURIOUS &#8226;</textPath></text>
@@ -116,7 +117,7 @@
         </span>
         <div class="hero-foot">
           <div class="hero-foot-left">
-            <p class="hero-premise">Founder of Parable Studio. CS sophomore at BITS Pilani, Goa. Multi-agent AI systems in production by day, hand-coded websites for real businesses the rest of the time.</p>
+            <p class="hero-premise">Founder of Parable Studio. CS sophomore at BITS Pilani, Goa. Multi-agent AI in production at HOPR AI, hand-coded sites for real businesses, and the tools that ship them.</p>
             <a class="btn btn-signal" href="#story" data-magnetic data-cursor>Read the story</a>
           </div>
           <div class="hero-photo" data-parallax="-12">
@@ -143,6 +144,7 @@
       <div class="premise-inner">
         <p class="premise-big" data-lines>I have never been good at just consuming.</p>
         <p class="premise-big premise-big-alt" data-lines>I take what I know and make something with it.</p>
+        <p class="premise-code" data-cursor-label="THE CODE"><span class="code-dot"></span>I do not solve problems that I am passionate about; I am passionate about the problems I solve.</p>
         <p class="premise-note">Every input has a build on the other side. Proof, on repeat:</p>
       </div>
       <div class="premise-rig" aria-hidden="true">
@@ -169,8 +171,8 @@
       </div>
     </section>
 
-    <!-- ACT III · THE STORY (projector room) -->
-    <section class="doctrine" id="story" aria-label="The story in six chapters">
+    <!-- ACT III · THE BROADCAST (CRT, seven channels) -->
+    <section class="doctrine" id="story" aria-label="The story, broadcast in seven channels">
       <div class="reel" data-reel>
         <svg class="tv-bg tv-bg-reel" viewBox="0 0 200 200" aria-hidden="true">
           <path d="M196.0 100.0 a96 96 0 1 0 -192 0 a96 96 0 1 0 192 0 Z M123.0 48.0 a23 23 0 1 0 -46 0 a23 23 0 1 0 46 0 Z M172.5 83.9 a23 23 0 1 0 -46 0 a23 23 0 1 0 46 0 Z M153.6 142.1 a23 23 0 1 0 -46 0 a23 23 0 1 0 46 0 Z M92.4 142.1 a23 23 0 1 0 -46 0 a23 23 0 1 0 46 0 Z M73.5 83.9 a23 23 0 1 0 -46 0 a23 23 0 1 0 46 0 Z M111.0 100.0 a11 11 0 1 0 -22 0 a11 11 0 1 0 22 0 Z" fill="#e5c4b6" fill-rule="evenodd"/>
@@ -190,17 +192,24 @@
           <circle cx="30" cy="82" r="7" fill="#efd6cb"/>
         </svg>
         <header class="reel-head">
-          <h2 class="sec-title"><em>Six chapters,</em> THE STORY</h2>
-          <span class="reel-counter">CH <b data-reel-no>01</b> / 06</span>
+          <h2 class="sec-title"><em>Seven channels,</em> THE BROADCAST</h2>
+          <span class="reel-counter">CH <b data-reel-no>01</b> / 07</span>
         </header>
-        <div class="tv">
-          <svg class="tv-antenna" viewBox="0 0 120 46" aria-hidden="true">
-            <line x1="60" y1="44" x2="22" y2="6" stroke="#262054" stroke-width="5" stroke-linecap="round"/>
-            <line x1="60" y1="44" x2="98" y2="6" stroke="#262054" stroke-width="5" stroke-linecap="round"/>
-            <circle cx="22" cy="6" r="5" fill="#c74a32"/><circle cx="98" cy="6" r="5.5" fill="#f0cf4a" stroke="#262054" stroke-width="2"/>
-          </svg>
-          <div class="tv-screen">
-            <div class="reel-frames">
+        <div class="tv" data-tv>
+          <button class="tv-antenna" data-antenna type="button" aria-label="Wiggle the antenna" data-cursor-label="SIGNAL?">
+            <svg viewBox="0 0 120 46" aria-hidden="true">
+              <line x1="60" y1="44" x2="22" y2="6" stroke="#262054" stroke-width="5" stroke-linecap="round"/>
+              <line x1="60" y1="44" x2="98" y2="6" stroke="#262054" stroke-width="5" stroke-linecap="round"/>
+              <circle cx="22" cy="6" r="5" fill="#c74a32"/><circle cx="98" cy="6" r="5.5" fill="#f0cf4a" stroke="#262054" stroke-width="2"/>
+            </svg>
+          </button>
+          <div class="tv-body">
+            <button class="tv-screw tv-screw-tl" data-screw type="button" aria-label="A screw. Curious?" data-cursor-label="?"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="#3b3470" stroke="#1a1638" stroke-width="1.5"/><line x1="5" y1="10" x2="15" y2="10" stroke="#1a1638" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+            <button class="tv-screw tv-screw-tr" data-screw type="button" aria-label="A screw. Curious?" data-cursor-label="?"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="#3b3470" stroke="#1a1638" stroke-width="1.5"/><line x1="5" y1="10" x2="15" y2="10" stroke="#1a1638" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+            <button class="tv-screw tv-screw-bl" data-screw type="button" aria-label="A screw. Curious?" data-cursor-label="?"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="#3b3470" stroke="#1a1638" stroke-width="1.5"/><line x1="5" y1="10" x2="15" y2="10" stroke="#1a1638" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+            <button class="tv-screw tv-screw-br" data-screw type="button" aria-label="A screw. Curious?" data-cursor-label="?"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="#3b3470" stroke="#1a1638" stroke-width="1.5"/><line x1="5" y1="10" x2="15" y2="10" stroke="#1a1638" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+            <div class="tv-screen" data-screen>
+              <div class="reel-frames" data-frames>
           <article class="frame" data-frame data-tone="red">
             <img src="assets/story-1.png" alt="A young student writing formulas across a chalkboard" loading="lazy">
             <div class="frame-scrim" aria-hidden="true"></div>
@@ -223,7 +232,7 @@
               <p class="frame-src"><em>The habit that everything since has scaled up from.</em></p>
             </div>
           </article>
-          <article class="frame" data-frame data-tone="forest">
+          <article class="frame" data-frame data-tone="forest" data-cursor-label="THIS WAS STUPID">
             <img src="assets/story-3.png" alt="Cold brew drinks on a terrazzo counter" loading="lazy">
             <div class="frame-scrim" aria-hidden="true"></div>
             <div class="frame-card">
@@ -267,15 +276,56 @@
               <p class="frame-src"><em>Chapter VII is being written right now.</em></p>
             </div>
           </article>
-        </div>
-            <div class="reel-flicker" data-flicker aria-hidden="true"></div>
+          <article class="frame frame-static" data-frame data-tone="butter" data-cursor-label="TO BE CONTINUED">
+            <div class="frame-noise" aria-hidden="true"></div>
+            <div class="frame-card">
+              <p class="frame-meta">SC 07 &middot; NEXT</p>
+              <h3 data-title="Whatever ships next">Whatever ships next</h3>
+              <p class="frame-themes">to be continued</p>
+              <p class="frame-line">Chapter seven is being written right now: cold outreach in the mornings, the studio in the afternoons, something new most nights.</p>
+              <p class="frame-src"><em>Stay on this frequency.</em></p>
+            </div>
+          </article>
+              </div>
+              <div class="crt-noise" data-noise aria-hidden="true"></div>
+              <div class="crt-scan" aria-hidden="true"></div>
+              <div class="crt-glass" aria-hidden="true"></div>
+              <div class="crt-osd" aria-hidden="true">
+                <span class="osd-ch">CH <b data-osd-ch>01</b></span>
+                <span class="osd-rec"><i></i>REC</span>
+                <span class="osd-right"><span class="osd-signal" data-osd-signal><i></i><i></i><i></i><i></i><i></i></span><span class="osd-time" data-osd-time>00:00:00</span></span>
+                <span class="osd-vol" data-osd-vol>VOL <span class="osd-vol-track"><span data-osd-vol-bar></span></span></span>
+                <p class="osd-cc" data-osd-cc></p>
+              </div>
+              <div class="tv-boot" data-boot aria-hidden="true">
+                <p class="boot-line" data-boot-1>SIGNAL FOUND</p>
+                <p class="boot-line boot-line-2" data-boot-2>MANAN BAFNA BROADCAST</p>
+                <p class="boot-line boot-line-3" data-boot-3>001 &#8212; 007</p>
+              </div>
+              <div class="tv-off" data-off aria-hidden="true"><span class="tv-off-dot" data-off-dot></span></div>
+              <div class="reel-flicker" data-flicker aria-hidden="true"></div>
+            </div>
+            <div class="tv-side" aria-label="TV controls">
+              <span class="tv-led" data-led aria-hidden="true"></span>
+              <button class="tv-power" data-power type="button" aria-pressed="true" aria-label="Power" data-cursor-label="DO NOT CLICK"><span></span></button>
+              <div class="tv-dial" data-dial="channel" data-cursor-label="TURN" role="slider" aria-label="Channel" aria-valuemin="1" aria-valuemax="7" aria-valuenow="1" tabindex="0">
+                <span class="dial-cap" data-dial-cap><i></i></span>
+                <span class="dial-label">CHANNEL</span>
+              </div>
+              <div class="tv-dial" data-dial="volume" data-cursor-label="TURN" role="slider" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="35" tabindex="0">
+                <span class="dial-cap" data-dial-cap><i></i></span>
+                <span class="dial-label">VOLUME</span>
+              </div>
+              <button class="tv-cc" data-cc type="button" aria-pressed="false" aria-label="Subtitles">CC</button>
+              <span class="tv-vents" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            </div>
           </div>
           <div class="tv-chin" aria-hidden="true">
             <svg class="tv-speaker" viewBox="0 0 46 14"><g stroke="#262054" stroke-width="3" stroke-linecap="round"><line x1="2" y1="3" x2="44" y2="3"/><line x1="2" y1="11" x2="44" y2="11"/></g></svg>
             <div class="reel-strip">
-              <span class="reel-cell is-on"></span><span class="reel-cell"></span><span class="reel-cell"></span><span class="reel-cell"></span><span class="reel-cell"></span><span class="reel-cell"></span>
+              <span class="reel-cell is-on"></span><span class="reel-cell"></span><span class="reel-cell"></span><span class="reel-cell"></span><span class="reel-cell"></span><span class="reel-cell"></span><span class="reel-cell"></span>
             </div>
-            <span class="tv-knob"></span>
+            <span class="tv-plate">MB &middot; FOLIO 001</span>
           </div>
         </div>
       </div>
@@ -344,48 +394,6 @@
       </div>
     </section>
 
-    <!-- ACT V · THE ARC (editor timeline) -->
-    <section class="gauntlet" id="arc">
-      <header class="gauntlet-head">
-        <h2 class="sec-title"><em>A life in</em> SEVEN SCENES</h2>
-        <p class="gauntlet-sub">The story so far, laid out on the timeline it deserves.</p>
-      </header>
-      <div class="editor-dock">
-      <div class="editor" role="img" aria-label="A film-style timeline of seven scenes, from Scratch games in school to multi-agent AI in production">
-        <div class="editor-inner">
-          <div class="editor-ruler" aria-hidden="true">
-            <span>ACT I &middot; SCHOOL</span><span>ACT II &middot; BITS GOA</span><span>TO BE CONTINUED</span>
-          </div>
-          <div class="editor-track" aria-hidden="true">
-            <span class="clip c-red" style="--w:13%"><i>OLYMPIADS</i></span>
-            <span class="clip c-navy" style="--w:11%"><i>JEE 99.5</i></span>
-            <span class="clip c-forest" style="--w:12%"><i>BITS GOA</i></span>
-            <span class="clip c-orange" style="--w:13%"><i>COLD BREW</i></span>
-            <span class="clip c-navy" style="--w:22%"><i>PARABLE</i></span>
-            <span class="clip c-forest" style="--w:18%"><i>PRODUCTION AI</i></span>
-            <span class="clip c-red" style="--w:11%"><i>NEXT</i></span>
-          </div>
-          <div class="editor-track editor-track-b" aria-hidden="true">
-            <span class="clip clip-audio" style="--w:100%"><span class="clip-audio-fill" data-broll-fill aria-hidden="true"></span><i>B-ROLL: MENTORING &#10033; EQUITY RESEARCH &#10033; DESIGN SYSTEMS</i></span>
-          </div>
-          <span class="editor-playhead" aria-hidden="true"></span>
-        </div>
-      </div>
-      </div>
-      <div class="gauntlet-rail">
-        <span class="gauntlet-line" aria-hidden="true"><span class="gauntlet-line-fill"></span></span>
-        <ol class="gauntlet-stops">
-          <li class="stop"><span class="stop-t">SC 01</span><span class="stop-what">Olympiad era: IOQM national cutoff, ranks, the grind</span><span class="stop-dur">School</span></li>
-          <li class="stop"><span class="stop-t">SC 02</span><span class="stop-what">The 99.5: JEE Mains, proof of sharp</span><span class="stop-dur">School</span></li>
-          <li class="stop"><span class="stop-t">SC 03</span><span class="stop-what">BITS Pilani, Goa: new campus, bigger game</span><span class="stop-dur">Goa</span></li>
-          <li class="stop"><span class="stop-t">SC 04</span><span class="stop-what">Cold brew: first venture, most useful failure</span><span class="stop-dur">Sem two</span></li>
-          <li class="stop"><span class="stop-t">SC 05</span><span class="stop-what">Parable Studio: the side project becomes a brand</span><span class="stop-dur">Year two</span></li>
-          <li class="stop"><span class="stop-t">SC 06</span><span class="stop-what">Production AI: multi-agent systems under real traffic</span><span class="stop-dur">Shipping</span></li>
-          <li class="stop stop-final"><span class="stop-t">SC 07</span><span class="stop-what">Whatever ships next</span><span class="stop-dur">Now</span></li>
-        </ol>
-      </div>
-    </section>
-
     <!-- ACT V·V · FOR THE RECORD -->
     <section class="record" id="record">
       <div class="record-decor" aria-hidden="true">
@@ -421,6 +429,7 @@
       </div>
       <div class="parable-chip">
         <img class="parable-logo" src="assets/parable-logo.png" alt="Parable Studio logo: a hand-drawn knot mark on orange">
+        <p class="sec-kicker"><i></i>LIVE CHANNEL</p>
         <h2>Parable Studio</h2>
         <p>My studio. Hand-coded sites, stores, and internal tools for businesses with a name worth protecting: brief to live in 14 days, then the code, the domain, and the accounts are handed over outright. The whole operation runs on a CRM I built for it.</p>
         <a class="btn btn-signal" href="https://parablestudio.in" target="_blank" rel="noopener" data-magnetic data-cursor>Visit parablestudio.in</a>
@@ -515,8 +524,8 @@
           <g fill="#e8dcc0"><rect x="48" y="70" width="5" height="9" rx="2"/><rect x="57" y="70" width="5" height="9" rx="2"/><rect x="66" y="70" width="5" height="9" rx="2"/></g>
         </svg>
       </div>
-      <h2 class="sec-title sec-title-center"><em>Here be</em> WORK</h2>
-      <p class="work-sub">The treasure chart: six ships logged, no wrecks.</p>
+      <h2 class="sec-title sec-title-center"><em>Here be</em> TRANSMISSIONS</h2>
+      <p class="work-sub">The treasure chart: six transmissions logged, no wrecks.</p>
       <div class="cargo-grid">
         <article class="crate crate-a" data-cursor>
           <div class="crate-art art-orbit" aria-hidden="true">
@@ -556,11 +565,15 @@
               <path d="M26 60 l2.5 7 l7 2.5 l-7 2.5 l-2.5 7 l-2.5 -7 l-7 -2.5 l7 -2.5 Z" fill="#c74a32" opacity=".85"/>
             </svg>
           </div>
+          <div class="live live-chat" data-live="chat" aria-hidden="true">
+            <p class="chat-in">Can we check out at 2pm tomorrow?</p>
+            <p class="chat-out"><span data-chat-stream></span><i class="chat-caret"></i></p>
+          </div>
           <span class="crate-stamp">SHIPPED &middot; IN PRODUCTION</span>
-          <p class="crate-kick">INTERNSHIP &middot; ROOMCHECKING</p>
+          <p class="crate-kick">INTERNSHIP &middot; HOPR AI &times; ROOMCHECKING</p>
           <h3>Multi-Agent AI Workflow System</h3>
-          <p class="crate-desc">A supervisor agent orchestrating specialists across email, website, and guest surfaces for a hospitality SaaS. RAG-grounded, streamed over SSE, hardened by real traffic.</p>
-          <ul class="wc-chips"><li>.NET + React</li><li>RAG</li><li>SSE</li><li>JWT</li></ul>
+          <p class="crate-desc">A supervisor coordinating agents across email, website, guest requests, and reputation for hotel operations, now being onboarded by clients. RAG on pgvector, tool-use agents that raise tasks and cleanings, JWT-secured runs over SSE and SignalR, evaluation gates before anything ships.</p>
+          <ul class="wc-chips"><li>LLM Orchestration</li><li>RAG &middot; pgvector</li><li>SSE &middot; SignalR</li><li>.NET + React</li></ul>
         </article>
         <article class="crate crate-b" aria-hidden="true">
           <span class="crate-big" data-scramble>06</span>
@@ -626,11 +639,15 @@
               <rect data-pipe-card x="12" y="66" width="28" height="14" rx="4" fill="#f0cf4a"/>
             </svg>
           </div>
+          <div class="live live-crm" data-live="crm" aria-hidden="true">
+            <div class="crm-lead" data-crm-lead><b>Caf&eacute; Nova</b><span data-crm-tag>new enquiry</span><i class="crm-avatar" data-crm-avatar>MB</i></div>
+            <p class="crm-toast" data-crm-toast>&#10003; lead saved &middot; owner assigned</p>
+          </div>
           <span class="crate-stamp">MULTI-TENANT</span>
           <p class="crate-kick">PRODUCT &middot; PARABLE</p>
           <h3>Parable Studio CRM</h3>
-          <p class="crate-desc">Runs the studio end to end: pipeline, payments, retainer billing, a ledger that snapshots itself, and a client portal with no logins at all.</p>
-          <ul class="wc-chips"><li>Next.js 14</li><li>Supabase</li><li>RLS</li><li>Postgres</li></ul>
+          <p class="crate-desc">Runs the studio end to end: pipeline, payments, retainer billing, a ledger that snapshots itself, a print-ready document studio, and a client portal with no logins: 144-bit tokens, zero anonymous grants.</p>
+          <ul class="wc-chips"><li>Next.js 14</li><li>Supabase</li><li>RLS</li><li>Server Actions</li></ul>
         </article>
         <article class="crate crate-e" data-cursor>
           <div class="crate-art art-chart" aria-hidden="true">
@@ -651,10 +668,15 @@
               </g>
             </svg>
           </div>
+          <div class="live live-wealth" data-live="wealth" aria-hidden="true">
+            <p class="wealth-price"><span>NIFTY IT</span><b data-wealth-price>34,210</b><i data-wealth-delta>+0.0%</i></p>
+            <p class="wealth-value"><span>portfolio</span><b data-wealth-value>&#8377;12,40,300</b></p>
+            <p class="wealth-risk"><span>risk</span><b data-wealth-risk>MODERATE</b></p>
+          </div>
           <p class="crate-kick">TEAM &middot; ACA WEALTH</p>
           <h3>Wealth Management Platform</h3>
-          <p class="crate-desc">Authored the design system end to end and rolled it across 50+ pages without regressions. Admin and advisor consoles for a live brokerage.</p>
-          <ul class="wc-chips"><li>React</li><li>TypeScript</li><li>PostgreSQL</li></ul>
+          <p class="crate-desc">Authored the design system end to end (tokens, type, theming) and rolled it across 50+ pages without regressions. Built the admin Operations Console and the advisor Partner Console for a live brokerage.</p>
+          <ul class="wc-chips"><li>React</li><li>TypeScript</li><li>shadcn/ui</li><li>Node</li></ul>
         </article>
         <article class="crate crate-f" data-cursor>
           <div class="crate-art art-ticker" aria-hidden="true">
@@ -669,7 +691,7 @@
           <p class="crate-desc">Built the society's site: brand identity, a 3D motif, scroll storytelling. Plus equity research on AI infrastructure. Selected for the build over other entries.</p>
           <ul class="wc-chips"><li>Brand + Site</li><li>GSAP</li><li>Equity Research</li><li>AI Infra</li></ul>
         </article>
-        <article class="crate crate-g" data-cursor>
+        <article class="crate crate-g" data-cursor data-cursor-label="I ALMOST DIDN&#8217;T SHIP THIS">
           <div class="crate-art art-pulse" aria-hidden="true">
             <svg viewBox="0 0 220 60">
               <path data-pulse d="M0 30 L40 30 L52 12 L66 48 L78 30 L120 30 L132 16 L146 44 L158 30 L220 30" fill="none" stroke="#f5efdd" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -678,7 +700,7 @@
           <span class="crate-stamp">DAILY DRIVER</span>
           <p class="crate-kick">SELF-BUILT</p>
           <h3>Cadence</h3>
-          <p class="crate-desc">A life-and-finance OS with no framework and no build step. The points ledger's transcript always sums to its balance.</p>
+          <p class="crate-desc">A life-and-finance OS with no framework and no build step: hand-built router, render loop, reactive state across habits, finance, journaling, reading, and a points economy. Multi-device sync whose ledger always sums.</p>
           <ul class="wc-chips"><li>Vanilla JS</li><li>Supabase</li><li>Chart.js</li></ul>
         </article>
         <article class="crate crate-h" data-cursor>
@@ -699,6 +721,11 @@
               </g>
             </svg>
           </div>
+          <div class="live live-food" data-live="food" aria-hidden="true">
+            <div class="food-qr" data-food-qr><i></i></div>
+            <div class="food-stalls"><span data-food-stall>Chai Point</span><span data-food-stall>Gongura</span><span data-food-stall>Domino&#8217;s</span></div>
+            <p class="food-review" data-food-review><b>Chai Point</b> &middot; &#9733;&#9733;&#9733;&#9733;&#9734; &middot; fast &middot; &#8377;20 &middot; <em>cutting was elite</em></p>
+          </div>
           <span class="crate-stamp">SCAN THE QR &middot; ON CAMPUS</span>
           <p class="crate-kick">CAMPUS APP &middot; WITH A FRIEND</p>
           <h3>The Foodcourt</h3>
@@ -708,32 +735,107 @@
       </div>
     </section>
 
-    <!-- ACT VIII · THE TOOLBOX -->
+
+    <!-- TRANSMISSION · LIVE · the ops room -->
+    <section class="ops" id="ops" aria-label="A working sketch of the multi-agent system">
+      <div class="ops-head">
+        <p class="sec-kicker"><i></i>TRANSMISSION &middot; LIVE</p>
+        <h2 class="sec-title"><em>Touch the</em> OPS ROOM</h2>
+        <p class="ops-sub">A working sketch of the HOPR AI supervisor. Drag a request into the inbox (or tap it) and watch it route, retrieve, act, and log.</p>
+      </div>
+      <div class="ops-room" data-ops>
+        <aside class="ops-col ops-inbox" data-ops-layer>
+          <h3 class="ops-h">INBOX</h3>
+          <div class="ops-drop" data-ops-drop><span>drop a request here</span></div>
+          <ul class="ops-requests" data-ops-requests>
+            <li class="ops-req" data-req tabindex="0" data-agent="email" data-from="guest &middot; email" data-kb="Late checkout policy: 2pm, &#8377;500 after 12:00|Room 302 · departs tomorrow · no conflicts|Tone guide: warm, brief, no exclamation marks" data-action="draft_reply &middot; late checkout confirmed, 2pm" data-cursor-label="DRAG">Can we check out at 2pm tomorrow?</li>
+            <li class="ops-req" data-req tabindex="0" data-agent="web" data-from="visitor &middot; website chat" data-kb="Sea-view double: &#8377;7,400 / night in March|Availability: 12 nights open, 3 blocked|Offer: 3+ nights, breakfast included" data-action="quote_sent &middot; sea-view double, March" data-cursor-label="DRAG">What&#8217;s the rate for a sea-view double in March?</li>
+            <li class="ops-req" data-req tabindex="0" data-agent="guest" data-from="guest &middot; in-stay request" data-kb="Housekeeping roster: floor 2, 14:00 pass|Room 204 · linen replaced 09:10 · flagged|SLA: replacement within 30 minutes" data-action="create_task &middot; housekeeping, room 204" data-cursor-label="DRAG">Towels haven&#8217;t been replaced in 204.</li>
+          </ul>
+          <ul class="ops-done" data-ops-done aria-label="Resolved requests"></ul>
+        </aside>
+        <div class="ops-col ops-graph" data-ops-layer>
+          <div class="ops-node ops-super" data-node="super"><span class="node-dot"></span><b>SUPERVISOR</b><small data-super-state>idle</small></div>
+          <svg class="ops-wires" viewBox="0 0 400 200" preserveAspectRatio="none" aria-hidden="true">
+            <path data-wire="email" d="M200 28 C 200 100, 60 90, 60 172" fill="none"/>
+            <path data-wire="web" d="M200 28 C 200 100, 200 100, 200 172" fill="none"/>
+            <path data-wire="guest" d="M200 28 C 200 100, 340 90, 340 172" fill="none"/>
+          </svg>
+          <div class="ops-agents">
+            <button class="ops-node ops-agent" type="button" data-node="email" data-cursor-label="OPEN"><span class="node-dot"></span><b>EMAIL</b><small data-agent-state>idle</small><div class="agent-detail">Replies to guests in the hotel&#8217;s voice. Never invents policy: retrieves it. Tools: draft_reply, create_task.</div></button>
+            <button class="ops-node ops-agent" type="button" data-node="web" data-cursor-label="OPEN"><span class="node-dot"></span><b>WEB</b><small data-agent-state>idle</small><div class="agent-detail">Answers site visitors with live rates and availability. Tools: quote, hold_room.</div></button>
+            <button class="ops-node ops-agent" type="button" data-node="guest" data-cursor-label="OPEN"><span class="node-dot"></span><b>GUEST</b><small data-agent-state>idle</small><div class="agent-detail">Handles in-stay requests and turns them into operations: cleanings, tasks, lost and found. Tools: create_task, escalate.</div></button>
+          </div>
+        </div>
+        <aside class="ops-col ops-panels" data-ops-layer>
+          <div class="ops-panel">
+            <h3 class="ops-h">KNOWLEDGE <span>pgvector</span></h3>
+            <ul class="ops-kb" data-ops-kb><li class="ops-empty">nothing retrieved yet</li></ul>
+          </div>
+          <div class="ops-panel">
+            <h3 class="ops-h">ACTION</h3>
+            <div class="ops-action" data-ops-action><span data-ops-action-text>waiting for a request</span><i class="ops-progress"><b data-ops-progress></b></i></div>
+          </div>
+          <div class="ops-panel ops-events">
+            <h3 class="ops-h">EVENTS <span data-ops-clock>00:00.0</span></h3>
+            <ul class="ops-log" data-ops-log></ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ACT VIII · THINGS I KEEP REACHING FOR -->
     <section class="toolbox" id="toolbox">
-      <h2 class="sec-title sec-title-center"><em>Twenty spines,</em> THE TOOLBOX</h2>
-      <p class="toolbox-sub">The shelf the work leans on.</p>
-      <ul class="shelf-row">
-        <li class="book"><strong>LLM ORCHESTRATION</strong><span>AI</span></li>
-        <li class="book"><strong>RAG + EMBEDDINGS</strong><span>AI</span></li>
-        <li class="book"><strong>PROMPT ENGINEERING</strong><span>AI</span></li>
-        <li class="book"><strong>API ARCHITECTURE</strong><span>SYSTEMS</span></li>
-        <li class="book"><strong>REALTIME APPS</strong><span>SYSTEMS</span></li>
-        <li class="book"><strong>NEXT.JS + REACT</strong><span>WEB</span></li>
-        <li class="book"><strong>TYPESCRIPT</strong><span>WEB</span></li>
-        <li class="book"><strong>NODE + EXPRESS</strong><span>WEB</span></li>
-        <li class="book"><strong>.NET / C#</strong><span>WEB</span></li>
-        <li class="book"><strong>POSTGRES + SUPABASE</strong><span>DATA</span></li>
-        <li class="book"><strong>MULTI-TENANT SAAS</strong><span>DATA</span></li>
-        <li class="book"><strong>WORKFLOW AUTOMATION</strong><span>OPS</span></li>
-        <li class="book"><strong>PRODUCT ENGINEERING</strong><span>PRODUCT</span></li>
-        <li class="book"><strong>GSAP + LENIS</strong><span>MOTION</span></li>
-        <li class="book"><strong>DESIGN SYSTEMS</strong><span>DESIGN</span></li>
-        <li class="book"><strong>TAILWIND</strong><span>DESIGN</span></li>
-        <li class="book"><strong>TECHNICAL RESEARCH</strong><span>RESEARCH</span></li>
-        <li class="book"><strong>COPYWRITING</strong><span>VOICE</span></li>
-        <li class="book"><strong>EQUITY RESEARCH</strong><span>FINANCE</span></li>
-        <li class="book"><strong>JAVA + C++ + PYTHON</strong><span>ORIGIN</span></li>
-      </ul>
+      <h2 class="sec-title sec-title-center"><em>Things I keep</em> REACHING FOR</h2>
+      <p class="toolbox-sub">Four shelves, sorted by what they are for.</p>
+      <div class="shelves">
+        <div class="shelf">
+          <h3 class="shelf-title"><em>To make things</em> MOVE</h3>
+          <ul class="shelf-row">
+          <li class="book"><strong>GSAP + LENIS</strong><span>MOTION</span></li>
+          <li class="book"><strong>SHADERS · OGL</strong><span>MOTION</span></li>
+          <li class="book"><strong>SCROLL CHOREO</strong><span>MOTION</span></li>
+          <li class="book"><strong>DESIGN SYSTEMS</strong><span>DESIGN</span></li>
+          <li class="book"><strong>TAILWIND</strong><span>DESIGN</span></li>
+          <li class="book"><strong>COPYWRITING</strong><span>VOICE</span></li>
+          </ul>
+        </div>
+        <div class="shelf">
+          <h3 class="shelf-title"><em>To make things</em> THINK</h3>
+          <ul class="shelf-row">
+          <li class="book"><strong>LLM ORCHESTRATION</strong><span>AI</span></li>
+          <li class="book"><strong>MULTI-AGENT SYSTEMS</strong><span>AI</span></li>
+          <li class="book"><strong>RAG · PGVECTOR</strong><span>AI</span></li>
+          <li class="book"><strong>TOOL-USE AGENTS</strong><span>AI</span></li>
+          <li class="book"><strong>PROMPT + CONTEXT</strong><span>AI</span></li>
+          <li class="book"><strong>WORKFLOW AUTOMATION</strong><span>OPS</span></li>
+          </ul>
+        </div>
+        <div class="shelf">
+          <h3 class="shelf-title"><em>To make things</em> HOLD TOGETHER</h3>
+          <ul class="shelf-row">
+          <li class="book"><strong>NEXT.JS + REACT</strong><span>WEB</span></li>
+          <li class="book"><strong>.NET / C#</strong><span>WEB</span></li>
+          <li class="book"><strong>TYPESCRIPT</strong><span>WEB</span></li>
+          <li class="book"><strong>NODE + EXPRESS</strong><span>WEB</span></li>
+          <li class="book"><strong>POSTGRES + SUPABASE</strong><span>DATA</span></li>
+          <li class="book"><strong>MULTI-TENANT · RLS</strong><span>DATA</span></li>
+          <li class="book"><strong>SSE · SIGNALR</strong><span>SYSTEMS</span></li>
+          <li class="book"><strong>JAVA + C++ + PYTHON</strong><span>ORIGIN</span></li>
+          </ul>
+        </div>
+        <div class="shelf">
+          <h3 class="shelf-title"><em>To figure things</em> OUT</h3>
+          <ul class="shelf-row">
+          <li class="book"><strong>EQUITY RESEARCH</strong><span>FINANCE</span></li>
+          <li class="book"><strong>TECHNICAL RESEARCH</strong><span>RESEARCH</span></li>
+          <li class="book"><strong>API ARCHITECTURE</strong><span>SYSTEMS</span></li>
+          <li class="book"><strong>PRODUCT ENGINEERING</strong><span>PRODUCT</span></li>
+          <li class="book"><strong>UNIT ECONOMICS</strong><span>FINANCE</span></li>
+          <li class="book"><strong>CONVERSATIONS</strong><span>VOICE</span></li>
+          </ul>
+        </div>
+      </div>
     </section>
 
     <!-- ACT IX · CONTACT -->
@@ -753,7 +855,7 @@
         <svg viewBox="0 0 100 100"><path d="M50 0 L61 39 L100 50 L61 61 L50 100 L39 61 L0 50 L39 39 Z"/></svg>
       </span>
       <div class="access-inner">
-        <p class="access-kicker">SAY HELLO</p>
+        <p class="access-kicker">OPEN FREQUENCY</p>
         <h2 class="access-title">Got something worth <em>building?</em></h2>
         <p class="access-body">Client work, collaborations, internships, or just a conversation about something you are making. I answer fastest when the message says what you are trying to build.</p>
         <div class="access-cta">
@@ -762,10 +864,169 @@
         </div>
         <p class="access-fine"><a href="https://www.linkedin.com/in/manan-bafna-08b567376/" target="_blank" rel="noopener" data-cursor>LinkedIn</a> &middot; <a href="https://instagram.com/by.parable" target="_blank" rel="noopener" data-cursor>@by.parable</a> &middot; Goa most of the year. Internet always.</p>
       </div>
-      <a class="access-mail" href="mailto:mananbafna2903@gmail.com" data-cursor>
-        <span class="access-mail-row" data-mailrow>LET&#8217;S BUILD SOMETHING &#10033; LET&#8217;S BUILD SOMETHING &#10033; LET&#8217;S BUILD SOMETHING &#10033;</span>
-      </a>
     </section>
+
+    <!-- END OF TRANSMISSION -->
+    <section class="outro" id="end" aria-label="End of transmission">
+      <div class="outro-stage" data-outro>
+        <div class="outro-tv">
+          <div class="outro-screen" data-outro-screen>
+            <div class="outro-static" data-outro-static aria-hidden="true"></div>
+            <div class="outro-lines">
+              <p class="outro-line" data-outro-1>Still curious?</p>
+              <p class="outro-line" data-outro-2>Good.</p>
+              <p class="outro-line outro-big" data-outro-3>LET&#8217;S BUILD SOMETHING.</p>
+              <a class="btn btn-signal outro-cta" data-outro-cta href="mailto:mananbafna2903@gmail.com" data-magnetic data-cursor>Open a frequency</a>
+            </div>
+          </div>
+          <span class="outro-led" data-outro-led aria-hidden="true"></span>
+        </div>
+        <p class="outro-tag" data-outro-tag>END OF TRANSMISSION</p>
+      </div>
+    </section>
+
+    <!-- FIELD SIGNALS · the drawer -->
+    <button class="drawer-pull" data-drawer-open type="button" data-cursor-label="?">OPEN DRAWER</button>
+    <div class="drawer" data-drawer aria-hidden="true">
+      <div class="drawer-top">
+        <div>
+          <p class="sec-kicker"><i></i>FIELD SIGNALS</p>
+          <h2 class="drawer-title">The desk, as found.</h2>
+          <p class="drawer-sub">Not a case study. Sticky notes, half-thoughts, abandoned ideas, things I still want to build. Drag anything. Click a note to read the back.</p>
+        </div>
+        <button class="btn btn-ghost drawer-close" data-drawer-close type="button" data-cursor>Close drawer</button>
+      </div>
+      <div class="desk" data-desk>
+        <article class="note note-butter" data-note style="--x:6%;--y:10%;--r:-3deg" tabindex="0">
+          <p class="note-front">This was a terrible idea.</p>
+          <p class="note-back">Cold brew out of a hostel room. Four cofounders, zero coffee drinkers. It taught me more about ownership than any class has.</p>
+        </article>
+        <article class="note note-pink" data-note style="--x:30%;--y:6%;--r:2deg" tabindex="0">
+          <p class="note-front">I should probably learn Blender.</p>
+          <p class="note-back">Every site I want to make lately has a 3D moment. SOFI&#8217;s motif was generated. The next one I want to model myself.</p>
+        </article>
+        <article class="note note-cream" data-note style="--x:55%;--y:8%;--r:-2deg" tabindex="0">
+          <p class="note-front">Could this be a product?</p>
+          <p class="note-back">The no-login client portal inside the CRM. Every client who used it asked where they could get one of their own.</p>
+        </article>
+        <article class="note note-butter" data-note style="--x:76%;--y:14%;--r:3deg" tabindex="0">
+          <p class="note-front">Don&#8217;t forget the stupidly simple version.</p>
+          <p class="note-back">Cadence started as a forty-line habits page. The stupidly simple version shipped. The clever one never did.</p>
+        </article>
+        <article class="note note-red" data-note style="--x:4%;--y:42%;--r:2deg" tabindex="0">
+          <p class="note-front">Things I abandoned</p>
+          <p class="note-back">A Notion clone (why). A campus food aggregator (became The Foodcourt, so not abandoned). A stock screener bot (paused, not dead).</p>
+        </article>
+        <article class="note note-navy" data-note style="--x:26%;--y:40%;--r:-2deg" tabindex="0">
+          <p class="note-front">Still want to build</p>
+          <p class="note-back">A tiny CRM for tuition teachers. A chai index of Goa. An agent that reads my inbox and drafts, and never, ever sends.</p>
+        </article>
+        <article class="note note-cream" data-note style="--x:50%;--y:44%;--r:1deg" tabindex="0">
+          <p class="note-front">Question I keep chewing on</p>
+          <p class="note-back">Why do people trust a hand-coded site more than a template, even when they cannot tell the difference? (They can tell.)</p>
+        </article>
+        <article class="note note-butter" data-note style="--x:74%;--y:46%;--r:-3deg" tabindex="0">
+          <p class="note-front">Rule I broke this month</p>
+          <p class="note-back">Ended a call on &#8220;I&#8217;ll get back to you.&#8221; It cost me a week. Every conversation ends on something dated now.</p>
+        </article>
+        <article class="note note-pink" data-note style="--x:8%;--y:72%;--r:-1deg" tabindex="0">
+          <p class="note-front">Reading</p>
+          <p class="note-back">Working in Public. The Mom Test. Shape Up. A stack of 10-Ks I pretend are novels.</p>
+        </article>
+        <article class="note note-cream" data-note style="--x:32%;--y:74%;--r:2deg" tabindex="0">
+          <p class="note-front">Things I&#8217;d redo</p>
+          <p class="note-back">The first Parable site (the CTA was a lie). The CRM&#8217;s first schema (no workspace column, then every row needed one).</p>
+        </article>
+        <article class="note note-butter" data-note style="--x:56%;--y:76%;--r:-2deg" tabindex="0">
+          <p class="note-front">Note to self</p>
+          <p class="note-back">Sell the outcome. Nobody has ever wanted a website.</p>
+        </article>
+        <article class="note note-red" data-note style="--x:78%;--y:74%;--r:3deg" tabindex="0">
+          <p class="note-front">DO NOT ship on a Friday.</p>
+          <p class="note-back">Shipped on a Friday. Next.js&#8217;s Data Cache froze a page&#8217;s data; force-dynamic did not bypass it. Ten hand-written SQL migrations later, Monday.</p>
+        </article>
+        <article class="desk-window" data-note style="--x:36%;--y:22%;--r:0deg" tabindex="0">
+          <header><i></i><i></i><i></i><span>tabs open right now</span></header>
+          <ul>
+            <li>pgvector docs, the HNSW page</li>
+            <li>lenis issues #412</li>
+            <li>a competitor&#8217;s pricing page (again)</li>
+            <li>blender tutorial, paused at 4:12</li>
+            <li>razorpay webhooks reference</li>
+          </ul>
+        </article>
+        <article class="desk-diagram" data-note style="--x:64%;--y:28%;--r:-2deg" tabindex="0">
+          <svg viewBox="0 0 200 120" aria-hidden="true">
+            <g stroke="#262054" stroke-width="2" fill="none" stroke-dasharray="4 5">
+              <path d="M100 30 L40 84 M100 30 L100 84 M100 30 L160 84"/>
+            </g>
+            <rect x="72" y="8" width="56" height="26" rx="8" fill="#f0cf4a" stroke="#262054" stroke-width="2.5"/>
+            <rect x="18" y="80" width="44" height="22" rx="7" fill="#e88b74" stroke="#262054" stroke-width="2.5"/>
+            <rect x="78" y="80" width="44" height="22" rx="7" fill="#f5efdd" stroke="#262054" stroke-width="2.5"/>
+            <rect x="138" y="80" width="44" height="22" rx="7" fill="#e0a33a" stroke="#262054" stroke-width="2.5"/>
+            <text x="100" y="25" text-anchor="middle" font-size="9" font-weight="800" fill="#262054">SUPERVISOR</text>
+            <text x="40" y="95" text-anchor="middle" font-size="8" font-weight="800" fill="#262054">EMAIL</text>
+            <text x="100" y="95" text-anchor="middle" font-size="8" font-weight="800" fill="#262054">WEB</text>
+            <text x="160" y="95" text-anchor="middle" font-size="8" font-weight="800" fill="#262054">GUEST</text>
+          </svg>
+          <p class="diagram-caption">how the agents talk (v3, still wrong)</p>
+        </article>
+        <article class="desk-books" data-note style="--x:86%;--y:40%;--r:4deg" aria-hidden="true">
+          <span class="db db-1">10-K</span><span class="db db-2">SHAPE UP</span><span class="db db-3">MOM TEST</span>
+        </article>
+      </div>
+    </div>
+
+    <!-- MAINTENANCE HATCH · the engine room -->
+    <div class="engine" data-engine aria-hidden="true">
+      <div class="engine-top">
+        <div>
+          <p class="sec-kicker"><i></i>MAINTENANCE HATCH</p>
+          <h2 class="engine-title">ENGINE ROOM</h2>
+          <p class="engine-sub">What this page actually runs on. Four screws, no framework, live numbers.</p>
+        </div>
+        <button class="btn btn-ghost engine-close" data-engine-close type="button" data-cursor>Close hatch</button>
+      </div>
+      <div class="engine-grid">
+        <section class="eng-card">
+          <h3>STACK</h3>
+          <ul class="eng-stack">
+            <li>HTML &middot; CSS &middot; VANILLA JS <span>no build step</span></li>
+            <li>GSAP 3.13 <span>ScrollTrigger &middot; SplitText &middot; ScrambleText</span></li>
+            <li>LENIS <span>smooth scroll, lerp .1</span></li>
+            <li>OGL <span>WebGL: ripple + glow shaders</span></li>
+            <li>CANVAS 2D <span>hero gold field &middot; particle mast</span></li>
+            <li>WEB AUDIO <span>CRT hum &middot; static &middot; click</span></li>
+            <li>INTERSECTION OBSERVER <span>scene visibility</span></li>
+            <li>VERCEL <span>static, edge cached</span></li>
+          </ul>
+        </section>
+        <section class="eng-card eng-live">
+          <h3>LIVE</h3>
+          <dl class="eng-metrics">
+            <div><dt>FPS</dt><dd data-eng-fps>--</dd></div>
+            <div><dt>DOM NODES</dt><dd data-eng-dom>--</dd></div>
+            <div><dt>WEBGL</dt><dd data-eng-gl>--</dd></div>
+            <div><dt>RESOURCES</dt><dd data-eng-res>--</dd></div>
+            <div><dt>TWEENS ALIVE</dt><dd data-eng-tweens>--</dd></div>
+            <div><dt>SCROLL</dt><dd data-eng-scroll>--</dd></div>
+            <div><dt>CURSOR</dt><dd data-eng-cursor>--</dd></div>
+            <div><dt>UPTIME</dt><dd data-eng-up>--</dd></div>
+          </dl>
+        </section>
+        <section class="eng-card eng-systems">
+          <h3>SYSTEMS</h3>
+          <ul>
+            <li><span>scroll engine</span><i class="eng-bar"><b data-eng-bar="scroll"></b></i></li>
+            <li><span>cursor engine</span><i class="eng-bar"><b data-eng-bar="cursor"></b></i></li>
+            <li><span>shader (ripple)</span><i class="eng-bar"><b data-eng-bar="shader"></b></i></li>
+            <li><span>transitions</span><i class="eng-bar"><b data-eng-bar="tweens"></b></i></li>
+            <li><span>audio</span><i class="eng-bar"><b data-eng-bar="audio"></b></i></li>
+            <li><span>assets</span><i class="eng-bar"><b data-eng-bar="assets"></b></i></li>
+          </ul>
+        </section>
+      </div>
+    </div>
 
   </main>
 
@@ -774,7 +1035,7 @@
     <p class="colophon-mast" aria-hidden="true">MANAN BAFNA</p>
     <div class="colophon-particles" data-particles="MANAN BAFNA" aria-hidden="true"><canvas></canvas></div>
     <div class="colophon-row">
-      <p class="colophon-tag">Built by hand, obviously.</p>
+      <p class="colophon-tag">Built by hand, obviously. Transmission ends here.</p>
       <p class="colophon-meta">BITS Pilani, Goa &middot; Class of 2029<br>Folio 001 <span class="heart">&hearts;</span></p>
       <p class="colophon-canon">Hand-coded with GSAP, Lenis, and stubbornness. No templates were harmed.</p>
     </div>
@@ -785,9 +1046,9 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/particles.js?v=90"></script>
-  <script src="js/main.js?v=90"></script>
-  <script type="module" src="js/ripple.js?v=90"></script>
-  <script type="module" src="js/glow.js?v=90"></script>
+  <script src="js/particles.js?v=93"></script>
+  <script src="js/main.js?v=93"></script>
+  <script type="module" src="js/ripple.js?v=93"></script>
+  <script type="module" src="js/glow.js?v=93"></script>
 </body>
 </html>
