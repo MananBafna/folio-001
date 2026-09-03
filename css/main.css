@@ -1483,19 +1483,24 @@ html.js .frame { opacity: 0; visibility: hidden; }
 }
 .board {
   position: relative; z-index: 2;
-  height: 17px; margin: 0 -1.2rem;
+  height: 22px; margin: 0 -1.2rem;
   background: linear-gradient(180deg, #ecb97c, var(--oak) 55%, var(--oak-lo));
   box-shadow: 0 -2px 0 rgba(255, 240, 210, .4), 0 10px 14px rgba(0, 0, 0, .5);
 }
 .plaque {
   position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-  padding: .2em .8em;
-  font-weight: 800; font-size: .48rem; letter-spacing: .22em; white-space: nowrap;
+  padding: .38em 1.6em;
+  font-weight: 800; font-size: .74rem; letter-spacing: .2em; white-space: nowrap;
   color: #3b2a12;
   background: linear-gradient(180deg, #f5dd90, #cfa94e);
   border: 1px solid #7d5a1c; border-radius: 2px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 2px 3px rgba(0, 0, 0, .35);
 }
+.plaque::before, .plaque::after {
+  content: ""; position: absolute; top: 50%; width: 5px; height: 5px; margin-top: -2.5px;
+  border-radius: 50%; background: radial-gradient(circle at 35% 35%, #fff2c0, #8a6620 70%);
+}
+.plaque::before { left: .5em; } .plaque::after { right: .5em; }
 .book {
   writing-mode: vertical-rl;
   display: flex; align-items: center; justify-content: space-between;
