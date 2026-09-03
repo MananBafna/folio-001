@@ -1934,7 +1934,7 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
   box-shadow: 4px 4px 0 var(--red);
 }
 .drawer-close:hover { background: var(--red); border-color: var(--red); color: var(--cream); box-shadow: 4px 4px 0 var(--navy-deep); }
-.desk { position: absolute; inset: 0; }
+.desk { position: absolute; inset: 0; top: 236px; }
 .note, .desk-window, .desk-diagram, .desk-books, .desk-obj {
   position: absolute;
   left: var(--x); top: var(--y);

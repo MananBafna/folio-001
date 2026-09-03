@@ -612,9 +612,9 @@
       master.gain.value = snd.on && snd.near ? snd.volume : 0;
       master.connect(ctx.destination);
       const hum = ctx.createOscillator(); hum.type = "sine"; hum.frequency.value = 55;
-      const humG = ctx.createGain(); humG.gain.value = 0.05;
+      const humG = ctx.createGain(); humG.gain.value = 0.085;
       const hum2 = ctx.createOscillator(); hum2.type = "triangle"; hum2.frequency.value = 110;
-      const hum2G = ctx.createGain(); hum2G.gain.value = 0.018;
+      const hum2G = ctx.createGain(); hum2G.gain.value = 0.03;
       hum.connect(humG).connect(master); hum2.connect(hum2G).connect(master);
       hum.start(); hum2.start();
       const len = ctx.sampleRate * 2;
@@ -648,6 +648,9 @@
     };
     const clickSound = () => staticBurst(0.03, 0.5);
     tv.addEventListener("pointerdown", ensureAudio, { passive: true });
+    /* any first gesture on the page unlocks the set, so scrolling into the
+       broadcast already hums and channel changes crackle without a click */
+    ["pointerdown", "keydown", "touchstart"].forEach((ev) => window.addEventListener(ev, ensureAudio, { once: true, passive: true }));
 
     /* ---- state ---- */
     let current = 0, switching = false, power = true, booted = false, cc = false;
@@ -678,7 +681,7 @@
       const dir = idx > current ? 1 : -1;
       current = idx;
       setOSD(idx);
-      staticBurst(0.28, 0.32);
+      staticBurst(0.4, 0.55);
       const toImg = to.querySelector("img");
       const tl = gsap.timeline({ onComplete() { switching = false; } });
       /* old-set channel change: the picture loses hold, rolls vertically
