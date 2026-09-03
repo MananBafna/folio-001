@@ -727,13 +727,18 @@
     /* ---- scroll picks the channel; the dial drives the scroll ---- */
     st = ScrollTrigger.create({
       trigger: ".doctrine", start: "top top",
-      end: () => `+=${N * window.innerHeight * 0.7}`,
+      end: () => `+=${N * window.innerHeight * (window.innerWidth < 700 ? 0.55 : 0.7)}`,
       pin: reel, invalidateOnRefresh: true, anticipatePin: 1,
       onEnter() { if (!booted) bootSequence(); },
       onEnterBack() { if (!booted) bootSequence(); },
       onUpdate() { if (!booted) bootSequence(); else if (booted === true) sync(); },
     });
     if (st.isActive && !booted) bootSequence();
+    /* the chin cells are tap targets too (the only channel control on a phone) */
+    gsap.utils.toArray(".reel-cell").forEach((cell, i) => {
+      cell.style.cursor = "pointer";
+      cell.addEventListener("click", () => { ensureAudio(); clickSound(); gotoChannel(i); });
+    });
     const gotoChannel = (idx) => {
       idx = Math.max(0, Math.min(N - 1, idx));
       const y = st.start + ((idx + 0.5) / N) * (st.end - st.start);

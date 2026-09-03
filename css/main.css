@@ -936,15 +936,23 @@ html.js .frame { opacity: 0; visibility: hidden; }
 .frame-src { font-size: .8rem; opacity: .85; }
 .frame-src em { font-weight: 600; }
 @media (max-width: 699px) {
-  .frame-card { left: 4%; right: 4%; bottom: 5%; max-width: none; padding: .85rem 1rem; }
-  .frame-line, .frame-src { display: none; }
-  .frame-card h3 { font-size: 1.15rem; }
+  /* the set on a phone: screen only, 4:3, controls folded away, channels tapped on the chin */
+  .frame-card { left: 4%; right: 4%; bottom: 5%; max-width: none; padding: .85rem 1rem; box-shadow: 4px 4px 0 oklch(0.12 0.05 290); }
+  .frame-src { display: none; }
+  .frame-line { font-size: .78rem; margin-bottom: 0; }
+  .frame-card h3 { font-size: 1.2rem; }
   .frame-meta { font-size: .6rem; margin-bottom: .25rem; }
-  .frame-themes { margin-bottom: 0; }
+  .frame-themes { margin-bottom: .45rem; font-size: .52rem; }
   .premise-loop svg { height: 150px; }
-  .tv-body { grid-template-columns: minmax(0, 1fr) 48px; padding: 8px; gap: 6px; }
+  .tv { margin-top: 28px; }
+  .tv-body { grid-template-columns: minmax(0, 1fr); padding: 8px; gap: 0; border-radius: 18px; box-shadow: 6px 6px 0 oklch(0.12 0.05 290), inset 0 0 0 3px oklch(0.34 0.08 290); }
+  .tv-side { display: none; }
+  .tv-screen { aspect-ratio: 4 / 3; border-radius: 12px; }
   .osd-rec, .osd-right { display: none; }
-  .dial-label, .tv-vents, .tv-cc { display: none; }
+  .tv-chin { margin-top: .6rem; }
+  .tv-speaker { width: 34px; }
+  .reel-cell { width: 26px; height: 18px; }
+  .reel-head { flex-direction: column; align-items: flex-start; gap: .4rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   .reel { height: auto; }
@@ -1421,6 +1429,8 @@ html.js .frame { opacity: 0; visibility: hidden; }
 @media (max-width: 599px) {
   .cargo-grid { grid-template-columns: 1fr; }
   .crate-b, .crate-c, .crate-f, .crate-g { grid-column: 1 / -1; }
+  /* the two decorative crates (map, caterpillar) are desktop set dressing */
+  .crate-b, .crate-c { display: none; }
 }
 .wc-chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: auto; }
 .wc-chips li {
@@ -1542,10 +1552,15 @@ html.js .frame { opacity: 0; visibility: hidden; }
 .book:nth-child(5n+4) { background: var(--forest); color: var(--cream); min-height: 214px; }
 .book:nth-child(5n+5) { background: var(--orange); color: var(--navy-deep); min-height: 196px; width: 58px; }
 @media (max-width: 899px) {
-  .cubbies { grid-template-columns: 1fr; }
-  .cubby { min-height: 330px; }
+  .cubbies { grid-template-columns: 1fr; gap: 14px; }
+  .cubby { min-height: 300px; }
   .bookcase { padding: 14px; }
   .plaque { font-size: .6rem; letter-spacing: .1em; padding-inline: 1.3em; }
+  /* each shelf becomes one row you can swipe through */
+  .shelf-row { flex-wrap: nowrap; overflow-x: auto; gap: .35rem; padding-top: 4.8rem; padding-inline: .1rem; scroll-snap-type: x proximity; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .shelf-row::-webkit-scrollbar { display: none; }
+  .book { flex: 0 0 auto; scroll-snap-align: start; }
+  .book:hover { transform: none; }
 }
 
 /* ------------------------------------------------ contact · BUTTER + ripple, fullscreen */
@@ -1717,10 +1732,16 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
   .shape-arc, .shape-ring { display: none; }
   .shape-asterisk { bottom: auto; top: 46%; left: 4%; }
   .hero-photo {
-    width: 44%;
-    margin: 0 0 0 auto;
+    order: -1;
+    width: 38%;
+    margin: -2.4rem 0 0 auto;
+    box-shadow: 6px 6px 0 var(--navy-deep);
   }
-  .hero-foot { order: 4; flex-direction: column; align-items: flex-start; gap: 2rem; margin-top: 2.2rem; }
+  .hero-foot { order: 4; flex-direction: column; align-items: flex-start; gap: 1.1rem; margin-top: 1rem; }
+  .hero-foot-left { gap: .9rem; }
+  .hero-premise { font-size: .95rem; }
+  .shape-asterisk { display: none; }
+  .tv-screw, .crate-screw, .screw-hint-wrap { display: none; }
   .premise-big { max-width: none; }
 
   /* story: native horizontal scroll instead of pin */
@@ -1764,6 +1785,11 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
   .nav { left: .8rem; right: .8rem; }
   .k-row { font-size: 2.1rem; }
   .rec { padding-inline: .4rem; }
+  .hero { padding-top: 92px; }
+  .outro-screen { border-width: 8px; border-radius: 14px; }
+  .outro-line { letter-spacing: .14em; font-size: .95rem; }
+  .access-cta { gap: .7rem 1rem; }
+  .code-mark { font-size: 5rem; }
 }
 
 /* ------------------------------------------------ reduced motion */
