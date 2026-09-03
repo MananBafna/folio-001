@@ -278,7 +278,7 @@ html.js .loader {
   position: relative;
   min-height: 100svh;
   display: flex; align-items: center;
-  padding: 96px var(--gutter) 3rem;
+  padding: 112px var(--gutter) 3rem;
   background: var(--forest);
   color: var(--cream);
   overflow: hidden;

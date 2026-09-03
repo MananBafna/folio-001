@@ -40,7 +40,7 @@
       const inset = wide ? w * 0.07 : 0;
       let fs1 = (100 * w * share) / len1;
       /* cap the lockup so tall screens keep air between the nav and the name */
-      const maxH = wide ? Math.max(240, Math.min(ih - 420, ih * 0.5)) : ih * 0.62;
+      const maxH = wide ? Math.max(240, Math.min(ih - 480, ih * 0.5)) : ih * 0.62;
       if (fs1 * 1.72 > maxH) fs1 = maxH / 1.72;
       const fs2 = Math.min(fs1, (100 * w * share) / len2);
       mk1.style.fontSize = fs1 + "px";
