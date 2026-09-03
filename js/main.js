@@ -161,13 +161,13 @@
   const heroIntro = gsap.timeline({ paused: true });
   heroIntro
     .fromTo(".hero-mark", { scale: 1.05, yPercent: 3 }, { scale: 1, yPercent: 0, duration: 1.1, ease: "power3.out" })
-    .from(".hero-photo", { scale: 0, rotate: 28, duration: 0.8, ease: "back.out(1.5)" }, 0.15)
-    .from(".hero-chips .chip", { scale: 0, x: -30, duration: 0.6, ease: "back.out(1.8)", stagger: 0.09 }, 0.25)
-    .from(".hero-badge", { scale: 0, rotate: -40, duration: 0.9, ease: "back.out(1.6)" }, 0.35)
+    .from(".hero-photo", { immediateRender: false, scale: 0, rotate: 28, duration: 0.8, ease: "back.out(1.5)" }, 0.15)
+    .from(".hero-chips .chip", { immediateRender: false, scale: 0, x: -30, duration: 0.6, ease: "back.out(1.8)", stagger: 0.09 }, 0.25)
+    .from(".hero-badge", { immediateRender: false, scale: 0, rotate: -40, duration: 0.9, ease: "back.out(1.6)" }, 0.35)
     .from(".sticker, .shape", { scale: 0, duration: 0.7, ease: "back.out(2)", stagger: 0.09 }, 0.4)
-    .from(".hero-foot > *", { opacity: 0, y: 26, duration: 0.8, ease: "power3.out", stagger: 0.1 }, 0.4)
-    .from(".nav", { opacity: 0, y: -18, duration: 0.7, ease: "power3.out" }, 0.5)
-    .from(".canon", { opacity: 0, duration: 0.8 }, 0.6);
+    .from(".hero-foot > *", { immediateRender: false, opacity: 0, y: 26, duration: 0.8, ease: "power3.out", stagger: 0.1 }, 0.4)
+    .from(".nav", { immediateRender: false, opacity: 0, y: -18, duration: 0.7, ease: "power3.out" }, 0.5)
+    .from(".canon", { immediateRender: false, opacity: 0, duration: 0.8 }, 0.6);
 
   if (loader) {
     /* stamp overture: an orbiting ring turns while BUILDS / SHIPS / REPEATS

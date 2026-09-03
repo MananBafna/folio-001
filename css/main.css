@@ -1062,7 +1062,8 @@ html.js .frame { opacity: 0; visibility: hidden; }
   rotate: 14deg;
 }
 @media (max-width: 899px) {
-  .se-gears, .se-bolt { display: none; }
+  .se-gears { left: -16%; top: 6%; transform: none; width: 230px; }
+  .se-bolt { right: 5%; top: auto; bottom: 9%; width: 54px; rotate: -12deg; }
 }
 .se-frame {
   position: absolute; inset: 0;
@@ -1790,6 +1791,9 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
   .k-row { font-size: 2.1rem; }
   .rec { padding-inline: .4rem; }
   .hero { padding-top: 92px; }
+  .loader-tag-mid { display: none; }
+  .loader-tag { font-size: .56rem; letter-spacing: .2em; bottom: 7.5%; }
+  .loader-count { font-size: 3rem; }
   .outro-screen { border-width: 8px; border-radius: 14px; }
   .outro-line { letter-spacing: .14em; font-size: .95rem; }
   .access-cta { gap: .7rem 1rem; }
