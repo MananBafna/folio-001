@@ -1124,7 +1124,11 @@
     opacity: 0, y: 36, duration: 0.9, ease: "power3.out", stagger: 0.1,
     scrollTrigger: { trigger: ".toolbox", start: "top 70%" },
   });
-  /* books stay put: their hover transition fights tweens, so no entrance animation */
+  /* the shelves settle in one by one; books themselves stay put (their hover transition fights tweens) */
+  gsap.from(".cubby", {
+    y: 26, autoAlpha: 0, duration: 0.8, ease: "power3.out", stagger: 0.12,
+    scrollTrigger: { trigger: ".bookcase", start: "top 78%" },
+  });
 
   /* ---------------------------------------------- contact */
   gsap.from(".access-inner > *", {
