@@ -1238,11 +1238,11 @@
       drawer.classList.add("is-open"); drawer.setAttribute("aria-hidden", "false");
       document.documentElement.classList.add("is-loading");
       if (lenis) lenis.stop();
-      gsap.fromTo(drawer, { y: "100%" }, { y: 0, duration: 0.7, ease: "power4.out", clearProps: "transform" });
-      gsap.from("[data-desk] > *", { scale: 0.85, autoAlpha: 0, duration: 0.5, ease: "back.out(1.5)", stagger: 0.04, delay: 0.3 });
+      gsap.fromTo(drawer, { x: "100%" }, { x: 0, duration: 0.7, ease: "power4.out", clearProps: "transform" });
+      gsap.from("[data-desk] > *", { x: 60, autoAlpha: 0, duration: 0.55, ease: "power3.out", stagger: 0.035, delay: 0.25 });
     };
     const close = () => {
-      gsap.to(drawer, { y: "100%", duration: 0.5, ease: "power3.in", onComplete() {
+      gsap.to(drawer, { x: "100%", duration: 0.5, ease: "power3.in", onComplete() {
         drawer.classList.remove("is-open"); drawer.setAttribute("aria-hidden", "true");
         gsap.set(drawer, { clearProps: "transform" });
         document.documentElement.classList.remove("is-loading");
