@@ -1588,50 +1588,18 @@ html.js .frame { opacity: 0; visibility: hidden; }
 .access-stick-a svg path { fill: var(--red); }
 .access-stick-b { width: clamp(22px, 2.6vw, 38px); right: 11%; bottom: 30%; }
 .access-stick-b svg path { fill: var(--navy-deep); }
-.access-mail {
-  position: absolute; left: 0; right: 0;
-  bottom: clamp(1.1rem, 4vh, 2.4rem);
-  z-index: 2;
-  overflow: hidden;
-  display: block;
-}
-.access-mail-row {
-  display: inline-block;
-  white-space: nowrap;
-  font-family: var(--font-poster);
-  font-size: clamp(2rem, 5vw, 4rem);
-  line-height: 1;
-  letter-spacing: .02em;
-  color: oklch(0.28 0.08 290 / .9);
-  transition: color .3s;
-}
-.access-mail:hover .access-mail-row { color: var(--red-deep); }
-.access-inner { position: relative; z-index: 2; max-width: 760px; margin-inline: auto; padding-bottom: clamp(3rem, 8vh, 5rem); }
+.access-inner { position: relative; z-index: 2; width: min(780px, 100%); margin-inline: auto; display: grid; justify-items: center; }
+html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opacity: 0; }
 .access-kicker {
   font-weight: 700;
   font-size: .7rem; letter-spacing: .3em; text-transform: uppercase;
   color: var(--red-deep);
-  margin-bottom: 2rem;
-}
-.access-title {
-  font-family: var(--font-round);
-  font-weight: 800;
-  font-size: clamp(2.2rem, 5vw, 4.2rem);
-  line-height: 1.02;
-  letter-spacing: -0.01em;
-  margin-bottom: 1.75rem;
-}
-.access-title em { color: var(--red-deep); font-weight: 800; }
-.access-body {
-  color: oklch(0.35 0.07 290);
-  max-width: 56ch;
-  margin: 0 auto 2.75rem;
-  font-size: clamp(.95rem, 1.15vw, 1.1rem);
-  text-wrap: pretty;
+  margin-bottom: 1.6rem;
 }
 .access-cta {
   display: flex; justify-content: center; align-items: center; flex-wrap: wrap;
   gap: 1rem 1.4rem;
+  margin-top: 2.6rem;
 }
 .access-tel {
   display: inline-flex; align-items: baseline; gap: .45em;
@@ -1797,18 +1765,8 @@ html.js .frame { opacity: 0; visibility: hidden; }
   }
 }
 
-/* ------------------------------------------------ end of transmission */
-.outro {
-  background: oklch(0.1 0.04 290);
-  color: var(--cream);
-}
-.outro-stage {
-  min-height: 100svh;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 1.6rem;
-  padding: 6rem var(--gutter);
-}
-.outro-tv { position: relative; width: min(880px, 92vw); }
+/* ------------------------------------------------ the sign-off screen (inside contact) */
+.outro-tv { position: relative; width: 100%; color: var(--cream); }
 .outro-screen {
   position: relative;
   aspect-ratio: 16 / 9;
@@ -1816,7 +1774,7 @@ html.js .frame { opacity: 0; visibility: hidden; }
   border-radius: 20px;
   border: 12px solid var(--navy-deep);
   outline: 3px solid oklch(0.34 0.08 290); outline-offset: -3px;
-  box-shadow: 12px 12px 0 oklch(0.05 0.02 290), inset 0 0 50px oklch(0 0 0 / .6);
+  box-shadow: 12px 12px 0 oklch(0.62 0.11 92), inset 0 0 50px oklch(0 0 0 / .6);
   overflow: hidden;
   display: grid; place-items: center;
   transform-origin: 50% 50%;
@@ -1855,8 +1813,7 @@ html.js .frame { opacity: 0; visibility: hidden; }
   opacity: 0;
 }
 .outro-line[data-outro-2] { color: var(--butter); }
-.outro-big { font-family: var(--font-poster); font-weight: 400; font-size: clamp(2.4rem, 6vw, 5.2rem); letter-spacing: .04em; color: var(--butter); text-shadow: 0 0 22px oklch(0.87 0.13 95 / .45); margin-top: .4rem; }
-.outro-cta { justify-self: center; opacity: 0; margin-top: .6rem; }
+.outro-big { font-family: var(--font-poster); font-weight: 400; font-size: clamp(2rem, 5vw, 4.2rem); letter-spacing: .04em; color: var(--butter); text-shadow: 0 0 22px oklch(0.87 0.13 95 / .45); margin-top: .4rem; }
 .outro-osd {
   position: absolute; z-index: 3;
   font-weight: 800; font-size: .6rem; letter-spacing: .2em;

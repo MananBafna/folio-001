@@ -1131,7 +1131,7 @@
   });
 
   /* ---------------------------------------------- contact */
-  gsap.from(".access-inner > *", {
+  gsap.from(".access-kicker, .outro-tv", {
     opacity: 0, y: 34, duration: 0.9, ease: "power3.out", stagger: 0.1,
     scrollTrigger: { trigger: ".access", start: "top 65%" },
   });
@@ -1183,6 +1183,7 @@
     const led = stage.querySelector("[data-outro-led]");
     const lines = [1, 2, 3].map((n) => stage.querySelector(`[data-outro-${n}]`));
     const cta = stage.querySelector("[data-outro-cta]");
+    const fine = stage.querySelector("[data-outro-fine]");
     const tag = stage.querySelector("[data-outro-tag]");
     let played = false;
     const tick = () => {
@@ -1216,9 +1217,9 @@
         .fromTo(lines[0], { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.5 }, "+=0.3")
         .fromTo(lines[1], { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.5 }, "+=1.1")
         .fromTo(lines[2], { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, "+=0.9")
-        .fromTo(cta, { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, "-=0.2");
+        .fromTo([cta, fine], { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out", stagger: 0.12 }, "-=0.1");
     };
-    ScrollTrigger.create({ trigger: ".outro", start: "top 35%", onEnter: play });
+    ScrollTrigger.create({ trigger: ".access", start: "top 40%", onEnter: play });
   })();
 
   /* ---------------------------------------------- field signals: the drawer */
