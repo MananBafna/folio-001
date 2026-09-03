@@ -597,17 +597,6 @@ html.js .loader {
 }
 .premise-big-alt { color: var(--butter); margin-top: .35em; }
 .premise-big .line { display: block; overflow: hidden; padding-block: .04em; }
-.premise-code {
-  margin-top: 2rem;
-  max-width: 34ch;
-  display: flex; align-items: flex-start; gap: .8rem;
-  font-family: var(--font-round); font-weight: 700;
-  font-size: clamp(1rem, 1.5vw, 1.3rem); line-height: 1.35;
-  color: var(--cream);
-  padding-left: 1rem;
-  border-left: 3px solid var(--red);
-}
-.code-dot { flex: 0 0 10px; width: 10px; height: 10px; margin-top: .45em; border-radius: 50%; background: var(--red); animation: rec-blink 1.4s steps(1) infinite; }
 .premise-note {
   margin-top: 2.4rem;
   color: oklch(0.86 0.03 300);
@@ -697,7 +686,8 @@ html.js .loader {
 /* chassis */
 .tv {
   position: relative; z-index: 1;
-  width: min(1120px, 100%, calc((100svh - 290px) * 1.9));
+  width: min(1120px, 100%, calc((100svh - 330px) * 1.9));
+  margin-top: clamp(34px, 4vw, 52px);
 }
 .tv-antenna {
   position: absolute;
@@ -845,6 +835,9 @@ html.js .frame { opacity: 0; visibility: hidden; }
 }
 .tv-off-dot { width: 10px; height: 10px; border-radius: 50%; background: #fff; box-shadow: 0 0 18px 6px oklch(1 0 0 / .6); }
 .reel-flicker { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+.crt-scanbar { position: absolute; left: 0; right: 0; top: 0; height: 7%; background: linear-gradient(to bottom, transparent, oklch(1 0 0 / .55), transparent); opacity: 0; pointer-events: none; }
+.tv-dial-ch { cursor: pointer; }
+.tv-dial-ch .dial-cap::after { content: ""; position: absolute; inset: -7px; border-radius: 50%; border: 1.5px dashed oklch(0.87 0.13 95 / .35); }
 /* side controls */
 .tv-side {
   display: flex; flex-direction: column; align-items: center;
@@ -937,6 +930,45 @@ html.js .frame { opacity: 0; visibility: hidden; }
   html.js .frame { position: relative; opacity: 1 !important; visibility: visible !important; min-height: 40vh; }
   .reel-flicker, .tv-boot, .crt-noise, .frame-noise { display: none; }
 }
+
+/* ------------------------------------------------ the code · NAVY */
+.code {
+  background: var(--navy-deep);
+  color: var(--cream);
+  padding: clamp(6rem, 16vh, 12rem) var(--gutter);
+}
+.code-quote {
+  position: relative;
+  max-width: 1100px;
+  margin-inline: auto;
+  text-align: center;
+}
+.code-mark {
+  display: block;
+  font-family: var(--font-round);
+  font-weight: 800;
+  font-size: clamp(6rem, 14vw, 13rem);
+  line-height: .6;
+  color: var(--butter);
+  margin-bottom: .1em;
+}
+.code-text {
+  font-family: var(--font-round);
+  font-weight: 800;
+  font-size: clamp(1.9rem, 4.4vw, 3.9rem);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.code-text .line { display: block; overflow: hidden; padding-block: .04em; }
+.code-mark-end { color: var(--butter); }
+.code-foot {
+  display: inline-flex; align-items: center; gap: .6rem;
+  margin-top: 2.2rem;
+  font-weight: 800; font-size: .64rem; letter-spacing: .3em;
+  color: var(--butter);
+}
+.code-foot i { width: 8px; height: 8px; border-radius: 50%; background: var(--red); animation: rec-blink 1.4s steps(1) infinite; }
 
 /* ------------------------------------------------ how i work · RED */
 .rules {

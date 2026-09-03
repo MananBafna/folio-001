@@ -614,31 +614,44 @@
       const line = frames[idx].querySelector(".frame-line");
       if (osdCc && line) osdCc.textContent = line.textContent;
       if (chDialEl) chDialEl.setAttribute("aria-valuenow", String(idx + 1));
+      if (typeof snapCap === "function") snapCap(idx);
     };
 
     gsap.set(frames, { autoAlpha: 0 });
+
+    /* a bright scan bar that sweeps the tube during a channel change */
+    const scanBar = document.createElement("i");
+    scanBar.className = "crt-scanbar";
+    framesWrap.parentNode.appendChild(scanBar);
+    const noiseEl = q("[data-noise]");
 
     const show = (idx) => {
       if (idx === current || switching) return;
       switching = true;
       const from = frames[current], to = frames[idx];
+      const dir = idx > current ? 1 : -1;
       current = idx;
       setOSD(idx);
-      staticBurst(0.16, 0.22);
-      const toImg = to.querySelector("img"), fromImg = from.querySelector("img");
+      staticBurst(0.28, 0.32);
+      const toImg = to.querySelector("img");
       const tl = gsap.timeline({ onComplete() { switching = false; } });
-      /* iris wipe: the next channel blooms open over the last */
-      tl.set(to, { autoAlpha: 1, clipPath: "circle(0% at 50% 54%)" }, 0)
-        .to(to, { clipPath: "circle(75% at 50% 54%)", duration: 0.85, ease: "power2.inOut" }, 0)
-        .set(from, { autoAlpha: 0 }, 0.85)
-        .set(to, { clipPath: "none" }, 0.85)
-        .fromTo(to.querySelector(".frame-card"), { y: 26, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 0.55, ease: "power3.out" }, 0.3);
-      if (fromImg) tl.to(fromImg, { scale: "+=0.03", duration: 0.85, ease: "power1.out" }, 0);
-      if (toImg) tl.fromTo(toImg, { scale: 1.12 }, { scale: 1.05, duration: 1.5, ease: "power2.out" }, 0);
+      /* old-set channel change: the picture loses hold, rolls vertically
+         through a burst of static with a tear, and the next channel snaps in */
+      tl.set(to, { autoAlpha: 1, yPercent: 100 * dir, clipPath: "none" }, 0)
+        .to(noiseEl, { opacity: 0.7, duration: 0.06 }, 0)
+        .to([from, to], { yPercent: "-=" + (100 * dir), duration: 0.3, ease: "power3.inOut" }, 0.04)
+        .fromTo(scanBar, { yPercent: -100, autoAlpha: 1 }, { yPercent: 1400, duration: 0.32, ease: "power2.in" }, 0.04)
+        .to(framesWrap, { skewX: 5, x: -8, duration: 0.05, repeat: 5, yoyo: true, ease: "none" }, 0.02)
+        .set(framesWrap, { skewX: 0, x: 0 }, 0.36)
+        .set(from, { autoAlpha: 0, yPercent: 0 }, 0.36)
+        .set(scanBar, { autoAlpha: 0 }, 0.36)
+        .to(noiseEl, { opacity: 0, duration: 0.22 }, 0.34)
+        .fromTo(to.querySelector(".frame-card"), { y: 18, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.5, ease: "power3.out" }, 0.42);
+      if (toImg) tl.fromTo(toImg, { scale: 1.1 }, { scale: 1.05, duration: 1.4, ease: "power2.out" }, 0.3);
       const t = to.querySelector("h3");
       if (t && scramble) {
-        tl.to(t, { duration: 0.8, scrambleText: { text: t.dataset.title || t.textContent, chars: "upperCase", speed: 0.6 } }, 0.35);
+        tl.to(t, { duration: 0.7, scrambleText: { text: t.dataset.title || t.textContent, chars: "upperCase", speed: 0.6 } }, 0.45);
       }
     };
 
@@ -725,15 +738,18 @@
     };
 
     const chStep = 300 / (N - 1);
-    let lastDialIdx = 0;
-    const chDial = makeDial(chDialEl, {
-      min: -150, max: 150, initial: -150, keyStep: chStep,
-      onTurn(a) {
-        const idx = Math.round((a + 150) / chStep);
-        if (idx !== lastDialIdx) { lastDialIdx = idx; clickSound(); gotoChannel(idx); }
-      },
-      onTap() { clickSound(); gotoChannel((current + 1) % N); },
-    });
+    const chCap = chDialEl ? chDialEl.querySelector("[data-dial-cap]") : null;
+    const snapCap = (idx) => { if (chCap) gsap.to(chCap, { rotation: -150 + idx * chStep, duration: 0.28, ease: "back.out(2.2)" }); };
+    const stepChannel = (d) => { ensureAudio(); clickSound(); gotoChannel(Math.max(0, Math.min(N - 1, current + d))); };
+    if (chDialEl) {
+      chDialEl.addEventListener("click", () => stepChannel(current === N - 1 ? -(N - 1) : 1));
+      chDialEl.addEventListener("wheel", (e) => { e.preventDefault(); stepChannel(e.deltaY > 0 ? 1 : -1); }, { passive: false });
+      chDialEl.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === "ArrowUp") { e.preventDefault(); stepChannel(1); }
+        else if (e.key === "ArrowLeft" || e.key === "ArrowDown") { e.preventDefault(); stepChannel(-1); }
+      });
+      snapCap(0);
+    }
     const volDialEl = q('[data-dial="volume"]');
     let volTimer;
     makeDial(volDialEl, {
@@ -746,12 +762,6 @@
         if (volDialEl) volDialEl.setAttribute("aria-valuenow", String(Math.round(snd.volume * 100)));
       },
     });
-    /* the channel dial keeps pointing at whatever channel the scroll chose */
-    setInterval(() => {
-      if (chDial.busy) return;
-      lastDialIdx = current;
-      chDial.set(-150 + current * chStep);
-    }, 400);
 
     /* ---- power ---- */
     const powerBtn = q("[data-power]");
@@ -816,6 +826,22 @@
       scrollTrigger: { trigger: ".doctrine", start: "top 75%" },
     });
   })();
+
+  /* ---------------------------------------------- the code */
+  if (document.querySelector(".code-text")) {
+    gsap.from(".code-mark", { scale: 0.6, autoAlpha: 0, duration: 0.7, ease: "back.out(1.6)",
+      scrollTrigger: { trigger: ".code", start: "top 70%" } });
+    if (window.SplitText) {
+      const cs = new SplitText(".code-text", { type: "lines", linesClass: "line" });
+      gsap.from(cs.lines, { yPercent: 105, opacity: 0, duration: 1, ease: "power4.out", stagger: 0.1,
+        scrollTrigger: { trigger: ".code", start: "top 65%" } });
+    } else {
+      gsap.from(".code-text", { opacity: 0, y: 30, duration: 1, ease: "power3.out",
+        scrollTrigger: { trigger: ".code", start: "top 65%" } });
+    }
+    gsap.from(".code-foot", { opacity: 0, y: 12, duration: 0.6,
+      scrollTrigger: { trigger: ".code", start: "top 55%" } });
+  }
 
   /* ---------------------------------------------- how i work */
   gsap.utils.toArray(".rule").forEach((r, i) => {
