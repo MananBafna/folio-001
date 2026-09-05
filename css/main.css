@@ -224,7 +224,7 @@ html.js .loader {
 
 /* ------------------------------------------------ nav · floating glass pill */
 .nav {
-  position: fixed; top: 14px; left: var(--gutter); right: var(--gutter);
+  position: fixed; top: calc(14px + env(safe-area-inset-top, 0px)); left: var(--gutter); right: var(--gutter);
   z-index: var(--z-nav);
   display: flex; align-items: center; justify-content: space-between;
   gap: 2rem;
@@ -943,7 +943,8 @@ html.js .frame { opacity: 0; visibility: hidden; }
   .frame-card h3 { font-size: 1.2rem; }
   .frame-meta { font-size: .6rem; margin-bottom: .25rem; }
   .frame-themes { margin-bottom: .45rem; font-size: .52rem; }
-  .premise-loop svg { height: 150px; }
+  .premise-loop svg { height: 176px; }
+  .tl-text, .tl-measure { font-size: 30px; }
   .tv { margin-top: 28px; }
   .tv-body { grid-template-columns: minmax(0, 1fr); padding: 8px; gap: 0; border-radius: 18px; box-shadow: 6px 6px 0 oklch(0.12 0.05 290), inset 0 0 0 3px oklch(0.34 0.08 290); }
   .tv-side { display: none; }
@@ -1800,6 +1801,8 @@ html.js .access-cta[data-outro-cta], html.js .access-fine[data-outro-fine] { opa
   .access .outro-big { font-size: 1.75rem; letter-spacing: .03em; line-height: 1.05; margin-top: .3rem; }
   .access .outro-osd { font-size: .5rem; letter-spacing: .14em; }
   .access .outro-osd-r { display: none; }
+  .access .outro-static { animation: none; mix-blend-mode: normal; opacity: .08; }
+  .access .outro-screen .crt-scan { opacity: .5; }
   .access-cta { gap: .7rem 1rem; }
   .code-mark { font-size: 5rem; }
 }

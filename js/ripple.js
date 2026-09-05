@@ -189,6 +189,8 @@ function init() {
   const mount = document.querySelector('[data-ripple]');
   if (!mount) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  /* phones have no pointer to ripple under, and Chrome on iOS janks on the shader */
+  if (window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 900) return;
 
   let renderer;
   try {

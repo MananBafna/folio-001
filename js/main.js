@@ -511,10 +511,12 @@
     ];
     const unit = PAIRS.join("  ✦  ") + "  ✦  ";
     measure.textContent = unit;
-    /* on phones, crop the wave instead of shrinking it into illegibility */
-    if (window.innerWidth < 700) {
-      root.querySelector("svg").setAttribute("preserveAspectRatio", "xMidYMid slice");
-    }
+    /* on phones, crop the wave instead of shrinking it into illegibility;
+       decided from the ribbon's own width (Chrome on iOS reports odd innerWidth early) */
+    const svgEl = root.querySelector("svg");
+    const fit = () => svgEl.setAttribute("preserveAspectRatio", root.clientWidth < 700 ? "xMidYMid slice" : "xMidYMid meet");
+    fit();
+    window.addEventListener("resize", fit, { passive: true });
     const setup = () => {
       let length = 0, unitW = 0;
       try {
