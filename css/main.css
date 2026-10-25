@@ -1439,13 +1439,21 @@ html.js .frame { opacity: 0; visibility: hidden; }
 .voice-cmd { display: inline-flex; align-items: center; gap: .45rem; max-width: 100%; background: var(--navy-deep); color: var(--butter); padding: .4em .8em; border-radius: 999px; font-weight: 700; font-size: .72rem; box-shadow: 3px 3px 0 oklch(0.3 0.08 30); white-space: nowrap; overflow: hidden; }
 .voice-cmd .chat-caret { background: var(--butter); }
 .voice-mic { flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: var(--red); box-shadow: 0 0 0 3px oklch(0.58 0.17 30 / .35); }
-/* Olli: the mascot tells you where to buy */
-.art-olli { display: flex; align-items: center; gap: .8rem; margin: 2.2rem 0 .9rem; }
-.olli-bot { flex: 0 0 auto; width: 84px; height: 84px; overflow: visible; filter: drop-shadow(4px 4px 0 oklch(0.23 0.08 290)); }
-.olli-say { position: relative; display: grid; gap: .3rem; padding: .55rem .75rem; background: var(--cream); border: 2px solid var(--navy-deep); border-radius: 12px; box-shadow: 3px 3px 0 var(--navy-deep); font-size: .68rem; max-width: 220px; }
-.olli-say::before { content: ""; position: absolute; left: -9px; top: 50%; width: 14px; height: 14px; margin-top: -7px; background: var(--cream); border-left: 2px solid var(--navy-deep); border-bottom: 2px solid var(--navy-deep); rotate: 45deg; }
-.olli-say span { justify-self: start; font-family: var(--font-poster); letter-spacing: .1em; font-size: .6rem; background: var(--navy-deep); color: var(--butter); padding: .2em .65em; border-radius: 999px; }
-.olli-say b { font-weight: 800; line-height: 1.3; }
+/* Olli: the octopus and its price board */
+.art-olli { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: .7rem; align-items: center; margin: 2.2rem 0 .9rem; }
+.olli-bot { width: 92px; height: auto; overflow: visible; filter: drop-shadow(3px 4px 0 oklch(0.23 0.08 290)); }
+.olli-board { background: var(--cream); border: 2px solid var(--navy-deep); border-radius: 12px; box-shadow: 3px 3px 0 var(--navy-deep); padding: .5rem .6rem; rotate: -1.5deg; }
+.olli-rows { display: grid; gap: .2rem; margin-bottom: .4rem; }
+.olli-rows li { display: grid; grid-template-columns: 4.4em 1fr auto; gap: .4rem; align-items: center; font-size: .6rem; padding: .18rem .3rem; border-radius: 5px; transition: background-color .35s ease; }
+.olli-rows b { font-weight: 800; }
+.olli-rows i { display: block; height: 6px; border-radius: 3px; background: oklch(0.86 0.04 300); overflow: hidden; }
+.olli-rows s { display: block; height: 100%; width: 60%; border-radius: 3px; background: var(--navy); text-decoration: none; transition: width .6s cubic-bezier(.22,1,.36,1), background-color .3s ease; }
+.olli-rows span { font-weight: 800; font-variant-numeric: tabular-nums; }
+.olli-rows li.is-best { background: var(--butter); }
+.olli-rows li.is-best s { background: var(--red); }
+.olli-best { display: flex; align-items: center; gap: .35rem; font-size: .58rem; }
+.olli-best span { flex: 0 0 auto; font-family: var(--font-poster); letter-spacing: .1em; font-size: .55rem; background: var(--navy-deep); color: var(--butter); padding: .2em .6em; border-radius: 999px; }
+.olli-best b { font-weight: 800; line-height: 1.25; }
 /* Interface Admin: the PMS links board */
 .art-pms { background: var(--navy-deep); color: var(--cream); border-radius: 12px; padding: .65rem .8rem; margin: 2.2rem 0 1rem; box-shadow: 4px 4px 0 oklch(0.62 0.11 92); max-width: 300px; }
 .pms-head { display: flex; align-items: center; justify-content: space-between; font-weight: 800; font-size: .56rem; letter-spacing: .16em; color: var(--butter); margin-bottom: .45rem; }

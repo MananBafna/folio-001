@@ -1163,26 +1163,32 @@
       }
     }
 
-    /* Olli: the mascot blinks, bobs, and names the best place to buy */
-    const olliBot = document.querySelector("[data-olli-bot]");
-    if (olliBot) {
+    /* Olli: prices reshuffle, the cheapest row wins, the octopus bobs along */
+    const olliRows = document.querySelectorAll("[data-olli-rows] li");
+    if (olliRows.length) {
       const bestEl = document.querySelector("[data-olli-best]");
-      const deals = [
-        "Flipkart \u00B7 \u20B95,669 with your HDFC card",
-        "Amazon \u00B7 \u20B95,499 with Amazon Pay UPI",
-        "Croma \u00B7 \u20B95,729 with your membership",
-        "Vijay Sales \u00B7 \u20B95,610, free delivery",
-      ];
-      gsap.to(olliBot, { y: -5, rotation: -3, transformOrigin: "50% 100%", duration: 1.3, ease: "sine.inOut", repeat: -1, yoyo: true });
-      const eyes = olliBot.querySelectorAll("[data-olli-eye]");
-      gsap.timeline({ repeat: -1, repeatDelay: 2.6 })
-        .to(eyes, { scaleY: 0.15, transformOrigin: "center center", duration: 0.09, yoyo: true, repeat: 1 });
-      let di = 0;
-      if (bestEl) gsap.timeline({ repeat: -1 }).to({}, { duration: 2.8 }).add(() => {
-        di = (di + 1) % deals.length;
-        gsap.fromTo(bestEl, { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.35, ease: "power3.out" });
-        bestEl.textContent = deals[di];
-      });
+      const perks = ["with HDFC", "via Amazon Pay UPI", "with Axis card", "with membership"];
+      const fmtR = (n) => "\u20B9" + Math.round(n).toLocaleString("en-IN");
+      const shuffle = () => {
+        const prices = [...olliRows].map(() => 6100 + Math.random() * 800);
+        const min = Math.min(...prices), max = Math.max(...prices);
+        const bi = prices.indexOf(min);
+        olliRows.forEach((li, i) => {
+          li.querySelector("span").textContent = fmtR(prices[i]);
+          li.querySelector("s").style.width = (35 + ((max - prices[i]) / (max - min || 1)) * 60) + "%";
+          li.classList.toggle("is-best", i === bi);
+        });
+        if (bestEl) bestEl.textContent = olliRows[bi].dataset.store + " \u00B7 " + fmtR(min * 0.9) + " " + perks[Math.floor(Math.random() * perks.length)];
+      };
+      shuffle();
+      gsap.timeline({ repeat: -1 }).to({}, { duration: 2.8 }).add(shuffle);
+      const bot = document.querySelector("[data-olli-bot]");
+      if (bot) {
+        gsap.to(bot, { y: -4, rotation: -2, transformOrigin: "50% 100%", duration: 1.3, ease: "sine.inOut", repeat: -1, yoyo: true });
+        const eyes = bot.querySelector("[data-olli-eyes]");
+        if (eyes) gsap.timeline({ repeat: -1, repeatDelay: 2.6 })
+          .to(eyes, { scaleY: 0.12, transformOrigin: "50% 60%", duration: 0.09, yoyo: true, repeat: 1 });
+      }
     }
 
     /* Interface Admin: a link drops, the bell rings until it is answered, the link heals */
