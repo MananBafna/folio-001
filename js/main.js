@@ -1094,13 +1094,6 @@
         gsap.to(tickerTrack, { xPercent: -50, duration: 9, ease: "none", repeat: -1 })]);
     }
 
-    const steam = document.querySelectorAll("[data-steam] path");
-    if (steam.length) {
-      gsap.to(steam, {
-        y: -5, opacity: 0.35, duration: 1.1, ease: "sine.inOut",
-        repeat: -1, yoyo: true, stagger: 0.25,
-      });
-    }
     /* map furniture: the compass needle wavers, the serpent swims in place */
     const needle = document.querySelector("[data-needle]");
     if (needle) {
@@ -1121,43 +1114,74 @@
       if (wave2) gsap.fromTo(wave2, { x: -24 }, { x: 0, duration: 2.1, ease: "none", repeat: -1 });
     }
 
-    const beam = document.querySelector("[data-beam]");
-    if (beam) gsap.to(beam, { opacity: 0.15, duration: 0.9, ease: "sine.inOut", repeat: -1, yoyo: true });
-
-    const route = document.querySelector("[data-route]");
-    const voyager = document.querySelector("[data-voyager]");
-    if (route && voyager) {
-      const rl = route.getTotalLength();
-      const sail = { p: 0 };
-      const pt0 = route.getPointAtLength(0);
-      gsap.set(voyager, { x: pt0.x, y: pt0.y });
-      speedable.push([route.closest(".crate"),
-        gsap.to(sail, {
-          p: 1, duration: 7, ease: "power1.inOut", repeat: -1, repeatDelay: 0.9,
-          onUpdate() {
-            const d = sail.p * rl;
-            const pt = route.getPointAtLength(d);
-            const ahead = route.getPointAtLength(Math.min(rl, d + 2));
-            const angle = Math.atan2(ahead.y - pt.y, ahead.x - pt.x) * (180 / Math.PI);
-            gsap.set(voyager, { x: pt.x, y: pt.y, rotation: angle * 0.55 });
-          },
-        })]);
+    /* QCAlpha: prices tick, the heatmap breathes, the clock runs */
+    const termRows = document.querySelectorAll("[data-term-rows] li");
+    if (termRows.length) {
+      const heat = document.querySelectorAll("[data-term-heat] i");
+      const clock = document.querySelector("[data-term-clock]");
+      const base = [...termRows].map((li) => parseFloat(li.querySelector("span").dataset.p));
+      let secs = 9 * 3600 + 15 * 60;
+      const tickTerm = () => {
+        termRows.forEach((li, i) => {
+          if (Math.random() < 0.45) return;
+          const span = li.querySelector("span"), em = li.querySelector("em");
+          const pct = (Math.random() - 0.45) * 1.4;
+          const p = base[i] * (1 + pct / 100);
+          span.textContent = p.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          em.textContent = (pct >= 0 ? "+" : "") + pct.toFixed(2) + "%";
+          li.classList.toggle("is-down", pct < 0);
+          li.classList.add("is-flash"); setTimeout(() => li.classList.remove("is-flash"), 320);
+        });
+        heat.forEach((cell) => { if (Math.random() < 0.3) cell.className = "h" + (1 + Math.floor(Math.random() * 4)); });
+        secs += 1;
+        if (clock) clock.textContent = [Math.floor(secs / 3600), Math.floor(secs / 60) % 60, secs % 60].map((n) => String(n).padStart(2, "0")).join(":");
+      };
+      heat.forEach((cell) => { cell.className = "h" + (1 + Math.floor(Math.random() * 4)); });
+      gsap.timeline({ repeat: -1 }).add(tickTerm).to({}, { duration: 1 });
     }
 
-    const clicks = document.querySelectorAll("[data-click]");
-    if (clicks.length) {
-      const tlClicks = gsap.timeline({ repeat: -1, repeatDelay: 0.9 });
-      tlClicks.to(clicks, { opacity: 1, duration: 0.16, stagger: 0.32, ease: "power2.out" })
-        .to(clicks, { opacity: 0, duration: 0.3 }, "+=0.9");
-      speedable.push([clicks[0].closest(".crate"), tlClicks]);
+    /* Jarvis: the waveform listens, commands type themselves in */
+    const vbars = document.querySelectorAll("[data-voice-bars] i");
+    if (vbars.length) {
+      vbars.forEach((bar, i) => {
+        gsap.to(bar, { scaleY: () => 0.25 + Math.random() * 0.75, duration: () => 0.22 + Math.random() * 0.3,
+          ease: "sine.inOut", repeat: -1, yoyo: true, repeatRefresh: true, delay: i * 0.03 });
+      });
+      const cmdEl = document.querySelector("[data-voice-cmd]");
+      const cmds = ["Spotify pe lo-fi chala do", "Reply to Riya: on my way", "What is on my screen?", "Start my study routine"];
+      if (cmdEl) {
+        let k = 0;
+        const typeNext = () => {
+          const text = cmds[k++ % cmds.length];
+          const st = { n: 0 };
+          gsap.timeline()
+            .to(st, { n: text.length, duration: text.length * 0.045, ease: "none", onUpdate() { cmdEl.textContent = text.slice(0, Math.round(st.n)); } })
+            .to({}, { duration: 1.8 })
+            .add(typeNext);
+        };
+        typeNext();
+      }
     }
 
-    const pulse = document.querySelector("[data-pulse]");
-    if (pulse) {
-      const len = pulse.getTotalLength();
-      gsap.set(pulse, { strokeDasharray: `${len * 0.28} ${len}` });
-      speedable.push([pulse.closest(".crate"),
-        gsap.to(pulse, { strokeDashoffset: -len * 1.28, duration: 2.6, ease: "none", repeat: -1 })]);
+    /* Olli: prices reshuffle, the best place to buy wins the row */
+    const olliRows = document.querySelectorAll("[data-olli-rows] li");
+    if (olliRows.length) {
+      const bestEl = document.querySelector("[data-olli-best]");
+      const cards = ["your HDFC card", "your Amazon Pay UPI", "your Flipkart Axis card", "your Croma membership"];
+      const fmtR = (n) => "\u20B9" + Math.round(n).toLocaleString("en-IN");
+      const shuffle = () => {
+        const prices = [...olliRows].map(() => 6100 + Math.random() * 800);
+        const min = Math.min(...prices), max = Math.max(...prices);
+        let bi = prices.indexOf(min);
+        olliRows.forEach((li, i) => {
+          li.querySelector("span").textContent = fmtR(prices[i]);
+          li.querySelector("s").style.width = (35 + ((max - prices[i]) / (max - min || 1)) * 60) + "%";
+          li.classList.toggle("is-best", i === bi);
+        });
+        if (bestEl) bestEl.textContent = olliRows[bi].dataset.store + " \u00B7 " + fmtR(min * 0.9) + " with " + cards[Math.floor(Math.random() * cards.length)];
+      };
+      shuffle();
+      gsap.timeline({ repeat: -1 }).to({}, { duration: 2.8 }).add(shuffle);
     }
 
     speedable.forEach(([crate, anim]) => {
@@ -1402,16 +1426,6 @@
       });
     }
 
-    /* foodcourt: scan, pick a stall, the review lands on the wall */
-    const food = document.querySelector('[data-live="food"]');
-    if (food) {
-      const qr = food.querySelector("[data-food-qr] i"), stalls = food.querySelectorAll("[data-food-stall]"), review = food.querySelector("[data-food-review]");
-      bind(food.closest(".crate"), () => gsap.timeline()
-        .set(stalls, { className: "" }).set(review, { autoAlpha: 0 })
-        .fromTo(qr, { y: 0 }, { y: 56, duration: 0.5, ease: "none", repeat: 1, yoyo: true })
-        .add(() => stalls[0].classList.add("is-pick"), 1.3)
-        .fromTo(review, { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "back.out(1.6)" }, 1.9));
-    }
   })();
 
   /* ---------------------------------------------- the maintenance hatch: four screws, then the engine room */
