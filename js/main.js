@@ -1144,11 +1144,11 @@
     const vbars = document.querySelectorAll("[data-voice-bars] i");
     if (vbars.length) {
       vbars.forEach((bar, i) => {
-        gsap.to(bar, { scaleY: () => 0.25 + Math.random() * 0.75, duration: () => 0.22 + Math.random() * 0.3,
+        gsap.fromTo(bar, { scaleY: 0.2 }, { scaleY: () => 0.3 + Math.random() * 0.7, duration: () => 0.22 + Math.random() * 0.3,
           ease: "sine.inOut", repeat: -1, yoyo: true, repeatRefresh: true, delay: i * 0.03 });
       });
       const cmdEl = document.querySelector("[data-voice-cmd]");
-      const cmds = ["Spotify pe lo-fi chala do", "Reply to Riya: on my way", "What is on my screen?", "Start my study routine"];
+      const cmds = ["Play lo-fi on Spotify", "Reply to Riya: on my way", "What is on my screen?", "Start my study routine"];
       if (cmdEl) {
         let k = 0;
         const typeNext = () => {
@@ -1163,25 +1163,61 @@
       }
     }
 
-    /* Olli: prices reshuffle, the best place to buy wins the row */
-    const olliRows = document.querySelectorAll("[data-olli-rows] li");
-    if (olliRows.length) {
+    /* Olli: the mascot blinks, bobs, and names the best place to buy */
+    const olliBot = document.querySelector("[data-olli-bot]");
+    if (olliBot) {
       const bestEl = document.querySelector("[data-olli-best]");
-      const cards = ["your HDFC card", "your Amazon Pay UPI", "your Flipkart Axis card", "your Croma membership"];
-      const fmtR = (n) => "\u20B9" + Math.round(n).toLocaleString("en-IN");
-      const shuffle = () => {
-        const prices = [...olliRows].map(() => 6100 + Math.random() * 800);
-        const min = Math.min(...prices), max = Math.max(...prices);
-        let bi = prices.indexOf(min);
-        olliRows.forEach((li, i) => {
-          li.querySelector("span").textContent = fmtR(prices[i]);
-          li.querySelector("s").style.width = (35 + ((max - prices[i]) / (max - min || 1)) * 60) + "%";
-          li.classList.toggle("is-best", i === bi);
-        });
-        if (bestEl) bestEl.textContent = olliRows[bi].dataset.store + " \u00B7 " + fmtR(min * 0.9) + " with " + cards[Math.floor(Math.random() * cards.length)];
+      const deals = [
+        "Flipkart \u00B7 \u20B95,669 with your HDFC card",
+        "Amazon \u00B7 \u20B95,499 with Amazon Pay UPI",
+        "Croma \u00B7 \u20B95,729 with your membership",
+        "Vijay Sales \u00B7 \u20B95,610, free delivery",
+      ];
+      gsap.to(olliBot, { y: -5, rotation: -3, transformOrigin: "50% 100%", duration: 1.3, ease: "sine.inOut", repeat: -1, yoyo: true });
+      const eyes = olliBot.querySelectorAll("[data-olli-eye]");
+      gsap.timeline({ repeat: -1, repeatDelay: 2.6 })
+        .to(eyes, { scaleY: 0.15, transformOrigin: "center center", duration: 0.09, yoyo: true, repeat: 1 });
+      let di = 0;
+      if (bestEl) gsap.timeline({ repeat: -1 }).to({}, { duration: 2.8 }).add(() => {
+        di = (di + 1) % deals.length;
+        gsap.fromTo(bestEl, { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.35, ease: "power3.out" });
+        bestEl.textContent = deals[di];
+      });
+    }
+
+    /* Interface Admin: a link drops, the bell rings until it is answered, the link heals */
+    const pmsRows = document.querySelectorAll("[data-pms-rows] li:not(.is-more)");
+    if (pmsRows.length) {
+      const bell = document.querySelector("[data-pms-bell]");
+      const loop = () => {
+        const li = pmsRows[Math.floor(Math.random() * pmsRows.length)];
+        const label = li.querySelector("span");
+        gsap.timeline({ onComplete: loop })
+          .to({}, { duration: 1.6 })
+          .add(() => { li.classList.add("is-down"); label.textContent = "down"; bell.classList.add("is-ringing"); })
+          .to(bell, { rotation: 18, duration: 0.07, repeat: 9, yoyo: true, ease: "none" })
+          .set(bell, { rotation: 0 })
+          .add(() => { label.textContent = "fixing"; })
+          .to({}, { duration: 0.9 })
+          .add(() => { li.classList.remove("is-down"); label.textContent = "synced"; bell.classList.remove("is-ringing"); });
       };
-      shuffle();
-      gsap.timeline({ repeat: -1 }).to({}, { duration: 2.8 }).add(shuffle);
+      loop();
+    }
+
+    /* Parable Studio OS: scan a city, pins drop, the best lead goes to the top of the call list */
+    const leadMap = document.querySelector("[data-lead-map]");
+    if (leadMap) {
+      const ring = leadMap.querySelector("[data-lead-ring]");
+      const pins = leadMap.querySelectorAll(".lead-pin");
+      const rows = document.querySelectorAll("[data-lead-list] li");
+      gsap.timeline({ repeat: -1, repeatDelay: 1.4 })
+        .set(pins, { scale: 0, y: -10 })
+        .set(rows, { autoAlpha: 0, x: 10 })
+        .fromTo(ring, { scale: 0.1, opacity: 0.9 }, { scale: 1.4, opacity: 0, duration: 1.1, ease: "power2.out" })
+        .to(pins, { scale: 1, y: 0, duration: 0.35, ease: "back.out(2.4)", stagger: 0.12 }, "-=0.7")
+        .to(rows, { autoAlpha: 1, x: 0, duration: 0.35, ease: "power3.out", stagger: 0.18 }, "+=0.2")
+        .to(pins[0], { scale: 1.35, duration: 0.25, yoyo: true, repeat: 3, ease: "sine.inOut" }, "-=0.2")
+        .to({}, { duration: 2.4 });
     }
 
     speedable.forEach(([crate, anim]) => {
@@ -1393,19 +1429,6 @@
     }
 
     /* crm: a lead arrives, gets tagged, moves, gets an owner, saves */
-    const crm = document.querySelector('[data-live="crm"]');
-    if (crm) {
-      const lead = crm.querySelector("[data-crm-lead]"), tag = crm.querySelector("[data-crm-tag]");
-      const avatar = crm.querySelector("[data-crm-avatar]"), toast = crm.querySelector("[data-crm-toast]");
-      bind(crm.closest(".crate"), () => gsap.timeline()
-        .set(tag, { textContent: "new enquiry", backgroundColor: "#f0cf4a" })
-        .set(avatar, { autoAlpha: 0 }).set(toast, { autoAlpha: 0 })
-        .from(lead, { x: -30, autoAlpha: 0, duration: 0.4, ease: "power3.out" })
-        .to(tag, { textContent: "AI: warm lead", backgroundColor: "#e88b74", duration: 0.01 }, "+=0.5")
-        .to(lead, { x: 26, duration: 0.5, ease: "power2.inOut" }, "+=0.3")
-        .to(avatar, { autoAlpha: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, "+=0.2")
-        .to(toast, { autoAlpha: 1, y: -4, duration: 0.3 }, "+=0.3"));
-    }
 
     /* wealth: a price ticks, the book revalues, risk relaxes */
     const wealth = document.querySelector('[data-live="wealth"]');
